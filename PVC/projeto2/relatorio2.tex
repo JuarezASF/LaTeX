@@ -1,0 +1,339 @@
+\documentclass[journal]{IEEEtran}
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{placeins}
+\pagestyle{fancy}
+\usepackage{color}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\usepackage{listings}
+
+
+\begin{document}
+\title{ 
+Detecção de Retas e Círculos com OpenCV}
+
+\author{
+		Princípios de Visão Computacional - UnB - 2º/2013 \\
+		Professor : Flávio Vidal \\
+		Aluno : Juarez Aires Sampaio Filho - 11/0032829 \\
+		}
+
+
+\maketitle
+\IEEEpeerreviewmaketitle
+
+\section{Objetivos} 
+Desenvolver um código para detectar linhas e círculos em 
+vídeos e em imagens.
+\section{Introdução}
+
+\IEEEPARstart{E}{m visão computacional} a detecção de formas geométricas
+simples é utilizada no processamento de objetos mais complexos.
+ A detecção de formas é útil quando conhecemos previamente 
+a forma do objeto e em muitas aplicações isso é possível.  A detecção
+de prédios e carros, por exemplo, pode ser feita facilmente se 
+usarmos o fato de que suas arestas são retas e procurarmos por linhas 
+na imagem.
+
+O primeiro passa na detecção de linhas é a detecção de bordas. Isso pode
+ser feito usando o algoritmo de \textbf{Canny}. Esse algoritmo usa a variação da intensidade
+medida por meio de aproximações para o \textbf{gradiente} da função intensidade para 
+determinar pontos de fronteiras entre duas superfícies. Após esse processo a
+\textbf{transformada Hough} é aplicada para detectar linhas. Uma versão melhorada dessa
+transformada pode também ser aplicada para detectar círculos.
+
+Todas essas funções citadas já estão
+implementadas no OpenCV, de modo que aplicações que envolvem detecção
+de retas e círculos podem ser rapidamente desenvolvidas. Descrevemos brevemente
+as funcionalidade de tais funções;
+\begin{itemize}
+	\item 
+	\textbf{Canny}( src, detected\_edges, lowThreshold, lowThreshold*ratio, kernel\_size ) :
+
+	salva em detected\_edges as quinas detectadas em src. Nessa imagem pontos detectados como quinas estão marcados com branco e o resto é preto. Os outros
+	argumentos são parâmetros que determinam a funcionalidade da função. De particular interesse lowThreshold determina a sensibilidade da rotina.Valores baixos
+	fazem o método muito sensível à ruídos e valores elevados impossibilitam a detecção. 
+	
+	\item \textbf{HoughLines}(dst, lines, rho, thetea, threshold, srn, stn) :
+	lines é uma coleção de vetores que guarda os coeficientes das retas
+	encontradas. Novamente threshold determina a sensibilidade do algoritmo.
+	
+	\item \textbf{HoughCircles}( src\_gray, circles, CV\_HOUGH\_GRADIENT, dp, min\_dist,param\_1, threshold, min\_r, max\_r ):
+	semelhante ao anterior, mas para detecção de círculos.
+		
+\end{itemize}
+
+\newpage
+\section{Materiais}
+O código elaborado foi feito em C++ utilizando as bibliotecas:
+\begin{itemize}
+\item imgproc
+\item highgui
+\end{itemize}
+do \textbf{OpenCV} versão 2.4.6.
+
+
+\section{Procedimentos}
+\subsection{Detectando Formas}
+\begin{itemize}
+	\item linhas
+		\begin{enumerate}
+			\item aplicamos o método Canny
+			\item aplicamos o método  HoughLines
+		\end{enumerate}
+	\item círculos
+		\begin{enumerate}
+			\item convertemos para grayscale
+			\item aplicamos um filtro gaussiano para diminuir ruídos
+			\item aplicamos o método  HoughCircles
+		\end{enumerate}
+\end{itemize}
+
+Agora é só desenhar as formas encontradas na figura com 
+as funções \textbf{line} e \textbf{circle} do OpenCV. Para
+facilitar o processo de calibração dos parâmetros acrescentamos ainda trackbars para podermos variar
+os parâmetros em tempo de execução.
+
+O código é feito de forma a aceitar entradas a partir de uma
+imagem ou vídeo em disco ou apartir de uma webcam 
+instalada via usb.
+
+\subsection{Testando o Código}
+As imagens \ref{fig:src-lines-circles} e \ref{fig:src-triangle} são entradas no programa e 
+procuram-se os parâmetros que permitem uma boa detecção. O programa também é testado
+com um vídeo de um modelo de helicóptero voando sobre ambiente controlado e chão
+quadriculado. Um frame do vídeo é mostrado na figura \ref{fig:src-heli}.
+
+As imagens \ref{fig:src-lines-circles} e \ref{fig:src-lines-circles} são impressas
+e coladas em superfície rígida. Elas são então mostradas para a webcam e
+compara-se o resultado da detecção com o do processo inicial. A comparação 
+é feita medindo-se o número de linhas detectadas nos dois casos. O processo
+de tomada de medidas no procedimento com a câmera é feito 10 vezes utiliza-se
+a média dos valores obtidos para efeito de comparação.
+\FloatBarrier
+\begin{figure}[!htp]
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\centering
+		\includegraphics[scale = 0.4]{./../images/linesCircles.jpg}
+		\caption{}
+		\label{fig:src-lines-circles}
+	\end{subfigure}
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\centering		
+		\includegraphics[scale = 0.4]{./../images/triangle.jpg}
+		\caption{}
+		\label{fig:src-triangle}
+	\end{subfigure}
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\centering		
+		\includegraphics[scale = 0.4]{./../images/src_heli.jpg}
+		\caption{}
+		\label{fig:src-heli}
+	\end{subfigure}
+	\caption{Imagens de teste do algoritmo}
+\end{figure}
+\FloatBarrier	
+%---------------------------------------------------
+%-------------RESULTADOS----------------------------
+%--------------------------------------------------
+
+\section{Resultados}
+Os resultados obtidos são mostrados a seguir nas figuras
+\ref{fig:src-lines-circles}, \ref{fig:src-triangle} e \ref{fig:src-heli}. 
+As duas primeiras figuras foram obtidas com parâmetro de thereshold mínimo
+para o algoritmo linear de 42, enquanto o parâmetro para a terceira foi de 145.
+A calibração foi feita manualmente por meio de trackbars até se atingir um resultado razoável.
+
+No teste de comparação obtivemos a seguinte tabela:
+\FloatBarrier
+\begin{table}[!htp]
+	\centering
+	\begin{tabular}{|l|r|r|}\hline
+	medida 						& baseado em imagem 					& em vídeo \\ \hline
+	média de linhas em \ref{fig:src-triangle} & 24 & 62.9 \\ \hline
+	média de círculos em \ref{fig:src-triangle} & 0 & 0\\ \hline
+	média de linhas em \ref{fig:src-lines-circles} & 35 & 24.4\\ \hline
+	média de círculos em \ref{fig:src-lines-circles} & 5 &3.9 \\ \hline	
+	\end{tabular}
+\end{table}
+\FloatBarrier
+As figuras em \ref{fig:quest3}  ilustram a detecção com câmera.
+\FloatBarrier
+\begin{figure}[!htp]
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\centering
+		\includegraphics[scale = 0.4]{./../images/show_circles.jpg}
+		\caption{}
+		\label{fig:show-lines-circles}
+	\end{subfigure}
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\centering		
+		\includegraphics[scale = 0.4]{./../images/show_triangle.jpg}
+		\caption{}
+		\label{fig:show-triangle}
+	\end{subfigure}
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\centering		
+		\includegraphics[scale = 0.4]{./../images/show_heli.jpg}
+		\caption{}
+		\label{fig:show-heli}
+	\end{subfigure}
+	\caption{resultados obtidos}
+	\label{fig:results}
+\end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{figure}[!htp]
+\begin{tabular}{ll}
+	\begin{subfigure}[!htp]{0.2\textwidth}
+		\centering
+		\includegraphics[scale = 0.1]{./../images/quest3T-src.jpg}
+		\caption{ imagem original}
+		\label{fig:quest3-src-a}
+	\end{subfigure}	
+&
+	\begin{subfigure}[!htp]{0.2\textwidth}
+		\centering		
+		\includegraphics[scale = 0.1]{./../images/quest3T-show.jpg}
+		\caption{detecção}
+		\label{fig:quest3-show-a}
+	\end{subfigure}
+\\
+	\begin{subfigure}[!htp]{0.2\textwidth}
+		\centering
+		\includegraphics[scale = 0.1]{./../images/quest3C-src.jpg}
+		\caption{imagem original}
+		\label{fig:quest3-src-b}
+	\end{subfigure}
+&
+	\begin{subfigure}[!htp]{0.2\textwidth}
+		\centering		
+		\includegraphics[scale = 0.1]{./../images/quest3C-show.jpg}
+		\caption{detecção}
+		\label{fig:quest3-show-b}
+	\end{subfigure}
+
+\end{tabular}
+	\caption{detectando linhas e círculos com câmera}
+	\label{fig:quest3}
+\end{figure}
+\FloatBarrier
+
+%---------------------------------------------------
+%-------------CONCLUSÃO-----------------------------
+%--------------------------------------------------
+\newpage
+\section{Discussão}
+
+Nos resultados da figura \ref{fig:results} vemos a eficiência e as limitações da detecção.
+\begin{itemize}
+
+
+\item Em \ref{fig:show-lines-circles} vemos que:
+		\begin{enumerate}
+			\item  o círculo no canto esquerdo superior que está cortado
+						foi detectado.
+			\item o círculo cortado na parte inferior não foi detectado
+			\item todos os círculos inteiros foram detectados. 
+		\end{enumerate}	
+			Temos uma boa garantia portanto que círculos bem definidos serão
+		detectados, já quanto a completação de círculos parcialmente ocultos 
+		não podemos ter certeza
+
+\item Em \ref{fig:show-triangle} vemos que:
+		\begin{enumerate}
+			\item linhas compridas e bem definidas foram detectadas
+			\item pequenas linhas não foram detectadas
+		\end{enumerate}	
+				Vemos que o algoritmo trabalha bem com a detecção de linhas bem definidas
+			mas que tem problemas com pequenas linhas. Provavelmente isso se deve ao fato 
+			de que o algoritmo Canny aplica um filtro para reduzir ruídos na imagem. Dessa forma
+			pequenas linhas são identificadas como ruído.
+
+\item Em \ref{fig:show-heli} vemos:
+		\begin{enumerate}
+			\item novamente temos linhas que não foram detectadas, mas que as todas
+			as linhas mais bem definidas foram
+		\end{enumerate}	
+			Assim como nos anteriores, notamos que o \textbf{algoritmo não é ideal mas que lida
+		bem com a maioria dos casos}. Em uma aplicação de localização de helicóptero 
+		por visão seria necessário reforçar os traço das linhas no chão e controlar
+		a iluminação para melhores
+		resultados. Vale ressaltar que poderíamos ter diminuído o threshold para o algoritmo.
+		Nesse caso teríamos detectados mais linhas, mas teríamos também maior ruído.
+		É necessário um processo de calibração desse parâmetro para cada aplicação.
+	
+\item 	Notamos uma queda apreciável na qualidade da detecção quando as mesmas 
+	imagens são apresentadas a uma câmera e o processamento é feito em cima de um
+	vídeo. Podemos citar algumas fontes de erro:
+		\begin{enumerate}
+			\item\textbf{ a iluminação ambiente} pode afetar as diferentes partes do vídeo diferentemente,
+			de forma que as relações de gradiente se alteram. Se o gradiente diminui em um ponto
+			pode-se ter que este, que era antes detectado como quina(e portanto tinha chance se ser
+			uma reta), passa a ser detectado como ruído e não é processado.
+			\item\textbf{ o formato de compactação de vídeo} muda as propriedades da imagem de moda
+			que podemos ter o mesmo efeito da iluminação.
+			\item se apresentarmos o padrão de forma inclinada, teremos os \textbf{círculos sendo projetados
+			como elipses} e não sendo mais detectados.
+			\item imperfeições no padrão de cor obtido podem fazer com que \textbf{o que era interpretado
+			como uma única reta seja quebrado em várias}. É isso o que acontece em \ref{fig:show-triangle}, onde temos um aumento no número de retas detectadas.
+
+		\end{enumerate}		
+\item 		é notável que os parâmetros de threshold para as imagens utilizadas e para o vídeo
+			do modelo de helicóptero são muito distintos. Ressalta-se aqui a \textbf{importância do processo
+			de calibração} nas aplicações com processamento de imagem. Um mesmo algoritmo pode
+			precisar de parâmetros bem distintos dependendo da aplicação que se tem em mente.
+	\end{itemize}
+	
+	Notamos nos resultados características comuns no trabalho com visão computacional:
+	os algoritmos são sensíveis às condições de iluminação e os parâmetros são extremamente
+	específicos para cada aplicação. Apesar dessas dificuldades presentes nota-se que resultados
+	razoáveis podem ser obtidos rapidamente. Apesar de detecção não ser perfeita, o modelo
+	de helicóptero do vídeo testado poderia utilizar a detecção de linhas no chão para se posicionar
+	em um sistema de coordenadas apropriado. 
+	
+	\section{Conclusão}
+		Foi possível utilizar as bibliotecas do OpenCV para desenvolver rapidamente um código 
+	capaz de detectar linhas e círculos em imagens e em vídeos. Os resultados obtidos 
+	mostram que os algoritmos utilizados não são perfeitos mas que funcionam adequadamente
+	quando os objetos a serem detectados estão bem definidos. Notou-se ainda a importância
+	da calibração dos parâmetros dos métodos para cada aplicação e a influência de condições
+	internas e externas no processamento de vídeos obtidos por câmeras. O projeto reforça a
+	ideia de que algoritmos de visão computacional são dificilmente robustos às condições do 
+	meio ambiente e que melhores resultados serão atingidos se for possível controlar
+	parâmetros de cena como a iluminação. 
+
+\begin{thebibliography}{1}
+
+\bibitem{livroPVC}
+Forsyth, D.A. , \emph{Computer Vision: a Modern Approach}, 1ªed.
+
+\bibitem{docsOpenCV}
+ Documentação do OpenCV, \emph{Tutoriais em Processamento de Imagem:Canny Edge Detector, Hough Line Transform e
+ Hough Circle Transform}
+ Disponível em: http://docs.opencv.org/doc/tutorials/imgproc/table\_of
+ 
+ \_content\_imgproc/table\_of\_content\_imgproc.html
+ 
+ \#table-of-content-imgproc
+	 Acesso em 14 de Outubro de 2013.
+\end{thebibliography}
+
+
+\end{document}
+
+

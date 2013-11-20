@@ -1,0 +1,236 @@
+\documentclass[a4paper,11pt]{article}
+\input{IncludeAll.tex}
+%inclui todosos pacotes utilizados
+
+\newcommand{\MyBox}[1]
+{
+	\begin{tabular}{|l|}\hline
+	  #1 \\ \hline	    
+	\end{tabular} 	
+}
+
+\lstset{frame=single,}	
+
+\begin{document}
+
+
+
+\MakeMyTitlePage
+{Análise Dinâmica Linear}
+{Experimento IV}
+{Identificação das Plantas Servo por meio
+da Análise da Resposta Temporal}
+{%autores
+		\begin{tabular}{llr} \
+		& & \\[0.05cm]		
+		Professor & Henrique Cezar Ferreira & \\
+		
+		Alunos:& & \\
+		& Juarez A.S.F 												& 11/0032829\\
+		& Luís Henrique Vieira Amaral						&	10/0130488 	
+			\end{tabular}
+}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      OBJETIVOS      @@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Objetivos}
+\paragraph{} Obter a função de transferência da planta servo rotacional em estudo
+a partir da análise da resposta temporal.
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@        INTRODUÇÃO       @@@@@@@@@@@@@@@@@@@@ 
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Introdução Teórica}
+\paragraph{} Se conhecermos a forma esperada da função de transferência
+de um sistema, podemos estimar os parâmetros desta por meio da análise
+do gráfico da resposta no tempo. Para a planta rotacional em estudo
+esperamos uma função
+de transferência na forma:
+\begin{equation}
+ \frac{\Omega _l (s)}{V_m(s)} = \frac{K}{\tau s + 1}
+\end{equation}
+
+em que $\Omega_l(s)$ é a transformada de Laplace da velocidade 
+angular do eixo de carga, $V_m$ a transformada do sinal de tensão 
+aplicado no motor, K o ganho em regime estacionário e $\tau$ a 
+constante de tempo. 
+
+\paragraph{} O sinal aplicado é o degrau de amplitude A. A 
+transformada de Laplace desse sinal é:
+
+\begin{equation}
+  V_m(s) = \frac{A}{s}
+\end{equation}
+ao multiplicarmos pela função de transferência temos a saída em 
+Laplace:
+
+\begin{equation}
+ \Omega _l(s) = \frac{A}{s} \cdot \frac{K}{\tau s + 1} = 
+  A \cdot k \cdot (\frac{1}{s} - \frac{1}{s + \frac{1}{\tau}})
+\end{equation}
+aplicando a transformada inversa obtemos a resposta no tempo:
+
+\begin{equation}
+ v(s) = A \cdot k \cdot(1 - e^{-\frac{t}{\tau}})
+\end{equation}
+
+de onde vemos que :
+\begin{equation}
+  \begin{array}{l}
+  \mbox{(valor final)} V_f = A \cdot k \\
+  \frac{d}{dt}(v(t))|_{t = 0} = \frac{A \cdot k}{\tau}
+  \end{array}
+  \label{eq:leEq}
+\end{equation}
+
+vemos então que a partir da inclinação inicial da reta tangente e 
+do valor final da resposta ao degrau os parâmetros estão 
+completamente determinados.
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@       PROCEDIMENTOS        @@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Descrição Experimental}
+\begin{itemize}
+ \item
+Iniciou-se o experimento abrindo o modelo identifica\_SRV02.mdl 
+no software Simulink. Ao abrir o modelo observou-se três subsistemas 
+distintos: um que representava o modelo real, um obtido através de 
+cálculos e outro obtido, posteriormente, experimentalmente. Como 
+entrada havia disponível excitação degrau ou uma onda quadrada, ao 
+final dos blocos os dados obtidos era enviados para a sessão workload 
+do MATLAB. Afim de configurar o sistema descrito rodou-se o programa 
+setup\_lab\_SRV02\_identifica.m.
+
+\item
+Com todas as configurações iniciais realizadas, selecionou-se a 
+entrada degrau para o sistema e as entradas para modelo teórico e 
+experimental foram aterradas. Logo após, o tempo de simulação foi 
+configurado para 0,3s. Assim, compilou-se e executou-se o sistema 
+plotando o gráfico de resposta no domínio do tempo.
+
+\item
+A partir da observação do gráfico obtido determinou-se, visualmente, 
+os valores de k e $\tau$. Para a determinação de k observou-se a 
+saída do sistema para um tempo suficientemente grande no qual o ganho 
+já poderia ser considerado constante. Já para a determinação de 
+$\tau$ observou-se o tempo necessário para que fosse alcançado, 
+aproximadamente, 63\% do ganho em regimente permanente.
+Simulou-se então o sistema real e os valores de k e $\tau$ foram 
+obtidos de 
+forma semelhante à explicada anteriormente.
+
+\item
+Por fim, todo o procedimento foi repetido com uma onda 
+quadrada na entrada e os valores de k foram observados como os valores 
+em que sistema estabilizava e $\tau$ como o tempo necessário para 
+atingir 63\% do valor máximo da saída.
+\end{itemize}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@       DADOS      @@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Resultados}
+\paragraph{}Os resultados são mostrados a seguir nas figuras 
+\ref{fig:quadrada} e \ref{fig:step}. Em ambos os gráficos a curva do 
+modelo experimental foi 
+gerada utilizando-se os valores:
+\begin{equation}
+  \begin{array}{l}
+   \tau = 0.0305 \\
+    K =  1.7345
+   \end{array}
+\end{equation}
+os valores foram obtidos experimentalmente. K obtido a partir do 
+valor final(levando em conta que a entrada tem amplitude 1.5V) e 
+$\tau$ a partir do tempo em que a saída atinge 63\% do valor final.
+
+\FloatBarrier
+\begin{figure}[!htp]
+  \begin{subfigure}{\linewidth}
+    \input{../images/stepOutput.tex}
+    \caption{entrada degrau 1.5V}
+    \label{fig:step}
+    \end{subfigure}
+    
+  \begin{subfigure}{\linewidth}    
+    \input{../images/QuadradaOutput.tex}
+    \caption{entrada quadrada}
+    \label{fig:quadrada}
+ \end{subfigure}
+\end{figure}
+\FloatBarrier
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       Análise         @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+\section{Discussão}
+\subsection{Questão 1}
+\paragraph{} Os resultados são mostrados nos gráficos \ref{fig:step} e
+\ref{fig:quadrada}. Notamos que em ambos os gráficos o modelo obtido apresenta
+resposta de menor amplitude que a resposta real. O motivo dessa discrepância
+não é claro, mas origens desta podem se encontrar nas simplificações adotadas
+na formulação do modelo teórico e na natureza imprecisa da formulação do atrito
+e perca de potência na transmissão de engrenagens. Apesar dessa diferença no
+valor final, podemos dizer que que ambas as resposta, teórica e experimental,
+apresentam comportamento de primeira ordem, mostrando que o modelo adotado é
+adequado para análise.
+\subsection{Questão 2}
+\paragraph{} Notamos que a resposta próximo do valor estacionário difere um
+pouco do comportamento previsto pois oscilações significativas são
+perceptíveis. Para tempos elevados, o valor parece oscilar em torno de um
+valor fixo, atingindo momentaneamente valores superiores e inferiores a este. 
+A resposta teórica nos diz que a resposta próxima do regime permanente deveria
+ser no sentido de se aproximar de um valor constante, mas sempre inferiormente
+a este, nunca o superando. Origens desse fenômeno podem se encontrar na própria
+medida da velocidade, uma vez que os erros aleatórios envolvidos em todo
+processo de medida geram essa oscilação de natureza gaussiana.
+
+\subsection{Questão 3}
+\paragraph{} Como visto na introdução, na fórmula \ref{eq:leEq}, a determinação
+dos parâmetros envolve a medida do valor final da resposta experimental no
+gráfico \ref{fig:step}. Uma vez que a resposta experimental não atinge de fato
+um valor final, em vez disso, oscila em torno de um valor, foi necessário
+contornar esse problema ao tomar como valor final a média dos últimos 50 pontos
+obtidos. Uma vez que a matriz obtida da simulação com os dados abrangia cerca
+de 300 instantes de tempo esse valor de 50 dados parece adequado para uma
+estimativa do real valor final.
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       Conclusão         @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+\newpage
+\section{Conclusão}
+\paragraph{} O experimento permitiu obter a função de transferência 
+de uma planta a partir do modelo teórico e da medição de parâmetros 
+na resposta temporal. Notou-se que a função de transferência obtida 
+não se comportou exatamente como o sistema em resposta ao degrau e à 
+entrada quadrada, ficando a resposta teórica sempre abaixo da 
+resposta experimental. Possivelmente essas falhas se devam a 
+imperfeições e simplificações feitas na análise teórica, de forma que 
+a função de transferência real não possui exatamente a fórmula 
+suposta para ela. Além disso, a resposta ao degrau apresentou comportamento
+oscilatório para altas constantes de tempo, de modo que foi necessário tomar
+uma média dos valores finais para se obter uma estimativa do valor em regime
+permanente.
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       REFERÊNCIAS     @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\begin{thebibliography}{9}    
+	 \bibitem{ADL-NISE}
+  		Nise, N.S.
+  		\emph{Engenharia de Sistemas de Controle}
+ 		 5ª ed.
+		LTC, 2009.
+
+	 \bibitem{ADL-OGATA}
+  		Ogata, K.
+  		\emph{Moder Control Engeeniring}
+ 		 5ª ed.
+		Pearson, 2010.
+	 
+\end{thebibliography}
+\end{document}
