@@ -1,0 +1,11 @@
+#! /bin/bash
+
+cd data
+
+gnuplot plot.GNU
+
+cd ..
+
+PdfLatexCompile exp6b.tex
+
+

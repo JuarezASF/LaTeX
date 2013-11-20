@@ -1,0 +1,46 @@
+\documentclass[a4paper,11pt]{article}
+\input{IncludeAll.tex}
+%inclui todosos pacotes utilizados
+
+
+\begin{document}
+
+\input{capa2.tex}
+\EmptyPage
+
+\paragraph{}Convençao adotada para relacionar os indies (i,j) da tabela com a coordenada (x,y).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1.0]{./images/convensao.png}
+\end{figure}
+
+\section{Equaçoes}
+\begin{flushleft}
+\NamedEquation{
+ {
+u_{i,j} = \frac{1}{4}(u_{i+1,j} + u_{i-1,j} + u_{i,j+1} + u_{i,j-1} - f_{i,j}\triangle x ^2) } 
+}{pontos interiores}
+
+
+\NamedEquation
+ {
+u_{i,j} = \frac{2}{3}(2u_{i,j+1} - \frac{1}{2} u_{i,j+2} - \triangle xf_{i,j})
+}{borda esquerda}
+
+\NamedEquation
+ {
+u_{i,j} = \frac{2}{3}(2u_{i,j-1} - \frac{1}{2} u_{i,j-2} + \triangle xf_{i,j})
+}{borda direita}
+
+\NamedEquation
+ {
+u_{i,j} = \frac{2}{3}(2u_{i-1,j} - \frac{1}{2} u_{i-2,j} + \triangle xf_{i,j})
+}{borda topo}
+
+\NamedEquation
+ {
+u_{i,j} = \frac{2}{3}(2u_{i+1,j} - \frac{1}{2} u_{i+2,j}  \triangle xf_{i,j})
+}{borda fundo}
+\end{flushleft}
+\end{document}

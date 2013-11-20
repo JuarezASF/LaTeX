@@ -1,0 +1,18 @@
+Materiais granulares são constituídos de uma
+coleção enorme de partículas macroscópicas.
+A física que rege o comportamento destes materiais não é
+ainda muito bem entendida, parte disso devido ao fato de
+que o movimento global do conjunto  resulta
+do movimento individual de cada partícula e as incontáveis 
+e aleatórias interações que podem ocorrer produzem efeitos
+difíceis de serem analisados.
+
+Nesse contexto de um número
+monstruoso de variáveis a serem levadas em consideração, a
+simulação computacional entra como a principal arma para
+atacar o problema.Este artigo apresenta
+a dinâmica molecular, um dos principais métodos utilizados para
+simulação de materiais granulares.
+Apresentamos também como uma tabela de dispersão
+pode ser utilizada 
+para diminuir o custo computacional das simulações.

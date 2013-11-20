@@ -1,0 +1,116 @@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      PACOTES BÁSICOS		     @@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} 
+\usepackage[portuguese]{babel}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphicx}				%para imagens
+\usepackage{epstopdf} 				%resolve problemas eps-pdf
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@     PACOTES NÃO TAOBÁSICOS		 @@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\usepackage{fancyhdr}				% para o cabeçalho bonito
+\usepackage{caption}					%para legendas
+\usepackage{subcaption}				% e sublegendas
+\usepackage{placeins} 				%controlar o lugar dos floats
+\pagestyle{fancy} 					% número de pag e cabeçalho
+\usepackage{txfonts} 				%fontes bonitas? acho que para o título
+\usepackage[usenames]{color} 		% algo com gunplot e eps
+\usepackage{ifthen}
+\usepackage{xparse}
+\graphicspath{{./images/}{./graph/}}	% procura imagens nessa pasta
+\usepackage{float} %%para definir ambiente gráfico
+\newfloat{Gráfico}{hbtp}{lop}[section]
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      Cabeçalho de cada página      @@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\setlength{\headheight}{25pt}%compila sem erro
+	\fancyhead{}
+	\fancyfoot{}
+	\fancyhead[R]{Física Experimental 4}%direito superior
+	\fancyhead[L]{\includegraphics[height=0.25in]{./images/logo_unb.pdf}}%esquerda superior
+	\fancyfoot[C]{\thepage}%baixo centro
+%E: Even page, O: Odd page, L: Left field, C: Center field, R: Right field, H: Header, F: Footer
+% em documentos com dois lados use LO, RO. como esse documento não tem lados essa opção é inútil
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      NOVOS COMANDOS		      @@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\newcommand\undermat[2]
+	{
+	  \makebox[0pt][l]
+	  	{$\smash{\underbrace{\phantom{%
+    \begin{matrix}#2\end{matrix}}}_{\text{$#1$}}}$
+    		}#2
+    	}
+    	
+\newcommand{\HRule}
+	{
+	\rule{\linewidth}{0.5mm}
+	}
+	
+\newcommand{\EmptyPage}
+	{
+	\thispagestyle{empty}
+	\mbox{ }
+	\newpage	
+	} 
+\newcommand{\del}[2]
+	{
+	\ifthenelse{\equal{#2}{1}}
+		{\frac{\partial }{\partial #1 }}
+		{\frac{\partial ^#2}{\partial #1 ^{#2}}}
+	}
+\newcommand{\dominio}{\Omega}
+
+\newcommand{\borda}{\partial \Omega}
+
+
+\newcommand{\NamedEquation}[2]
+{
+\begin{equation}
+	\begin{array}{lr}
+		#1	& \mbox{(#2)}
+	\end{array}
+\end{equation}
+}
+	
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      NOVOS AMBIENTES		      @@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\newcounter{graph-c}
+\setcounter{graph-c}{0}
+
+
+%\NewDocumentEnvironment{Graph}{m}
+ % {%antes
+  %\addtocounter{graph-c}{1}
+  %\begin{figure}
+  %}
+ %{
+ %depois
+%	\end{figure} 
+%	\caption*{Grafico \arabic{graph-c} - #1}
+ %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

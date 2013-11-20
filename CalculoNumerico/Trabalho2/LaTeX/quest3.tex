@@ -1,0 +1,116 @@
+\section*{Questão 3}
+
+\paragraph{}Primeiro vamos derivar as equações de diferenças finitas de segunda ordem 
+para a primeira e a segunda derivada. Para isso escrevamos a fórmula de Taylor de primeira 
+, segunda e terceira ordem:
+
+\begin{equation}
+  \begin{array}{l}
+      f(x_0 + h) = \frac{f^{(0)}(x_0)h^0}{0!} + 
+          \frac{f^{(2)}(x_0)h^2}{2!} + \frac{f^{(2)}(\xi )h^2}{2!} \\
+      f(x_0 + h) = \frac{f^{(0)}(x_0)h^0}{0!} + 
+          \frac{f^{(2)}(x_0)h^2}{2!} + \frac{f^{(2)}(x_0)h^2}{2!} 
+              + \frac{f^{(3)}(\xi)h^3}{3!}\\
+      f(x_0 + h) = \frac{f^{(0)}(x_0)h^0}{0!} + 
+          \frac{f^{(2)}(x_0)h^2}{2!} + \frac{f^{(2)}(x_0)h^2}{2!} 
+              + \frac{f^{(3)}(x_0)h^3}{3!}
+              +  \frac{f^{(4)}(\xi)h^4}{4!}\\
+
+  \end{array}
+\end{equation}
+
+onde $\xi \in (x_0, h)$ nos dois casos. Vamos rescrever essas equações com a notação O(h):
+
+\begin{equation}
+  \begin{array}{l}
+      f(x_0 + h) = \frac{f^{(0)}(x_0)h^0}{0!} + 
+          \frac{f^{(2)}(x_0)h^2}{2!} + O(h^2) \\
+      f(x_0 + h) = \frac{f^{(0)}(x_0)h^0}{0!} + 
+          \frac{f^{(2)}(x_0)h^2}{2!} + \frac{f^{(2)}(x_0)h^2}{2!} 
+              + O(h^3)\\
+      f(x_0 + h) = \frac{f^{(0)}(x_0)h^0}{0!} + 
+          \frac{f^{(2)}(x_0)h^2}{2!} + \frac{f^{(2)}(x_0)h^2}{2!} 
+              + \frac{f^{(3)}(x_0)h^3}{3!}
+               + O(h^4)\\
+  \end{array}
+\end{equation}
+
+Usando a expressão com $O(h^4)$ e avaliando em f(x-h) e f(x+4) temos:
+\begin{equation}
+  f(x+h) + f(x-h) = 2f(x) + f^{(2)}h^2 + O(h^4)
+\end{equation}
+
+de onde obtemos:
+\begin{equation}
+  f^{(2)}(x) = \frac{f(x+h) - 2f(x) + f(x-h)}{h^2} + O(h^2)
+\end{equation}
+
+Essa é a expressão de diferenças finitas para a segunda derivada nos pontos interiores.
+Fazendo $h =\triangle t$ esse método é $O(\triangle t^2)$. O mesmo procedimento
+refeito com a expressão de Taylor com $O(h ^3)$ nos dá:
+
+\begin{equation}
+  f^{(1)}(x) = \frac{f(x+h) - f(x-h)}{2h} + O(h^2)
+\end{equation}
+
+Essa será a fórmula usada para a primeira derivada nos pontos interiores. Para os
+pontos de fronteira teremos problemas, uma vez que $x_0-h$ e $x_n+h$ não estão tabelados
+e seriam necessários para as fórmulas até aqui descritas. Procedimentos semelhantes
+analisando mais pontos nos dão as seguinte fórmulas de diferenças finitas de
+segunda ordem para frente:
+
+\begin{equation}
+  \begin{array}{l}
+  f^{(1)}(x) = \frac{-\frac{3}{2}f(x) + 2f(x+h) -\frac{1}{2} f(x+2h}{h} + O(h^2) \\
+  f^{(2)}(x) = \frac{2f(x) -5 f(x+h) +4 f(x+2h) - f(x+3h}{h} + O(h^2) \\
+  \end{array}
+\end{equation}
+
+e as diferenças finitas de segunda ordem para trás:
+\begin{equation}
+  \begin{array}{l}
+  f^{(1)}(x) = \frac{\frac{3}{2}f(x) - 2f(x-h) +\frac{1}{2} f(x-2h}{h} + O(h^2) \\
+  f^{(2)}(x) = \frac{2f(x) -5 f(x-h) +4 f(x-2h) - f(x-3h}{h} + O(h^2) \\
+  \end{array}
+\end{equation}
+
+Essa fórmulas serão usadas para o cálculo das derivadas primeiras e segundas nas extremidades.
+O código é implementado em C e o resultado mostrado a seguir.
+
+\FloatBarrier
+\begin{table}
+\parbox{.45\linewidth}
+		{
+		\centering
+		\begin{tabular}{|l|l|}\hline
+			t & $f^{(1)}(t)$ \\ \hline
+			\input{./tables/tab-quest3-1.tex}
+		\end{tabular}
+		\caption{Primeira derivada}
+		\label{tab:quest1-X1}
+		}
+\parbox{.45\linewidth}
+	{
+	\centering
+		\begin{tabular}{|l|l|}\hline
+			t & $f^{(2)}(t)$ \\ \hline
+			\input{./tables/tab-quest3-2.tex}
+		\end{tabular}
+		\caption{Segunda derivada}
+		\label{tab:quest1-X2}	
+	}
+	
+
+\end{table}
+
+\FloatBarrier
+
+\paragraph{}O ajuste escolhido como o melhor na questão 2 tem primeira derivada constante e igual a
+$\alpha_1 = -1.819038$ e segunda derivada constante igual a 0. Quanto a derivada
+primeira podemos dizer apenas que os valores tem mesma ordem de grandeza. Já a segunda
+derivada difere totalmente. As duas aproximações levaram a valores completamente distintos
+para as derivadas. Vemos que a derivada, por ser um processo local, não permite boas aproximações
+quando o conjunto de dados tabelados é pequeno e o espaçamento entre eles é grande.
+
+
+ 

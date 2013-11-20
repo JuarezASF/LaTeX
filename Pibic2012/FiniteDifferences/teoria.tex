@@ -1,0 +1,99 @@
+\documentclass[a4paper,11pt]{article}
+\input{IncludeAll.tex}
+%inclui todosos pacotes utilizados
+
+
+\begin{document}
+
+\input{capa.tex}
+\EmptyPage
+
+\section{Resumo}
+\paragraph{} Apresenta-se o uso de diferenças finitas para resolver a equação de Laplace na forma homogênea e não homogênea(eq. de Poisson) nas condições de Neuman e Dirichlet.
+
+\section{Introdução}
+\paragraph{}Presente em muitas aplicações matemáticas a equação de Laplace é uma equação diferencial parcial da forma:
+\begin{equation}
+	\nabla ^2 \phi = \del{x}{2} \phi + \del{y}{2} \phi = 0
+\end{equation}
+\paragraph{}A equação deve ser válida no interior de um domínio $\Omega$ e sobre as bordas do domínio $\borda$ devem valer as chamadas condições de contorno. Estas últimas assumem em geral três principais formas:
+\begin{itemize}
+	\item condição de \textbf{Dirichlet}: quando especifica-se a função sobre a fronteira. Ex.: $\phi (x,y) = f(x,y)$ sobre $\borda$.
+	\item condição de \textbf{Neuman}: quando especifica-se a derivada normal à fronteira da função. Ex.: $\frac{\partial}{\partial n} \phi$ sobre $\borda$  
+	\item condição de \textbf{Robin}: especifica-se uma combinação linear das função e sua derivada normal sobre $\borda$. Ex.: $\phi + \frac{\partial}{\partial n} \phi =  0$ sobre $\borda$. 
+\end{itemize}
+
+\paragraph{} Apenas para exemplificar esses três tipos de condição de contorno considere o problema de calor em uma barra finita. Considerado o processo unidimensional para simplificação a equação que o governa é: 
+\begin{equation}
+	\del{t}{1} u(x,t) = k \del{x}{2} u(x,t)
+\end{equation}
+\paragraph{}Onde k é a constante de transmissividade térmica. Um exemplo de condição de \textbf{Dirichlet} associada seria mergulhar a extremidade $x = 0$ da barra em gelo e a outra $x = L$ em vapor d'água. Dessa forma estamos especificando a função em suas fronteiras. Junto com uma condição inicial $u(x, 0)$ o problema está bem posto e pode ser modelado como:
+\begin{equation}
+\left\{ 
+	\begin{array}{l}
+	\del{t}{1} u(x,t) = k \del{x}{2} u(x,t) \\
+	u(0, t) = 0 \\
+	 u(L, t) = 100 \\
+	u(x, 0) = f(x)
+	\end{array}
+\right.
+\end{equation}
+\paragraph{} A condição de \textbf{Neuman} para esse mesmo problema seria, por exemplo, adicionar uma bomba de calor como um maçarico em uma das extremidades. Dessa forma essa extremidade teria sua derivada normal, no caso a derivada em relação a x, especificada. 
+
+\paragraph{}A equação do calor foi citada apenas a título de exemplificação mas podemos comparar os dois problema para obtermos observações importantes. A equação de Laplace não envolve derivada temporal e portanto não precisa de uma condição inicial como a equação do calor. A solução depende exclusivamente da equação, das condições de contorno e da geometria do problema.
+
+\paragraph{}Na aplicação que temos em mente a equação de Laplace não-homogênea(\textbf{eq. de Poisson}) aparece no algoritmo de solução numérica para a equação de Navier-Stokes. Mais especificamente, para o cálculo da pressão do sistema. O problema será resolvido em um domínio retangular sob condições de contorno de \textbf{Neuman} em todos os lados. Nesse caso, com 4 condições de \textbf{Neuman}, o problema não tem solução única mas em nossa aplicação isso não será um problema, visto que a pressão aparece na equação com sua derivada espacial.
+
+\section{Diferenças Finitas}
+
+\paragraph{}Consiste em uma discretização de um operador diferencial. A construção segue da fórmula de Taylor e permite avaliar as derivadas de uma função como uma combinação linear dos valores da função em pontos próximos e no próprio ponto considerado. O método pode ser entendido como uma aproximação numérica para as derivadas. Como se trata de uma aproximação podemos avaliar o erro da aproximação em função de quão próximos estão os pontos considerados. As diversas fórmulas utilizadas no método possuem cada uma um erro associado $O(h)$ que medem o quão rápido nossa aproximação se aproxima do valor exato a medida que nos aproximamos de h = 0. Um algoritmo que tenha $O(h^2)$ é dito de segunda ordem. Consideramos aqui as aproximações por diferenças finitas de segunda ordem para as derivadas primeira e segundas.
+
+\paragraph{}Seja $u(x,y):\Re^2 \longrightarrow \Re$. 
+
+
+\section{Resultados}
+\paragraph{}Seguem alguns resultados obtidos.
+
+\begin{Gráfico}
+	\input{./graph/graph-01.tex}
+\end{Gráfico}
+
+\begin{Gráfico}
+	\input{./graph/graph-02:convergence-grosso.tex}
+\end{Gráfico}
+
+\begin{Gráfico}
+	\input{./graph/graph-03:convergence-fino.tex}
+\end{Gráfico}
+
+\begin{Gráfico}
+	\input{./graph/graph-04:convergence-fino-fino.tex}
+\end{Gráfico}
+
+\begin{Gráfico}
+	\input{./graph/graph-05:convergence-fino-fino-fino.tex}
+\end{Gráfico}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       REFERÊNCIAS     @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\begin{thebibliography}{9}    
+	 \bibitem{fis4-serway}
+  		JEWETT, J.W.; SERWAY, R.A.
+  		\emph{Física para cientistas e engenheiros} volume 4 : Luz, Óptica e Física Moderna.
+ 		 8ª ed.
+ 		 São Paulo : Cengage Learning, 2012.
+ 		 
+ 	 \bibitem{fis4-halliday}
+  		HALLIDAY, D.; RESNICK, R. ; WALKER.
+  		\emph{Fundamentos de Física} volume 4
+ 		 8ª ed.
+ 		 Rio de Janeiro : LTC, 2009.
+ 	
+ 	\bibitem{wiki:inverso_do_quadrado}
+ 			Wikipedia. Inverse-square law . Disponível em: http://en.wikipedia.org/wiki/Inverse-square$\_$law. Acesso em: 29 de maio de 2013
+
+\end{thebibliography}
+
+
+
+\end{document}

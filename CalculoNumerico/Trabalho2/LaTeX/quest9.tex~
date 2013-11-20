@@ -1,0 +1,23 @@
+\section{Questão 9}
+
+\paragraph{}Nas seções precedentes o cálculo das parametrizações de cada coordenada
+foram independentes umas das outras. Dessa forma acrescentar a terceira coordenada
+é trivial, basta repetir o mesmo processo. O resultado é apresentado nos gráficos a 
+seguir. A curva é vista de dois ângulos para que se possa melhor perceber o ajuste 
+tridimensional.
+
+\FloatBarrier
+\begin{figure}[!htp]
+	\begin{subfigure}[!htp]{0.5\textwidth}
+	\input{./graph/quest9-1.tex}
+	\caption{Interpolação com splines 3D }
+	\label{fig:quest9-1}
+	\end{subfigure}
+	
+	\begin{subfigure}[!htp]{0.5\textwidth}	
+	\input{./graph/quest9-2.tex}
+	\caption{Interpolação com splines 3D - outro ângulo }
+	\label{fig:quest9-2}
+	\end{subfigure}
+	\caption{Gráficos da questão 9}
+\end{figure}

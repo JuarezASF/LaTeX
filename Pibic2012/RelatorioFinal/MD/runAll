@@ -1,0 +1,9 @@
+  #!/bin/bash
+  
+  cd SearchingAlgorithmComparsion/
+
+	gnuplot PlotSAC.gnu
+	
+  cd ..
+  
+	PdfLatexCompile RF-MD.tex

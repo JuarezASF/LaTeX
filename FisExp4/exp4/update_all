@@ -1,0 +1,28 @@
+#! /bin/bash
+
+cd images/
+
+	gnuplot plot-img1.gnu 
+
+
+cd data/
+
+	gnuplot plot.gnu >> output.txt
+	rm output.txt
+
+cd ..
+
+cd tables/
+
+	 ./table-maker2 ./../data/proced-1.dat proced-1.tex 2 0 5
+
+	 ./table-maker2 ./../data/proced-2.dat proced-2.tex 3 0 0 0
+
+
+cd ..
+
+	pdflatex -shell-escape exp4.tex 
+
+
+
+	#gnome-open exp3.pdf 

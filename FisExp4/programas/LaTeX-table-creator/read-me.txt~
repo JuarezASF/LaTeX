@@ -1,0 +1,23 @@
+O código lê um arquivo de dados e imprime uma tabela em latex!
+
+IMPORTANTE: 
+O programa deve ser rodado como:
+	- ./table-maker2 ArquivoFonte.dat ArquivoDestino.tex ncolunas precisao1 precisa2 ....
+	- n colunas é o número de colunas no arquivo fonte
+
+
+inclua em latex com: 
+\begin{table}
+	\begin{tabular}{c...c}
+		\input{ArquivoDestino.tex}
+	\end{tabular}
+	\caption{legenda}
+	\label{referência}
+\end{table}
+
+
+aqui compilei com o comando:
+ gcc table-latex2.c -o table-maker2
+
+
+*Mais uma utilidade pública by Juara

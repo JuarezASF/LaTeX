@@ -1,0 +1,282 @@
+\documentclass[a4paper,11pt]{article}
+\input{IncludeAll.tex}
+%inclui todosos pacotes utilizados
+\begin{document}
+
+\MakeMyTitlePage
+{Física Experimental 4}
+{Experimento V}
+{Espectroscopia Ótica}
+{%autores
+		\begin{tabular}{llr} \
+		& & \\[0.05cm]		
+		Professora & Nadia Maria de Liz Koche & \\
+		
+		Alunos:& & \\
+		& Juarez A.S.F 					& 11/0032829\\
+		& Sérgio Fernandes da Silva Reis & 11/0140257\\
+		& Jedhai Pimentel				& 09/0007883\\	[0.05cm]	
+		\end{tabular}
+}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      OBJETIVOS      @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Objetivos}
+ \paragraph{}Estudar difração de luz monocromática em fendas simples, duplas múltipla e rede de difração. Determinar os comprimentos de ondas presentes no espetro de lâmpada de Mercúrio.
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@        MATERIAIS         @@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Materiais}
+\paragraph{} Para o experimento utiliza-se:
+\begin{itemize}
+	\item[•]Fonte de Laser He-Ne
+	\item[•]Lâmpada de vapor de Hg
+	\item[•]ABERTURA CONTROLÁVEL - QUAL O NOME DISSO MESMO?
+	\item[•]Slide de fenda dupla de largura 0.1mm e espaçamentos 0.175mm
+	\item[•]Slide de fenda dupla de largura 0.1mm e espaçamentos 0.150mm
+	\item[•]Slide de fenda dupla de largura 0.1mm e espaçamentos 0.300mm
+	\item[•]Slide de múltiplas fendas de densidade 80 fendas/cm
+  \item[•]Slide de múltiplas fendas de densidade 100 fendas/cm
+  \item[•]Slide de múltiplas fendas de densidade 300 fendas/cm	
+	\item[•]Rede de difração 600 fendas/mm
+	\item[•]Suporte para slides
+	\item[•]Anteparo fixo com papel milimetrado
+	\item[•]Banco ótico,
+	\item[•]Espectroscópio,
+	\item[•]Régua milimetrada.
+\end{itemize}  
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@        INTRODUCAO       @@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\newpage
+\section{Introdução}
+\paragraph{}Difração é o efeito que ocorre quando a luz ao passar por
+um obstáculo tem a sua trajetória desviada. Pontos que não seriam
+iluminados caso a luz passasse em linha reta pelo obstáculo passam
+a ser devido a esse efeito. O fenômeno pode ser explicado pelo princípio
+de Huygens que diz que cada ponto de uma frente de onda funciona como uma
+fonte pontual de mini-ondas. A figura \ref{fig:intro-huygens} ilustra como 
+o princípio é usado para achar a nova frente de onda. 
+
+\paragraph{}Além do espalhamento outro efeito interessante ocorre. 
+Ao colocarmos uma tela após a fenda não só observamos que a área
+iluminada é maior que a fenda mas também o padrão como a intensidade
+de luz se distribui não é constante nem é um máximo central que decai 
+com a distância ao centro como poderia se esperar. A figura \ref{fig:single-slit-pattern}
+ilustra o padrão observado, nela vemos a tela em branco e os picos
+de luz em escuro. Notamos um máximo central ladeado de máximos
+secundários separados por regiões de intensidade nula. A distribuição 
+lembra o padrão de gerado por interferência de duas fendas e não
+é coincidência, a origem dos efeitos é a mesma: a interferência.
+Voltando ao princípio de Huygens cada ponto da fenda funciona como
+uma fonte pontual e a luz de cada um desses pontos deve interferir
+com a luz dos outros pontos da fenda na tela. Onde essa interferência for
+construtiva vemos os máximos, quando destrutiva vemos os 
+mínimos.
+
+\paragraph{} Análise detalhada de como essa interferência ocorre
+num caso mais geral é complicada mas se a tela de captura for tomada
+muito distante algumas simplificações são válidas e observamos o padrão
+de difração de Fraunhofer. Considerando as grandezas indicadas na figura
+\ref{fig:single-slit-schematic} pode-se mostrar que a posição angular dos mínimos $\theta _{dark}$ 
+é tal que:
+\begin{equation}
+	\begin{array}{ll}
+	a \sin \theta_{dark} = \mbox{m}\lambda & \mbox{, m =} \pm 1, \pm 2, \pm 3, \ldots	
+	\end{array}
+	\label{eq:single-slit}
+\end{equation}
+ 
+\paragraph{}Pode-se ainda mostrar que para a difração em fenda única nos critérios
+de Fraunhofer a distribuição de intensidade segue a fórmula:
+\begin{equation}
+	I(\theta) =
+	 I_{max} \left[
+	 			\frac{
+	 				sin\left(
+	 					\frac{\pi a sin \theta}{\lambda}
+	 					\right)
+	 				}
+					{
+					\frac{\pi a sin \theta}{\lambda}
+					}
+				\right]^2
+	\label{eq:single-slit-intensity-pattern}
+\end{equation}
+\paragraph{} O estudo da difração em fenda dupla deve levar com conta a interferência
+da luz difratada em uma fenda com a outra e a interferência entre os pontos da
+própria fenda segundo o princípio de Huygens. A figura \ref{fig:double-slit-schematic}
+mostra as grandezas importantes para o processo.
+A interferência entre as duas fendas separadas por d nos dá a posição dos máximos em:
+\begin{equation}
+	\begin{array}{ll}
+		d sin \theta _{max} = m \lambda & \mbox{, m =} 0, \pm 1, \pm 2, \ldots  
+	\end{array}
+	\label{eq:maximos-fenda-dupla-sem-difracao}
+\end{equation}
+
+\paragraph{}Vale a pena notar que esse é o resultado dos máximos previstos
+levando em consideração apenas a interferência de uma fenda com a outra. 
+O estudo do padrão de intensidade em fendas duplas levando em consideração
+também a interferência entre os pontos de uma mesma fenda nos dá:
+\begin{equation}
+	I(\theta) =
+	 I_{max} 
+	    \underbrace
+	      {
+	      \left[
+	 			\frac{
+	 				sin\left(
+	 					\frac{\pi a sin \theta}{\lambda}
+	 					\right)
+	 				}
+					{
+					\frac{\pi a sin \theta}{\lambda}
+					}
+				\right]^2
+				}_\textrm{fator de difração}
+				\cdot
+				\underbrace
+				{
+				cos^2 
+				  \left(
+				      \frac
+				        {\pi d sin \theta}
+				        {\lambda}
+				  \right)
+				}_\textrm{fator de interferência entre as fendas}
+	\label{eq:doble-slit-intensity-pattern}
+\end{equation}
+
+\paragraph{}Note que o efeito final é uma composição do efeito de interferência
+de duas fendas com a difração em fenda única, sendo a segunda um envelope para a primeira.
+A figura \ref{fig:double-slit-patter} ilustra a curva de interferência. Veja que existem máximos
+previsto pela fórmula \ref{eq:maximos-fenda-dupla-sem-difracao} que são achatados pelo envelope da 
+difração e aparecem como mínimos.
+
+\paragraph{} Temos ainda a interferência em redes de difração. Quando tivermos múltiplas fendas cada
+uma irá interferir em todas as outras produzindo um padrão de difração que é caracterizado pela densidade
+de fendas N. O padrão observado é mostrado na figura \ref{fig:mult-slit-pattern}.Como pode ser
+visto na figura temos estreitos e poucos máximos principais e numorosos máximos secundários. Os
+máximos principais podem ser achados pela fórmula:
+\begin{equation}
+    \begin{array}{ll}
+    d sin \theta = m \lambda & \mbox{, m = } 0, \pm 1, \pm 2, \ldots
+   \end{array}
+\end{equation}
+
+\paragraph{}Onde d é a distância entre duas fendas adjacente e pode ser determinado por $d = \frac{1}{N}$.  Vemos que os ângulos nos quais os máximos são observados dependem do 
+comprimento de onda $\lambda$ da luz incidente. Caso um feixe incidente contenha 
+vários comprimentos de onda, estes serão divididas ao passarem por uma rede de difração.
+Esse comportamento é utilizado para determinar o material atômico que produziu um dado feixe
+de luz. Sabe-se que as frequência emitidas por um átomo estão relacionadas com os saltos quâticos
+sofrido pelos seus elétrons. Pelo modelo atômico de Bohr esses saltos estão restritos a determinados valores
+de energia e são característicos de cada átomo. Uma análise do espectro da luz emitida por um dado
+material pode então nos dizer que material é este. É assim que podemos saber, por exemplo, o material
+constitutivo das estrelas ou ainda de um gás a baixa pressão preso em um recipiente sobre o qual se aplica 
+tensão elétrica.
+\FloatBarrier
+\begin{figure}[H]
+
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\includegraphics[width = 6 cm]{./images/Huygens-Principle.png}
+		\caption{Princípio de Huygens para explicar a difração}
+		\label{fig:intro-huygens}
+	\end{subfigure}
+\hspace{1 cm}	
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\includegraphics[width = 8 cm]{./images/single-slit-pattern.jpg}
+		\caption{Padrão experimental de difração em fenda simples}
+		\label{fig:single-slit-pattern}
+	\end{subfigure}
+%
+\vspace{1 cm}
+%
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\includegraphics[width = 6 cm]{./images/single-slit-schematic.jpg}
+		\caption{grandezas importantes para a difração em fenda simples}
+		\label{fig:single-slit-schematic}
+	\end{subfigure}
+\hspace{1 cm}	
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\includegraphics[width = 6 cm]{./images/MIT-double-slit-schematic.png}
+		\caption{grandezas importantes para a difração em fenda dupla}
+		\label{fig:double-slit-schematic}
+	\end{subfigure}
+%
+\vspace{1 cm}
+%
+\hspace{-1 cm}	
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\includegraphics[width = 8 cm]{./images/MIT-figure.jpg}
+		\caption{Padrão de intensidade em fenda dupla}
+		\label{fig:double-slit-patter}
+	\end{subfigure}
+\hspace{2 cm}	
+	\begin{subfigure}[!htp]{0.5\textwidth}
+		\includegraphics[width = 6 cm]{./images/MIT-mult-slit.jpg}
+		\caption{Padrão de intensidade em múltiplas fendas (N = 10)}
+		\label{fig:mult-slit-pattern}
+	\end{subfigure}
+
+	\caption{Difração em diferentes tipos de fenda}
+
+\end{figure}
+
+\FloatBarrier
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@       PROCEDIMENTOS        @@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Procedimentos}
+
+\paragraph{} Monta-se o banco ótico como na figura \ref{fig:montagem}
+primeiramente utilizando o diafragma na montagem. 
+Liga-se o laser de He-Ne e ajusta-se a posição do suporte e da tela para
+que se obtenha um padrão nítido de difração. Anota-se a dist
+
+\begin{figure}
+	\includegraphics[width = 8 cm]{./images/montagem1.jpg}
+	\caption{Montagem  do procedimento 1}
+	\label{fig:montagem}
+\end{figure}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@       DADOS      @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Dados}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       Análise         @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\newpage
+\section{Análise de Dados}
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       CONCLUSAO       @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Conclusão}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       REFERÊNCIAS     @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\begin{thebibliography}{9}    
+	 \bibitem{fis4-serway}
+  		JEWETT, J.W.; SERWAY, R.A.
+  		\emph{Física para cientistas e engenheiros} volume 4 : Luz, Óptica e Física Moderna.
+ 		 8ª ed.
+ 		 São Paulo : Cengage Learning, 2012.
+ 		 
+	\bibitem{wiki: Huygens}
+ 		Autor desconhecido. Huygens–Fresnel principle. Disponível em: http://en.wikipedia.org/wiki/Huygens$\%E2\%80\%93Fresnel\_principle$. Acesso em: 3 de Julho de 2013
+  	
+  	\bibitem{figura usada}Bill Casselman at UBC: The University of British Columbia. 
+  	SINGLE SLIT DIFFRACTION PATTERN OF LIGHT	 
+  	Disponível em: http://www.math.ubc.ca/~cass/courses/m309-03a/m309-projects/krzak/.
+  	Acesso em 4 de Julho de 2013.
+  		
+  	\bibitem{MIT: cap14}
+  	MIT, notas de aula. Electromagnetism, chapter 14: Interference and Diffraction. Disponível em: 
+  	http://web.mit.edu/viz/EM/visualizations/coursenotes/modules/guide14.pdf. Acesso em 4 de Julho de 2013.
+
+  		
+\end{thebibliography}
+\end{document}

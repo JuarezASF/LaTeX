@@ -1,0 +1,20 @@
+\section*{Questão 7}
+\paragraph{}O algoritmo descrito anteriormente é implementado em C. A função 
+SplitCalculate2D e suas auxiliares exemplificam a implementação.
+A resolução do sistema foi feita de 3 formas diferentes: invertendo matrizes,
+usando o método de Jacobi e pelo método de Gauss-Seidel. Para o caso em estudo
+os três métodos convergiram para a solução e em tempo de execução quase que instantâneo.
+Para o pequeno problema sob estudo e para as máquinas atuais não houve diferença
+entre a utilização de um método ou de outro.
+
+\paragraph{}O resultado é apresentado no gráfico \ref{fig:quest7}. Notamos que, 
+como esperado, o ajuste coincide com os pontos tabelados e além disso a curva 
+é suave e não apresenta inclinações muito elevadas com as obtidas no método
+de interpolação polinomial. 
+\FloatBarrier
+\begin{figure}[!htp]
+	\input{./graph/quest7.tex}
+	\caption{Interpolação com splines}
+	\label{fig:quest7}
+\end{figure}
+\FloatBarrier

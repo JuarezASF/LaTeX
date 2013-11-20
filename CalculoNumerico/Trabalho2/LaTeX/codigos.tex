@@ -1,0 +1,26 @@
+\section{Códigos}
+
+\paragraph{}Os códigos desenvolvidos estão em anexo. Todos os algoritmos foram
+implementados em C usando-se apenas as bibliotecas padrões da linguagem. 
+Cada questão que exigiu um código tem uma arquivo fonte chamado questX.c que pode
+ser compilado com "gcc -Wall questX.c -o questX -lm". Existem algumas funções comuns
+a todos esses arquivos que estão definidas em bibliotecas, são elas:
+\begin{itemize}
+  \item matrix-class.h : define a estrutura de matriz e operações
+  básicas como criação, deleção, adição e transposição.
+  \item usual-math.h : define algumas funções básicas como módulo, máx
+  \item LU-fatoration.h: implementa a fatoração LU com permutação. Amplamente
+  utilizada para inverter matrizes e resolver sistemas
+  \item simply-gaussian-elimination.h : implementa eliminação gaussiana com permutação.
+  \item inversa.h : calcula a matriz inversa como sugerido na lista 3.
+  \item determinante.h: calcula o determinante como sugerido na lista 3  
+  \item Jacobi-method.h: soluciona sistema por método iterativo de Jacobi
+  \item Gauss-Seidel-method.h : soluciona sistema por método iterativo de Gauss-Seidel
+  \item AlgebricSystem.h: implementa método vetorial de Newton para 2 dimensões
+  \item DataFitting.h : funções de interpolação polinomial 
+\end{itemize}
+
+\paragraph{}Essas bibliotecas são comuns a todas as questões e foram desenvolvidas
+ao longo do curso. Como algumas questões usam ideias parecidas pode haver repetição
+de algumas rotinas em alguns .c. Isso ocorre pois cada .c é independente e pode
+ser compilado separadamente.

@@ -1,0 +1,48 @@
+\section*{Questão 8}
+
+\paragraph{} Primeiramente calculamos o protudo vetorial dado:
+
+\begin{equation}
+    (t'(s), y'(s)) \times  (t''(s), y''(s)) = (0,0,t'(s)y''(s) - y'(s)t''(s))
+\end{equation}
+
+portanto:
+
+\begin{equation}
+     \kappa(s) =  \frac{||(t'(s), y'(s)) \times  (t''(s), y''(s))||}{||(t'(s), y'(s))||^{3}} = 
+     \frac{|t'(s)y''(s) - y'(s)t''(s)|}{(t'(s)^2 + y'(s)^2)^{\frac{3}{2}}}
+    \label{eq:quest8}
+\end{equation}
+
+além disso as derivadas são conhecidas uma vez que já temos os coeficientes que determinam
+y(s) e t(s). Basta então resolver os coeficientes e calcular a função acima com s variando de 0 a 1
+em cada subintervalo. O resultado junto com o ajuste por splines e os dados tabelados são mostrados n
+a figura \ref{fig:quest8}.
+
+\paragraph{}O gráfico nos mostra, assim como a fórmula \ref{eq:quest8} já previa, que nos pontos
+onde a reta tangente ao ajuste é horizontal, ou seja, quando a primeira derivada se anula, a curvatura
+é infinita(limitamos os eixos para poder visualizar melhor o resultado, sem isso os elevados valores
+assumidos nas singularidades não permitiriam entendimento dos resultados). Além disso, e mais interessante,
+a curvatura é baixíssima na maioria dos pontos do domínio. A baixa curvatura significa que a curva é extremamente
+suave. Digamos que quiséssemos criar uma animação e tivéssemos pouco poder computacional, de modo que um número
+reduzido de potos a serem considerados seria vantajoso para a simulação. Nesse caso a técnica de ajuste por splines
+nos permitiria integrar as posições da um número reduzido de pontos e completar a curva entre eles de forma suave.
+Dessa forma teríamos uma boa representação da superfície suave de um corpo e a pouco custo computacional.
+
+\paragraph{}É interessante notar que a curvatura nos extremos se aproxima de 0, o que decorre do fato de,
+em nosso algoritmo termos imposto a condição de contorno natural Y''(0) = Y''(1) = 0.
+
+\paragraph{}Na análise aqui apresentada o cálculo da curva de torção foi feita conhecendo-se 
+os coeficientes e avaliando a função da torção em cada ponto do gráfico(a rigor, em 100 pontos entre cada
+ponto tabelado). Poderíamos também calcular a curvatura apenas nos pontos tabelados e completar os intervalos
+com a mesma técnica de spline utilizada. Teríamos assim uma aproximação para a torção que pode não ser a ideal
+mas seria rapidamente calculada, baseada em um número reduzido de pontos(100 vezes menos que no primeiro 
+método).
+
+\FloatBarrier
+\begin{figure}[!htp]
+	\input{./graph/quest8.tex}
+	\caption{Curvatura da interpolação com splines}
+	\label{fig:quest8}
+\end{figure}
+\FloatBarrier

@@ -1,0 +1,23 @@
+Nas simulações otemos conservação da energia
+em colisões totalmente elásticas
+mas não conseguiu-se obter
+apena pequenos overlaps máximos e colisões com
+amortecimento. Em colisões envolvendo altas
+velocidades overlaps da ordem de 20% são sempre
+observados.
+Quanto aos overlaps, verificou-se que colisões
+com altas velocidades precisam de pequenos incrementos
+de tempo e altas constantes de restituição elástica
+para manter os overlaps pequenos.
+Incrementos de tempo muito pequenos tornam a simulação
+muito cara e altas constantes de restituição combinadas
+com passos de tempo moderados geram colisões com ganhos
+de energia.
+A eficiência da
+tabela de dispersão é comprovada para simulações 
+com muitas partículas. Simulações com número
+crescente de partículas mostram que, ao utilizar-se
+uma busca trivial de colisões, o tempo de processamento
+total cresce com o quadrado do número de partículas, enquanto
+uma busca utilizando tabelas de dispersão faz o tempo
+total crescer linearmente. 

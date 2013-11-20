@@ -1,0 +1,65 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} 
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}			%para imagens
+\usepackage{epstopdf} 			%resolve problemas eps-pdf
+\usepackage{fancyhdr}			% para o cabeçalho bonito
+\usepackage{caption}				%para legendas
+\usepackage{subcaption}			% e sublegendas
+\usepackage{placeins} 			%controlar o lugar dos floats
+
+
+\usetheme{Warsaw}
+\title[Pibic]{Simulação Numérica de Fluidos e Partículas}
+\author{Juarez A.S.F.}
+\institute{UnB}
+\date{24 de Maio, 2013}
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+\section{O problema}
+\begin{frame}{}
+	\frametitle{O Problema}
+    \tableofcontents[currentsection,currentsubsection]
+ 
+O que acontece quando passamos fluído por um conjunto de grãos?
+\begin{itemize}
+ \item<2-> O fluido contorna os grãos individualmente.
+ \item<3-> Os grãos são empurrados pelo fluído e se movem.
+ \item<4-> Os grãos se movendo colidem entre si.
+ \item<5-> E se tivermos muitas partículas?
+ \item<6-> O efeito aleatório dessas iterações produz algo interessante.
+\end{itemize}
+\end{frame}
+\begin{frame}{}
+	\frametitle{O Problema}
+    \tableofcontents[currentsection,currentsubsection]
+ 
+O que acontece quando passamos fluído por um conjunto de grãos?
+\begin{itemize}
+ \item<2-> O comportamento da mistura dependerá da pressão exercida pelo fluído.
+ \item<3-> Em certas condições a mistura passa a se comportar como um outro fluído como um todo
+ \item<4-> inclusive respeitando as leis de empuxo de Arquimedes
+ \item<5-> Se aumentarmos um pouco mais a velocidade notamos algo estranho
+ \item<6-> Surgem ondas de partículas se propagando
+\end{itemize}
+\end{frame}
+\begin{frame}
+	\frametitle{O Problema}
+    \tableofcontents[currentsection,currentsubsection]
+	\begin{block}{Objetivo}
+		Nosso objetivo é desenvolver um código que simule a interação flúido-partícula para estudarmos leitos fluidizados
+	\end{block}
+\end{frame}
+
+\section{A Física}
+\begin{frame}{}
+	\frametitle{A Física}
+    \tableofcontents[currentsection,currentsubsection]
+Temos que simular a fisica de tr
+\end{frame}
+
+\end{document}

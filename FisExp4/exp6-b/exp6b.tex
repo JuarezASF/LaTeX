@@ -1,0 +1,284 @@
+\documentclass[a4paper,11pt]{article}
+\input{IncludeAll.tex}
+%inclui todosos pacotes utilizados
+
+\newcommand{\MyBox}[1]
+{
+	\begin{tabular}{|l|}\hline
+	  #1 \\ \hline	    
+	\end{tabular} 	
+}
+
+\begin{document}
+
+
+
+\MakeMyTitlePage
+{Física Experimental 4}
+{Experimento VI-b}
+{Medida da velocidade da luz}
+{%autores
+		\begin{tabular}{llr} \
+		& & \\[0.05cm]		
+		Professora & Nadia Maria de Liz Koche & \\
+		
+		Alunos:& & \\
+		& Juarez A.S.F 					& 11/0032829\\
+		& Sérgio Fernandes da Silva Reis & 11/0140257\\
+		& Jedhai Pimentel				& 09/0007883\\
+	[0.05cm]	
+		\end{tabular}
+}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      OBJETIVOS      @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Objetivos}
+\paragraph{}Medir a velocidade da luz. 
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@        MATERIAIS         @@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Materiais}
+\paragraph{} Para o experimento utilizou-se:
+\begin{itemize}
+  \item fonte de laser 
+  \item 2 lentes convergentes: uma de foco 50mm e outra de
+    200mm 
+  \item banco ótico
+  \item espelho rotativo com controle de velocidade
+  \item microscópio acoplado com micrômetro
+  \item divisor de feixe(Beam Splitter)
+  \item espelho esférico
+\end{itemize}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@        INTRODUCAO       @@@@@@@@@@@@@@@@@@@@ %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\newpage
+\section{Introdução}
+
+\paragraph{}A velocidade da luz c é uma das propriedades mais
+importante da natureza. Segundo a teoria da relatividade
+ela impõe restrições para a velocidade que um corpo pode
+atingir e, além disso, contra todas as intuições e princípios
+da física clássica, deve ser a mesma independente do
+referencial sob o qual é medida. Isso quer dizer, por
+exemplo, que independente da velocidade que um observador
+possua ele sempre irá ver a luz de sua lanterna de afastar
+de si com a mesma velocidade. Esse fato contaria uma noção
+comum que de que um jogador pode sempre lançar uma bola mais
+rápida se ele realizar o mesmo lançamento enquanto corre,
+acrescentando assim sua velocidade a velocidade com que seus
+braços conseguem mandar a bola. Esse princípio de constância
+da velocidade da luz tem várias consequências, dentre elas a
+contração do espaço e do tempo. Felizmente tais previsões só
+alteram significativamente os resultados clássicos em
+velocidades da ordem de c e , como veremos, essas
+velocidades não ocorrem no dia a dia.
+
+\paragraph{} Os sentidos humanos não são capazes de perceber
+a velocidade da luz, de modo que a luz parece se propagar
+instantaneamente. Experimentos que tentam medir a velocidade
+da luz do modo como normalmente medimos velocidade, ou seja,
+usando $v = \frac{\triangle s}{\triangle t}$, são difíceis de
+serem realizados pois para as distâncias disponíveis na
+Terra o incremento de tempo dificilmente pode ser medido.
+Tome por exemplo o diâmetro da Terra aproximadamente $12.74
+\cdot 10^6$m, para a velocidade da luz aceita como correta a
+luz demoraria apenas 0.042 segundos para percorrê-lo. Fica
+claro que tal medida se torna inviável. Um modo de medir a
+velocidade seria usando medidas astronômicas ou, como
+faremos nesse experimento, usando resultados simples da
+ótica geométrica.
+
+\paragraph{}Considere um sistema ótico de dois espelhos e
+uma fonte pontual de luz. Um dos espelhos é fixo e o outro
+tem sua posição fixada mas é livre para girar em torno de
+seu eixo. O sistema é posto de forma que a luz incida no
+espelho rotativo, seja refletida na direção do espelho
+fixo, reflita no espelho fixo e retorne ao rotativo. É de se
+esperar que se o espelho rotativo for posto para rodar que o
+raio que retorna do espelho fixo incida do rotativo com
+ângulo de incidência diferente daquele com que o raio que
+veio da fonte o incidiu inicialmente. A diferença nesse
+ângulo de incidência está relacionada com o tempo que a luz
+demorou para ir ao espelho fixo e retornar ao rotativo.
+Conhecendo-se a velocidade com que o espelho gira e as
+distâncias envolvidas pode-se determinar a velocidade da
+luz. Medir esses ângulos de incidência é impraticável, mas o
+exemplo ilustra como um sistema ótico pode ser usado para
+medir a velocidade.
+
+\paragraph{} Considere a figura \ref{fig:diagrama}. Nela
+temos um divisor de feixe e um microscópio que permite a
+visualização de um ponto imagem cujo ponto objeto é a imagem
+formada pelo espelho rotativo. A diferença nos ângulos
+discutidas no parágrafo anterior irá gerar variações nas
+posições em que o ponto imagem aparece no microscópio. É
+essa a medida que será usada no cálculo da velocidade da
+luz. Seja A a distância entre a fonte e a lente L2 da
+figura, B a distância entre L2 e o espelho rotativo, D a
+distância do espelho rotativo a imagem formada nele,
+$\omega$ a velocidade angular, em rad/sec, de rotação do
+espelho e $\triangle d'$ o deslocamento observado no
+microscópio. Pode ser mostrado que essas grandezas satisfazem a
+relação:
+
+\begin{equation}
+  \triangle s' = \frac{4AD^2}{c(D+B)}w
+  \label{eq:LeEquation}
+\end{equation}
+
+\paragraph{}A velocidade da luz pode ser então medida
+através do coeficiente angular da reta acima. 
+\FloatBarrier
+\begin{figure}[!htp]
+  \centering 
+  \includegraphics[scale=0.7]{./images/montagem.jpg}
+  \caption{Diagrama do experimento}
+  \label{fig:diagrama}
+\end{figure}
+\FloatBarrier
+
+\newpage
+\section{Procedimentos}
+\paragraph{} A montagem é ilustrada na figura
+\ref{fig:diagrama}. Inicialmente ajusta-se os espelhos de forma
+a obter uma imagem nítida da fonte no microscópio.
+Durante esse ajuste o espelho rotativo deve estar girando para
+que o microscópio não receba a luz diretamente da fonte. Escolhe-se um 
+sentido para começar as medidas e coloca-se a intensidade da rotação
+em máximo. Para colocar em máximo deve-se topar o potenciômetro e apertar o 
+botão vermelho do aparelho. O botão vermelho não pode ficar apertado por mais de um minuto
+para não danificar o equipamento. Olhando no microscópio ajusta-se o micrômetro 
+para que a divisão
+horizontal coincida com a altura do ponto vermelho observado. Anota-se
+a medida do micrômetro e a frequência de giro do espelho
+rotativo. O procedimento é refeito para vários valores de 
+frequência com valores decrescentes até que se atinja o mínimo. Agora inverte-se 
+o sentido da rotação e as medidas são tomadas para valores crescentes de frequência. 
+Convenciona-se um dos sentidos com positivo e o outro como negativo para 
+futura análise dos dados. Devem ser medidas também as distâncias entre
+as lentes L1 e L2, a distância focal de cada uma, a distância entre a lente L2
+e o espelho rotativo e e a distância entre o espelho
+rotativo e o espelho fixo.
+
+\section{Dados}
+
+\paragraph{} Os dados da posição s' em função da frequência de rotação
+são mostrados na tabela \ref{tab:dataA}. Nas medidas adotamos o sentido
+anti-horário como positivo.As distâncias entre os elementos e as distâncias focais são:
+
+\begin{equation}
+	\begin{array}{ll}
+	A = 21.5 cm \pm  0.1 cm & \mbox{ distância entre as lentes menos a distância focal de L1} \\
+	B = 40.7 cm \pm  0.1 cm & \mbox{ distância entre L2 e espelho rotativo} \\
+	D = 992.00 cm \pm  0.05 cm & \mbox{ distância entre os espelhos}  \\
+	F1 = +50 mm & \mbox{ distância focal de L1}  \\
+	F2 = +200 mm & \mbox{ distância focal de L2}  \\	
+	\end{array}
+\end{equation}
+
+
+\FloatBarrier
+\begin{table}
+\centering
+	\begin{tabular}{|l|l|}\hline
+	f(Hz)$\pm 1$Hz & S'(cm) $\pm 0.0005$cm \\ \hline
+	\input{./tables/tabA.tex}
+	\end{tabular}
+\caption{posição em função da frequência}
+\label{tab:dataA}
+\end{table}
+\FloatBarrier
+
+\section{Análise de Dados}
+
+\paragraph{} Os gráficos da tabela \ref{tab:dataA} são plotados na figura 
+\ref{graph:A}. Não plotamos os dados puros da tabela e sim uma adaptação deles
+para melhor visualização. Como aqui o que importa é o $\triangle s'$ subtraímos
+de todos os dados o valor de s' na frequência mais negativa e multiplicamos por menos um para invertermos o sinal. Dessa forma temos uma reta crescente. Além disso, as frequência 
+em Hz são multiplicadas por $2\pi$ para termoS a frequência angular em radianos por
+segundo.
+
+\paragraph{} A regressão linear obtida é:
+
+\begin{equation}
+	\input{./equation/EqFitA.tex}
+\end{equation}
+
+O termo linear na fórmula simplesmente ajusta os dados ao nosso referencial escolhido.
+O importante dessa regressão é o coeficiente angular $\alpha = (2.72 \pm 0.04)10^{-6} cm \cdot s$ que podemos comparar com a fórmula \ref{eq:LeEquation}. Usando as medidas A, B e D podemos determinar a velocidade da luz como:
+
+\begin{equation}
+	c = \frac{4AD^2 }{(D+B)\alpha} = \frac{4\cdot26.5cm\cdot(992.00 cm)^2}{(1032.7 cm)
+	\cdot (0.00000272 cm \cdot s)} = 3.01285836 \cdot 10^{10} \frac{cm}{s}
+\end{equation}
+
+vamos aproximar o erro. Para facilitar as contas vamos considerar $(E = D + B = 1032.7 \pm 0.2)cm$ uma variável independente. Nesse caso o erro pode ser aproximado como:
+
+\begin{equation}
+	|\triangle c| \leq 4\left[ |\frac{D^2}{E \alpha}\triangle A|
+	+|\frac{A2D}{E \alpha}\triangle D| +
+	|\frac{AD^2 (-1)}{E^2 \alpha}\triangle E |+
+	|\frac{AD^2 (-1)}{E \alpha^2}\triangle \alpha |\right] 
+\end{equation}
+
+\begin{equation}
+	|\triangle c| \leq (1.4 \cdot 10^{8}
+	+ 3.0 \cdot 10^{6}
+	+ 7.2 \cdot 10^{6}
+	+ 1.4 \cdot 10^{8}) \frac{cm}{s}
+\end{equation}
+
+e o erro total é:
+\begin{equation}
+	|\triangle c| = (3 \cdot 10^{8})cm/S
+\end{equation}
+
+Portanto nossa medida foi:
+
+\begin{equation}
+\MyBox{$	c = (3.01 \pm 0.03) \cdot 10^{10} \frac{cm}{s}$}
+\end{equation}
+
+
+
+Vemos que os dois fatores que mais influenciam no erro são a distância entre a fonte 
+e a lente L2 e o coeficiente angular da reta da regressão. 
+
+
+\paragraph{} O valor aceito para a velocidade da luz é de $2.99796x10^{10}cm/s$. O valor 
+difere do nosso por $0.012 x 10^{8}$, dentro da margem de erro encontrada e portanto
+as medidas foram acuradas. Além disso a margem de erro calculada é de 1\% e o experimento
+foi preciso.
+
+
+\FloatBarrier
+\begin{figure}
+         \input{./graph/graphA.tex}
+        \caption{$\triangle s'$ em função de $\omega$}
+        \label{graph:A}
+\end{figure}
+\FloatBarrier
+
+\section{Conclusão}
+\paragraph{} O experimento permitiu calcular a velocidade da luz em
+ $c = (3.01 \pm 0.03)\cdot 10^{8} m/s$. A margem de erro é de 1\% da melhor
+ medida e engloba o valor tabelado. O experimento foi portanto acurado e preciso.  
+
+
+
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       REFERÊNCIAS     @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\begin{thebibliography}{9}    
+	 \bibitem{fis4-serway}
+  		JEWETT, J.W.; SERWAY, R.A.
+  		\emph{Física para cientistas e engenheiros}
+volume 4 : Luz, Óptica e Física Moderna.
+ 		 8ª ed.
+ 		 São Paulo : Cengage Learning, 2012.
+ 		 
+\end{thebibliography}
+\end{document}

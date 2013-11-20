@@ -1,0 +1,20 @@
+Pôde-se estudar como materiais granulares
+podem ser simulados computacionalmente através
+da dinâmica molecular. O código desenvolvido
+foi capaz de gerar simulações que respeitam
+a conservação da energia em colisões totalmente
+elásticas mas não conseguiu-se calibrar
+as constantes de forma a obter apenas pequenos
+overlaps nem colisões com amortecimento.
+Fica claro que um desenvolvimento futuro
+deve levar em conta constantes que dependam da velocidade
+de aproximação ou ainda um incremento de tempo
+que varie ao longo da simulação. Por outro lado,
+a busca por colisões utilizando tabelas de dispersão 
+foi um sucesso e mostra como uma estrutura de dados
+adequada pode ser utilizada para tornar um
+algoritmo muito mais eficiente.
+
+
+
+

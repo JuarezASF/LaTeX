@@ -1,0 +1,11 @@
+A dinâmica molecular é empregada para simular 
+um conjunto de partículas circulares e completamente
+lisas dentro de uma caixa fechada. As constantes
+da simulação são escolhidas de forma a permitir
+um mínimo de interpenetração das partículas e
+conservação da energia a um baixo custo computacional.
+Uma tabela de dispersão é utilizada para tornar
+mais eficiente a busca por colisões. Algoritmos
+de integração temporal de segunda ordem são 
+utilizados para acelerar a convergência e permitir
+passos de tempo maiores.

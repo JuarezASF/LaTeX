@@ -1,0 +1,70 @@
+\section{Questão 2}
+
+\paragraph{} O mesmo algoritmo da questão anterior é rodado
+desta vez com n = m - 1 = 16. Nessas condições devemos ter como 
+resposta o polinômio interpolador. Os coeficientes são mostrados
+ na tabela \ref{tab:quest2-X16}.
+O erro quadrático médio encontrado foi:
+
+\begin{displaymath}
+	E_{rms_{16}} = 0.008
+\end{displaymath}
+
+\paragraph{} O polinômio é plotado em \ref{fig:quest2} e em \ref{fig:quest2-zoom} 
+limitamos o eixo y para observarmos melhor o comportamento da função.
+Os gráfico nos mostram que, como esperávamos, o ajuste polinomial
+para n = m-1 bate perfeitamente com os pontos considerados. O erro rms calculado
+não é exatamente 0 como esperávamos mas isso pode ser devido a erros de truncamento
+que ocorrem durante o processo. 
+ Se fossemos usar o mesmo critério utilizado na
+questão 1 
+para escolher o melhor ajuste teríamos que o polinômio interpolador fornece de longe
+o melhor ajute para os dados. No entanto, as altas inclinações da curva entre
+os pontos tabelados e as altíssimas inclinações perto
+dos extremos geram dúvidas quanto a aplicação do polinômio para
+pontos fora aqueles que já tínhamos tabelados. Novamente, não conhecendo o que os 
+dados devem representar não se pode decidir se o comportamento esperado corresponde
+ao encontrado.
+
+\paragraph{}Nas apliações mais comuns espera-se que uma função f(t) esteja próxima
+de $f(t_0)$ quando t está próximo de $t_0$. O polinômio interpolador não apresenta 
+essa propriedade, ele é contínuo mas possui altas derivadas em quase todos os pontos.
+Por exemplo, se t está entre $t_1$ e $t_2$ pode ser esperado que y(t) esteja
+entre $y_1$ ou $y_2$ ou ainda que tenha ao menos magnitude comparável com estes. 
+O gráfico nos mostra que no polinômio interpolador para um t nesse intervalo f pode assumir
+valores cerca de 1000 vezes o máximo de f em todos os $t_i$'s conehcidos. Para a maioria
+das aplicações este não é o comportamento esperado. 
+
+\paragraph{}A primeira questão nos  mostrou que o ajuste linear nos dá
+o menor erro quadrático médio dentre os graus tomados e até aqui vemos que
+o polinômio interpolador nos dá uma grande variação em um intervalo pequeno.
+Escolhemos portanto o ajuste linear como o mais adequado para descrever os dados da tabela.
+\FloatBarrier
+\begin{figure}[!htp]
+	\begin{subfigure}[!htp]{0.5\textwidth}
+	\input{./graph/quest2.tex}
+	\caption{Polinômio interpolador(fitting polinomial de grau 16 = m - 1}
+	\label{fig:quest2}
+	\end{subfigure}
+
+	\begin{subfigure}[!htp]{0.5\textwidth}
+	\input{./graph/quest2-zoom.tex}
+	\caption{zoom para observar as oscilações}
+	\label{fig:quest2-zoom}
+	\end{subfigure}
+	\caption{Gráficos da questão 2}
+\end{figure}
+\FloatBarrier
+
+
+
+
+\begin{table}[!htp]
+\centering
+	\begin{tabular}{|l|l|}\hline
+	n & $\alpha_{n}$ \\ \hline
+	\input{./tables/tab-quest2-X16.tex}
+	\end{tabular}
+	\caption{Coeficientes de $y_{16}(t)$}
+	\label{tab:quest2-X16}
+\end{table}

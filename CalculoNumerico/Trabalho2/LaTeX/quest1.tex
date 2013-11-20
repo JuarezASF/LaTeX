@@ -1,0 +1,203 @@
+\section*{Questão 1}
+
+\paragraph{}Para o conjunto de dados da tabela 1 deseja-se
+calcular os ajustes polinomiais de ordem 1,2,3,5 e 10.
+ Ou seja, achar quais são os polinômios de ordem n $y_{n}(t)$ 
+\begin{displaymath}
+y_n(t) = \alpha_{0}n^{0} + \alpha_{1}n^{1} + \ldots 
+									\alpha_{n}t^{n}
+\end{displaymath}
+que 
+miniminizam o erro quadrático médio 
+\begin{equation}
+e_{n} = \sqrt{\sum _{i = 1}^{m} [y_{i} - y_{n}(t_{i})]^2}
+\label{eq:erro}
+\end{equation}
+
+sobre o conjunto de m dados na forma $(t_{i}, y_{i})$. 
+A tabela apresenta 17 desses pares, nesse caso m = 17. 
+A função PolynomialFitting do anexo realiza o cálculo dos 
+coeficientes e os resultados são plotados nos gráficos 
+\ref{fig:quest1-a} e \ref{fig:quest1-b}. No primeiro gráfico
+vemos os ajustes para n = 1,2 e 3. No segundo vemos n = 5 e 10.
+Os resultados foram separados em dois gráficos para permitir 
+melhor visualização das curvas. As tabelas de \ref{tab:quest1-X1} 
+a \ref{tab:quest1-X10} mostram os coeficientes $\alpha_n$ calculados.
+
+\paragraph{}Descrevemos brevemente o algoritmo utilizado.
+Considere a expressão $[y_{i} - y_{n}(t_{i})]$. Pela fórmula
+\ref{eq:erro} vemos que $e_n$ será mínimo quando essa expressão
+for mínima, i.e.:$y_{i} = y_{n}(t_{i}), \forall 
+t = \{ 1, 2, \ldots, m \}$, onde n é a ordem dada do polinômio  e m o número
+de dados tomados. As incógnitas desse problema são os coeficientes $\alpha_j$,
+com $j = {0, 1, \ldots, n}$. Esse sistema pode ser reescrito na forma $Ax = y$
+com:
+
+\begin{minipage}{0.3\textwidth}
+\begin{displaymath}
+	A_{\mbox{mx(n+1)}} = \left(
+	\begin{array}{lllll}
+	1 & t_1 & t_1^2 & \ldots & t_1^n \\
+	1 & t_2 & t_2^2 & \ldots & t_2^n \\
+	\vdots & \vdots & \vdots &\ddots  & \vdots \\
+	1 & t_m & t_m^2 & \ldots & t_m^n \\
+	\end{array}\right)
+\end{displaymath}
+\end{minipage}
+\hspace{2 cm}
+\begin{minipage}{0.3\textwidth}
+\begin{displaymath}
+	x_{\mbox{(n+1)x1}} = \left(
+	\begin{array}{l}
+	\alpha_0 \\
+	\alpha_1 \\
+	\vdots \\
+	\alpha_n \\
+	\end{array}\right)
+\end{displaymath}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+\begin{displaymath}
+	y_{\mbox{mx1}} = \left(
+	\begin{array}{l}
+	y_0 \\
+	y_1 \\
+	\vdots \\
+	y_n \\
+	\end{array}\right)
+\end{displaymath}
+\end{minipage}
+
+\paragraph{}O sistema pode ser resolvido de diversas formas. Se quisermos
+inverter matrizes podemos usar:
+
+\begin{equation}
+	x = (A^T A)^{-1}A^T y
+	\label{eq:SolvingSystemGeral}
+\end{equation}
+
+\paragraph{} Podemos também usar as diversas técnicas de solução de sistemas
+estudadas ao longo do curso. Para isso fazemos $D =A^T A$ e $E=(A^T y)$ e podemos
+usar os métodos de Jacobi ou Gauss-Seidel por exemplo para resolver $Dx = E$
+
+\paragraph{}Na equação \ref{eq:SolvingSystemGeral} a existência da inversa 
+$(A^T A)^{-1}$ se baseia no fato de que a matriz A tem colunas linearmente
+independentes, o que é garantido no caso em que existem ao menos 2 $t_i$'s 
+diferentes entre si.
+
+\paragraph{} No caso em que m = n+1 teremos a matriz A quadrada e o
+erro dever ser zero. Isto é, o polinômio coincide perfeitamente com os dados
+nos pontos tomados. Nesse caso temos o polinômio interpolador. Nos outros casos
+a interpolação não é perfeita e temos apenas o polinômio de ordem n que melhor
+se ajusta aos dados.
+
+\paragraph{}Em nosso código o sistema é resolvido pela inversão de matrizes. 
+A rotina foi implementada em C e o anexo contém todos os algoritmo usados,
+inclusive os de interseção de matrizes,  multiplicação, soma e transposição.
+Essas rotinas são consideradas auxiliares e portanto apresentadas separadamente
+dos códigos principais para interpolação. 
+
+\paragraph{}Os gráficos \ref{fig:quest1-a} e \ref{fig:quest1-b} nos mostram
+ que a medida que aumenta a ordem n
+do polinômio temos mais oscilações no fitting. Sem saber o que os dados
+representam e para que serão usados é difícil decidir sobre qual o ajuste
+mais adequado. Sem essa informação podemos apenas qualificar os ajustes quanto
+aos erros quadráticos médios que deram origem ao método que
+calculou as interpolações. A expressão \ref{eq:erro} pode ser 
+calucalada para cada uma das curvas. Os resultados são apresentados na tabela
+a seguir.
+
+\begin{table}[!htp]
+\centering
+	\begin{tabular}{|l|l|}\hline
+	n & $E_{n}$ \\ \hline
+	 1	& 4.967 \\ \hline	
+	 2	& 5.045\\ \hline	
+	 3	& 5.861\\ \hline	
+	 5	& 6.126\\ \hline	
+	10	& 7.616\\ \hline	
+	\end{tabular}
+	\caption{Erro quadrático médio para n = 1,2,3,5 e 10}
+	\label{tab:ERMS-quest1}
+\end{table}
+
+\paragraph{}Vemos que nesse caso aumentar o grau do polinômio de
+interpolação nos deu um maior erro quadrático médio. Baseado nesses
+dados podemos dizer que o melhor ajuste dentre esses 5 feitos é o 
+de primeira ordem. 
+
+\FloatBarrier
+\begin{figure}[!htp]
+	\begin{subfigure}[!htp]{0.5\textwidth}
+	\input{./graph/quest1-a.tex}
+	\caption{Fitting para n = 1,2 e 3}
+	\label{fig:quest1-a}
+	\end{subfigure}
+
+	\begin{subfigure}[!htp]{0.5\textwidth}
+	\input{./graph/quest1-b.tex}
+	\caption{Fitting para n = 5, 10}
+	\label{fig:quest1-b}	
+	\end{subfigure}
+	\caption{Gráficos da questão 1}
+\end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{table}
+\parbox{.45\linewidth}
+		{
+		\centering
+		\begin{tabular}{|l|l|}\hline
+			n & $\alpha_{n}$ \\ \hline
+			\input{./tables/tab-quest1-X1.tex}
+		\end{tabular}
+		\caption{coeficientes de $y_1(t)$}
+		\label{tab:quest1-X1}
+		}
+\parbox{.45\linewidth}
+	{
+	\centering
+		\begin{tabular}{|l|l|}\hline
+			n & $\alpha_{n}$ \\ \hline
+			\input{./tables/tab-quest1-X2.tex}
+		\end{tabular}
+		\caption{coeficientes de $y_2(t)$}
+		\label{tab:quest1-X2}	
+	}
+
+\parbox{.45\linewidth}
+	{
+	\centering
+		\begin{tabular}{|l|l|}\hline
+			n & $\alpha_{n}$ \\ \hline
+			\input{./tables/tab-quest1-X3.tex}
+		\end{tabular}
+		\caption{coeficientes de $y_3(t)$}
+		\label{tab:quest1-X3}
+	}
+\parbox{.45\linewidth}
+	{
+	\centering
+		\begin{tabular}{|l|l|}\hline
+			n & $\alpha_{n}$ \\ \hline
+			\input{./tables/tab-quest1-X5.tex}
+		\end{tabular}
+		\caption{coeficientes de $y_5(t)$}
+		\label{tab:quest1-X5}
+	}
+	
+\parbox{.45\linewidth}
+	{
+	\centering
+		\begin{tabular}{|l|l|}\hline
+			n & $\alpha_{n}$ \\ \hline
+			\input{./tables/tab-quest1-X10.tex}
+		\end{tabular}
+		\caption{coeficientes de $y_{10}(t)$}
+		\label{tab:quest1-X10}
+	}
+
+\end{table}
+\FloatBarrier
+
