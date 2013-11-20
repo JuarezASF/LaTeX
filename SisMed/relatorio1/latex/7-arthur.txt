@@ -1,0 +1,42 @@
+7)
+
+Para realização desta etapa do relatório, fizemos o uso do Software MATLAB para nos auxiliar nos calculos. Temos a tarefa de averiguar se as amostras coletadas e mostradas na tabela do roteiro fazem parte de alguma distribuição normal. Para tal feito, iremos realizar o teste Qui Quadrado. Neste ponto o MATLAB foi fundamental, dentro de uma de suas inúmeras bibliotecas e toolboxes, o MATLAB dispõem de uma função que realiza o teste Qui Quadrado e nos retorna se as amostras postas na entrada foram classificadas ou não como pertencentes à uma distribuição normal com sua media e variancia.
+
+A função em questão é a chi2gof, que retorna a variável h = 0 para o caso em que a hipostese de que as amostras fazem parte de uma distribuição normal, ou então retorna h = 1 para o caso oposto.
+
+Nosso código redigido está apresentado logo abaixo:
+
+--------------------------------------------
+D = [10.10 10.15 9.81 9.36 9.89 10.10 10.02 8.90 9.98 9.87 10.10 9.86 8.99 10.01 10.10 10.38 10.20 10.00 9.79 10.10 10.11 10.07 10.32 9.38 9.90 10.20 8.99 10.10 9.06 9.20];
+m = sum(D)/30;
+
+s = sqrt(sum(D.^2)/30 - m.^2);
+
+[h,p,stats] = chi2gof(D)
+--------------------------------------------
+
+Onde todas os nossos valores das amostras foram armazenados no vetor D.
+Como resultado da execução do programa, obtivemos a seguinte saída na comand window do MATLAB:
+
+--------------------------------------------
+>> quiquadrado
+
+h =
+
+     0
+
+
+p =
+
+   NaN
+
+
+stats = 
+
+    chi2stat: 6.0268
+          df: 0
+       edges: [8.9000 9.7880 10.3800]
+           O: [7 23]
+           E: [13.6978 16.3022]
+--------------------------------------------
+E como podemos ver, a variavel h foi igualada à zero, o que nos permite concluir que de fato as amostras obtidas da tabela do roteiro fazem parte de uma distribuição gaussiana.

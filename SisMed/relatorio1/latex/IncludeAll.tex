@@ -1,0 +1,159 @@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      PACOTES BÁSICOS		     @@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} 
+\usepackage[portuguese]{babel}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphicx}				%para imagens
+\usepackage{epstopdf} 				%resolve problemas eps-pdf
+\usepackage{pict2e}				%%writting to images
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@     PACOTES NÃO TAOBÁSICOS		 @@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\usepackage{fancyhdr}				% para o cabeçalho bonito
+\usepackage{caption}					%para legendas
+\usepackage{subcaption}				% e sublegendas
+\usepackage{placeins} 				%controlar o lugar dos floats
+\pagestyle{fancy} 					% número de pag e cabeçalho
+\usepackage{txfonts} 				%fontes bonitas? acho que para o título
+\usepackage[usenames]{color} 		% algo com gunplot e eps
+\usepackage{ifthen}
+\usepackage{xparse}
+\graphicspath{{./../images/}{./../data/}{./graph/}}	% procura imagens nessa pasta
+\usepackage{float} %%para definir ambiente gráfico
+\newfloat{Gráfico}{hbtp}{lop}[section]
+%\usepackage{undertilde}	%%para notação de vetor do yuri
+\usepackage[import]{xy} % para escrever em imagens
+\xyoption{import}
+
+\usepackage{listings}
+\lstset{frame=single,}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      Cabeçalho de cada página      @@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\setlength{\headheight}{25pt}%compila sem erro
+	\fancyhead{}
+	\fancyfoot{}
+	\fancyhead[R]{Sistemas de Medição}%direito superior
+	\fancyhead[L]{\includegraphics[height=0.25in]{./../images/logo_unb.pdf}}%esquerda superior
+	\fancyfoot[C]{\thepage}%baixo centro
+%E: Even page, O: Odd page, L: Left field, C: Center field, R: Right field, H: Header, F: Footer
+% em documentos com dois lados use LO, RO. como esse documento não tem lados essa opção é inútil
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      NOVOS COMANDOS		      @@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\newcommand\undermat[2]
+	{
+	  \makebox[0pt][l]
+	  	{$\smash{\underbrace{\phantom{%
+    \begin{matrix}#2\end{matrix}}}_{\text{$#1$}}}$
+    		}#2
+    	}
+    	
+\newcommand{\HRule}
+	{
+	\rule{\linewidth}{0.5mm}
+	}
+	
+\newcommand{\EmptyPage}
+	{
+	\thispagestyle{empty}
+	\mbox{ }
+	\newpage	
+	} 
+	
+\newcommand{\MakeMyTitlePage}[4]
+%%Argumentos: 
+%1º Nome da Matéria
+%2º subtítulo ex: experimento IV
+%3º título
+%4º autores
+% exemplo de autores:
+%	\begin{center} \large
+%		\begin{tabular}{llr} \
+%		& & \\[0.05cm]		
+%		Professora & Nadia Maria de Liz Koche & \\
+%		
+%		Alunos:& & \\
+%		& Juarez A.S.F 					& 11/0032829\\
+%		& Sérgio Fernandes da Silva Reis & 11/0140257\\
+%		& Jedhai Pimentel				& 09/0007883\\	[0.05cm]	
+%		\end{tabular}
+%	\end{center}
+{
+\begin{titlepage}
+\begin{center}
+
+% Upper part of the page. The '~' is needed because \\
+% only works if a paragraph has started.
+\includegraphics[width=\textwidth]{./../images/logo_unb.pdf}~\\[1cm]
+
+\Huge #1\\[0.5cm]
+
+\huge #2
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries  #3}\\[0.4cm]
+
+\HRule \\[0.5cm]
+
+{\large \today}
+
+
+\vfill %%o que vier depois vai ao fim da páginda
+
+
+%Autor e Professor
+\begin{center} \large
+#4
+\end{center}
+
+\end{center}
+\end{titlepage}
+
+\EmptyPage
+\tableofcontents
+\newpage
+
+}
+	
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      NOVOS AMBIENTES		      @@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\newcounter{graph-c}
+\setcounter{graph-c}{0}
+
+
+%\NewDocumentEnvironment{Graph}{m}
+ % {%antes
+  %\addtocounter{graph-c}{1}
+  %\begin{figure}
+  %}
+ %{
+ %depois
+%	\end{figure} 
+%	\caption*{Grafico \arabic{graph-c} - #1}
+ %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,54 @@
+Questão 1: 
+Os dados do ponto 1 são : 
+media = 0.84875
+s2t = 2.29167e-07
+
+
+
+Os dados do ponto 2 são : 
+media = 6.87425
+s2t = 0.000220396
+
+
+
+Os dados do ponto 3 são : 
+media = 10.9595
+s2t = 0.00022875
+
+
+
+Os dados do ponto 4 são : 
+media = 13.0872
+s2t = 8.30625e-05
+
+
+
+ UnB - Sis Med - 2º/2013 ---------Professor Carlos Llanos
+Juarez Aires Sampaio Filho--------11/0032829
+Questão 1: 
+Os dados do ponto 1 são : 
+media = 0.84875
+s2t = 2.29167e-07
+
+
+
+Os dados do ponto 2 são : 
+media = 6.87425
+s2t = 0.000220396
+
+
+
+Os dados do ponto 3 são : 
+media = 10.9595
+s2t = 0.00022875
+
+
+
+Os dados do ponto 4 são : 
+media = 13.0872
+s2t = 8.30625e-05
+
+
+
+ UnB - Sis Med - 2º/2013 ---------Professor Carlos Llanos
+Juarez Aires Sampaio Filho--------11/0032829
