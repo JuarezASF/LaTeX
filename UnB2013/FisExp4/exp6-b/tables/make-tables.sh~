@@ -1,3 +1,0 @@
-#! /bin/bash
-
-./table-maker2 ./../data/tabA.dat ./tabA.tex 2 0 4 

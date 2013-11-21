@@ -1,6 +1,0 @@
-#! /bin/bash
-
-./table-maker 4-1-table 4-1-tabela.tex
-
-./table-maker 4-2-table 4-2-tabela.tex
-
