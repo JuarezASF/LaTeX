@@ -190,23 +190,31 @@ das constantes resultou nos seguintes parâmetros:
 
 
 \begin{figure}[h]
-  \centering  
+  \centering
+
+  \begin{tabular}{c}
+  
     \begin{tabular}{cc}
 	\includegraphics[scale = 0.3]{./images/frame1.jpg}& 
 	\includegraphics[scale = 0.3]{./images/frame2.jpg} \\
-		     \multicolumn{2}{c}{\scriptsize(a) }  \\
+	
 	\includegraphics[scale = 0.3]{./images/flux1.jpg} &
-	\includegraphics[scale = 0.3]{./images/flux2.jpg}\\
-		      \multicolumn{2}{c}{\scriptsize(b) }  \\
-	\includegraphics[scale = 0.3]{./images/output1.jpg}& 
-	\includegraphics[scale = 0.3]{./images/output2.jpg}\\
-		      \multicolumn{2}{c}{\scriptsize(c) }
+		\includegraphics[scale = 0.3]{./images/flux2.jpg}\\
+	{\scriptsize(a) }      &     {\scriptsize(b) }  \\
+	\includegraphics[scale = 0.3]{./images/output1.jpg}& \\
+	{\scriptsize(c) }
+	
+
+
+	{\scriptsize(a) }      &     {\scriptsize(b) }  \\
+	\includegraphics[scale = 0.3]{./images/output2.jpg}& \\
+	{\scriptsize(c) }
+	
+    \end{tabular}
+  
   \end{tabular}  
-  \caption{etapas do processamento para dois instantes : \\
-  (a) imagem original,
-  (b) fluxo ótico e
-  (c) resultado final}
-  \label{fig:resultados}
+  \caption{etapas do processamento para dois instantes}
+  \label{fig1}
 \end{figure}
 
      
