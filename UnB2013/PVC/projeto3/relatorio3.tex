@@ -47,7 +47,6 @@ Clusterização}
 Desenvolver um segmentador de objetos em movimento utilizando para 
 isso técnicas de subtração de fundo, fluxo óptico e clusterização.
 A aplicação em mente é a detecção de carros em uma câmera de rodovia.
-Isto é um teste. Será que vai funcionar?
 \section{Introdução}
     Um problema recorrente em visão computacional é 
 a segmentação de objetos, isto é, definir quais pixeis de uma
@@ -132,7 +131,7 @@ relativo. Além disso outros parâmetros devem ser informados, como o
 critério de fim de parada algoritmo dentre outros. Esse algoritmo 
 está na categoria dos algoritmos densos, pois calcula o fluxo para 
 todos os pixels da imagem. Para tratamento futuro dos dados, faz-se 
-necessário uma filtragem nos dados.
+necessário uma filtragem destes.
 
 \subsection{Determinando Pontos de Interesse}
 Para filtragem dos pontos escolhemos dois critérios:
@@ -189,10 +188,15 @@ das constantes resultou nos seguintes parâmetros:
 
 \section{Resultados}
 A imagens em \ref{fig:resultados} mostram algumas etapas do algoritmo
-implementado. Vemos o cálculo do fluxo óptico e a detecção dos objetos para
-dois quadros diferentes.
+implementado em quadros onde a detecção foi eficiente.
+Vemos o cálculo do fluxo óptico e a detecção dos objetos para
+dois quadros diferentes. Na figura \ref{fig:problemas} vemos quadros onde
+a detecção não foi eficiente. Na figura \ref{fig:printScreen} vemos uma imagem
+da tela com o programa funcionando. Vemos na imagem ourtas etapas intermediárias,
+como a subtração de fundo e as trackbars para ajuste de parâmetros em tempo 
+de execução.
 
-
+\FloatBarrier
 \begin{figure}[h]
   \centering  
     \begin{tabular}{cc}
@@ -212,31 +216,106 @@ dois quadros diferentes.
   (c) resultado final}
   \label{fig:resultados}
 \end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{figure}[h]
+  \centering  
+    \begin{tabular}{cc}
+  \includegraphics[scale = 0.3]{./images/problema1.jpg}& 
+  \includegraphics[scale = 0.3]{./images/problema2.jpg} \\
+        {\scriptsize (a)} & {\scriptsize(b)}  \\
+  \includegraphics[scale = 0.3]{./images/problema3.jpg} &
+  \includegraphics[scale = 0.3]{./images/problema4.jpg}\\
+         {\scriptsize(c)} & {\scriptsize(d)}  \\
+  \end{tabular}  
+  \caption{Problemas na detecção}
+  \label{fig:problemas}
+\end{figure}
+\FloatBarrier
+
+\FloatBarrier
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale = 0.20]{./images/printWorksSpace.jpg} \\
+  \caption{printscreen do programa em funcionamento}
+  \label{fig:printScreen}
+\end{figure}
+\FloatBarrier
 
 
-
-\section{Resultados}
 %---------------------------------------------------
-%-------------CONCLUSÃO-----------------------------
+%-------------Discussão-----------------------------
 %--------------------------------------------------
 \newpage
 \section{Discussão}
+Notamos nas figuras \ref{fig:resultados} que apesar das filtragens utilizadas o
+fluxo óptico ainda apresenta ruídos significativos. No vídeo em questão
+duas fontes de ruído são notáveis:
+\begin{itemize}
+  \item a área sendo descoberta pelo obejto é considerada parte do objeto
+  \item a detecção de sombra não é perfeita e a sombra acaba fazendo parte
+  do objeto
+\end{itemize}
+Esses dois fatores fazem com que mesmo quando a detecção é eficiente
+o centro do objeto detectado não seja aquele
+realmente esperado.
+
+Na figura \ref{fig:problemas} vemos problemas na detecção quando os objetos e 
+suas sombras se superpõe, de forma que o algoritmo detecta um único grande 
+objeto. Além disso notamos em todas as figuras de \ref{fig:problemas} que o 
+número de objetos detectados, e portanto o número de objetos a serem procurados
+pelo kmeans é diferente daquele esperado. Provavelmente o algoritmo simples
+utilizado para a contagem de objetos não foi adequado para o vídeo em questão e
+trabalhos futuros devem focar a melhora essa etapa da rotina.
+ 
+ Um fator que influenciou a queda na qualidade da detecção foi a sombra. No vídeo
+ em questão a sombra e boa parte dos objetos apresentam intensidade de brilho 
+ muito semelhante, notavelmente, os parabrisas dos carros são tão escuros quanto
+ as sobras. Ao se ajustar os parâmetros de detecção de 
+ sombra para pegar quase totalidade das sombras, parte dos objetos também
+ foi descartada, de forma que o cálculo de fluxo e a posterior
+ clusterização pelo kmeans teve de trabalhar com menos pontos, piorando assim o 
+ resultado.
+%---------------------------------------------------
+%-------------CONCLUSÃO-----------------------------
+%--------------------------------------------------
 \section{Conclusão}
+
+Com o auxílio do OpenCV foi possível desenvolver rapidamente um programa capaz
+de detectar razoavelmente bem carros em uma rodovia. Os resultados não foram 
+perfeitos e a interferência de sombras impediram uma melhor detecção. O trabalho
+é um exemplo de como os mais diversos conceitos de visão computacional, como
+subtração de fundo, cálculo de fluxo ótico e clusterização de dados são utilizados
+em conjunto no desenvolvimento aplicações simples e possivelmente úteis.
+
+\newpage
+
 \begin{thebibliography}{1}
 
 \bibitem{livroPVC}
 Forsyth, D.A. , \emph{Computer Vision: a Modern Approach}, 1ªed.
 
 \bibitem{docsOpenCV}
- Documentação do OpenCV, \emph{Tutoriais em Processamento de 
-Imagem:Canny Edge Detector, Hough Line Transform e
- Hough Circle Transform}
- Disponível em: http://docs.opencv.org/doc/tutorials/imgproc/table\_of
- 
- \_content\_imgproc/table\_of\_content\_imgproc.html
- 
- \#table-of-content-imgproc
-	 Acesso em 14 de Outubro de 2013.
+ Documentação do OpenCV
+ Disponível em: http://docs.opencv.org
+	 Acesso em 21 de Novembro de 2013.
+
+   \bibitem{drawArrows}
+    Dan Casas, \emph{how to plot velocity vectors as arrows using
+                       sigle static image}.
+    Disponível em: http://stackoverflow.com/questions/10161351/opencv-how-to-plot-velocity-vectors-as-arrows-in-using-single-static-image
+    Acesso em 21 de Novembro de 2013.
+
+    \bibitem{kmeans}
+    Utkarsh Sinha, \emph{K-Means clustering in OpenCV}.
+    Disponível em: http://www.aishack.in/2010/08/k-means-clustering-in-opencv/
+    Acesso em 21 de Novembro de 2013.
+
+    \bibitem{BGsubtract}
+    Mateusz Stankiewicz, \emph{Background detection with OpenCV}.
+    Disponível em : http://mateuszstankiewicz.eu/?p=189
+    Acesso em 21 de Novembro de 2013. 
 \end{thebibliography}
 
 
