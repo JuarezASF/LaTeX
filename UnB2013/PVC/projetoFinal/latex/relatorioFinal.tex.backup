@@ -1,0 +1,198 @@
+
+
+
+
+\documentclass[journal]{IEEEtran}
+\hyphenation{op-tical net-works semi-conduc-tor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{placeins}
+\pagestyle{fancy}
+\usepackage{color}
+\usepackage{cancel}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\usepackage{steinmetz}
+\graphicspath{{../images/}}
+
+\begin{document}
+
+\title{
+Universidade de Brasília \\
+Princípios de Visão Computacional
+\HRule
+\\
+Projeto Final:\\
+Detecção de Objetos \\ {\huge e} \\Previsão de Colisões com 
+Filtro de Kalman
+\HRule \\
+{\normalsize \today}
+}
+
+\author{  \begin{tabular}{llr}
+    Professor: & Flávio Vidal & \\
+    Alunos:& & \\
+    & Juarez A.S.F                        & 11/0032829\\
+    & Rodrigo Lima 		          & 11/xxxxxxx  
+      \end{tabular}
+      }
+
+
+\maketitle
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      OBJETIVOS      @@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Objetivos}
+Desenvolver um algoritmo para detecção de objetos e previsão de
+suas trajetórias e possíveis colisões utilizando para isso o 
+conjunto de ferramentas disponíveis no OpenCV.
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@        INTRODUÇÃO       @@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Introdução Teórica}
+Em aplicações de monitoramento de sistemas móveis estamos muitas vezes
+interessados na previsão de colisão entre dois objetos. Com essa 
+previsão podemos tomar decisões para controlar a trajetória dos 
+objetos de modo a evitar a colisão ou, ao menos, reduzir os danos
+causados. Com esse objetivo, devemos ser capazes detectar os objetos, 
+sua trajetória e sermos capazes de extrapolar a trajetória e prever
+as posições futuras dos objetos sobre monitoramento.
+
+As técnicas de visão computacional são comumente utilizadas na 
+detecção de objetos. Vários procedimentos podem ser utilizadas para 
+esse fim: como fizemos nos trabalhos anteriores, podemos detectar 
+objetos pelo seu contorno(através de gradientes e a transformada 
+Canny), sua forma(círculos e retas pela transformada Hough) e pelo 
+movimento(subtração de fundo). Nesse trabalho, no entanto, 
+usaremos uma técnica mais simples e que é eficiente se conhecermos 
+de antemão a cor dos objetos: detecção por cor.
+
+
+Se as cores dos objetos envolvidos forem conhecidas e aproximadamente 
+constantes, e essas cores forem bem distintas das cores do fundo da 
+imagem, então basta varremos a imagem procurando os pixeis 
+pertencentes a uma certa faixa em torno das cores de interesse e 
+temos detectados os objetos.
+Uma dificuldade que surge nesse algoritmo, é que cores parecidas podem
+ser geradas com combinações diferentes de canais RGB. Para contornar 
+esse problema, torna-se
+útil trabalhar com a imagem em componentes HSV. HSV é sigla para:
+\begin{itemize}
+ \item 
+ \textit{hue}: indica a cor
+ \item 
+ \textit{saturation}: indica o quanto essa cor está misturado com 
+branco
+ \item
+ \textit{value}: indica o quanto a cor está misturada com preto
+\end{itemize}
+veja que a componente de cor(\textit{hue}) é obtida diretamente e 
+podemos dar maior importância a essa componente na hora da busca.
+
+
+Utilizando técnicas de transformação morfológicas, como cálculo de 
+momentos da imagem, ou então usando o kmeans para agrupar dados 
+semelhantes, podemos obter o centro dos objetos sendo detectados e,
+monitorando esses centros, guardarmos a trajetória dos objetos a 
+medida que o vídeo evolui. Possuindo dados sobre a posição em 
+diferentes instantes de tempo podemos determinar um modelo envolvendo 
+velocidade e aceleração para calcular uma curva de trajetória e assim 
+prever posições futuras para o movimento dos objetos.
+
+Esse processo de previsão de uma trajetória pode ser feito utilizando
+filtragem de Kalman. Filtro de Kalman é um processo que junta 
+informações de um modelo para o sistema sob análise, medições 
+realizadas por diferentes sensores e métodos e as incertezas sob o 
+modelo e as medições para estimar o real valor da variável sendo 
+medida e ainda a incerteza resultante dessa estimação. De natureza 
+matricial, a implementação computacional do filtro pode ser complexa 
+e, para nossa sorte, já está implementada no OpenCV.  
+
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@      MATERIAIS      @@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+\section{Materiais}
+O código elaborado foi feito em C++ as bibliotecas:
+\begin{itemize}
+    \item core
+    \item imgproc
+    \item highgui
+    \item background\_segm
+    \item tracking
+\end{itemize}
+do \textbf{OpenCV} versão 2.4.6.
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@       PROCEDIMENTOS        @@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Descrição Experimental}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@       DADOS      @@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Resultados}
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       Análise         @@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\section{Discussão}
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       Conclusão         @@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+\section{Conclusão}
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       REFERÊNCIAS     @@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\begin{thebibliography}{1}
+
+\bibitem{livroPVC}
+Forsyth, D.A. , \emph{Computer Vision: a Modern Approach}, 1ªed.
+
+\bibitem{artigo}
+  Vidal, F.B. e Alcalde, V.H.C. \emph{Motion Segmentation in 
+Sequential 
+  Images Based on the Differential Optical Flow} 
+
+\bibitem{docsOpenCV}
+ Documentação do OpenCV
+ Disponível em: http://docs.opencv.org
+	 Acesso em 21 de Novembro de 2013.
+
+   \bibitem{drawArrows}
+    Dan Casas, \emph{how to plot velocity vectors as arrows using
+                       sigle static image}.
+    Disponível em: 
+http://stackoverflow.com/questions/10161351/opencv-how-to-plot-velocit
+y-vectors-as-arrows-in-using-single-static-image
+    Acesso em 21 de Novembro de 2013.
+
+    \bibitem{kmeans}
+    Utkarsh Sinha, \emph{K-Means clustering in OpenCV}.
+    Disponível em: 
+http://www.aishack.in/2010/08/k-means-clustering-in-opencv/
+    Acesso em 21 de Novembro de 2013.
+
+    \bibitem{BGsubtract}
+    Mateusz Stankiewicz, \emph{Background detection with OpenCV}.
+    Disponível em : http://mateuszstankiewicz.eu/?p=189
+    Acesso em 21 de Novembro de 2013. 
+\end{thebibliography}
+
+\end{document}
+
+
