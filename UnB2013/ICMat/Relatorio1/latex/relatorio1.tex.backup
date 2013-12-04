@@ -1,0 +1,208 @@
+
+
+
+
+\documentclass[journal]{IEEEtran}
+\hyphenation{op-tical net-works semi-conduc-tor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{placeins}
+\pagestyle{fancy}
+\usepackage{color}
+\usepackage{cancel}
+\usepackage{steinmetz}
+\graphicspath{{../images/}}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\newcommand{\hRule}{\rule{\linewidth}{0.2mm}}
+
+\begin{document}
+
+\title{
+\HRule \\
+\Huge Introdução à Ciência dos Materiais \\
+\huge Relatório Final
+\HRule
+}
+
+\author{  \begin{tabular}{llr} \
+    & & \\[0.05cm]
+	\multicolumn{3}{ c }{Universidade de Brasília} \\
+	\multicolumn{3}{ c }{\today} \\ \\
+    Professora: & Palloma Vieira Muterlle & \\
+    Alunos:& & \\
+    & Juarez A.S.F                        & 11/0032829\\
+    & Maria Cleuza Ornelas Parente        & pegarMatrícula
+      \end{tabular}
+      }
+\maketitle
+
+
+\section{Discussão e Análise}
+
+Consideramos para análise o gráfico \ref{fig:graph} 
+a seguir.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{../images/leGraph.png}
+\caption{Diagrama tensão-deformação para 3 condições}
+\label{fig:graph}
+\end{figure}
+\FloatBarrier
+
+\subsection*{Questão 1}
+Para o gráfico em análise vamos determinar alguns parâmetros:
+\begin{itemize}
+ \item \textbf{limite de escoamento : } 
+ esse é o ponto até onde uma aproximação linear dada pela lei
+ de Hooke é válida, em geral pode ser determinado pela tensão 
+ que cause uma deformação de 0.02\%. Como não temos acesse a esse
+ nível de precisão no gráfico dado, fazemos apenas uma estimativa 
+ grosseira do real valor. Para as três condições dadas, temos:
+ 
+ \begin{table}
+  \centering
+  \begin{tabular}{|c|c|} \hline
+  condição & limite de escoamento \\ \hline
+  A & 1000 MPa \\ \hline
+  B & 1300 MPa\\ \hline
+  C & 800 MPa\\ \hline
+  \end{tabular}
+  \caption{limite de escoamento}
+ \end{table}
+
+  \item \textbf{Módulo de Elasticidade: } 
+ é a constante K que relaciona a tensão($\sigma$) com a
+ deformação ($\varepsilon$) na lei de Hooke $\sigma = k \varepsilon$
+ durante a fase linear do escoamento. Para as três condições
+ dadas, podemos estimar a constante pela fórmula $k = 
+\frac{\Delta \sigma}{\Delta \varepsilon}$:
+ \begin{table}[!htp]
+  \centering
+  \begin{tabular}{|c|c|} \hline
+  condição & módulo de elasticidade($\approx$) \\ \hline
+  A & $\frac{1000}{1\%} = 1000 \frac{KPa}{\%}$   \\ \hline
+  B & $\frac{1300}{1\%} = 1300\frac{KPa}{\%}$\\ \hline
+  C & $\frac{800}{1.5\%} = 533 \frac{KPa}{\%}$\\ \hline
+  \end{tabular}
+  \caption{módulo de elasticidade}
+ \end{table}
+
+   \item \textbf{Limite de Resistência à Tração: } 
+corresponde à tensão máxima aplicada ao material antes da 
+ruptura. Estimamos:
+   
+   \begin{table}[!htp]
+  \centering
+  \begin{tabular}{|c|c|} \hline
+  condição & LRT \\ \hline
+  A & 1100 KPa   \\ \hline
+  B & 1400 KPa\\ \hline
+  C & 950 KPa\\ \hline
+  \end{tabular}
+  \caption{limite de resistência à tração}
+ \end{table}
+
+    \item \textbf{Limite de Ruptura: } 
+
+    \item \textbf{Ductilidade: }
+    indica quanto o material deforma, em \%, antes da 
+    fratura.
+    
+       \begin{table}[!htp]
+  \centering
+  \begin{tabular}{|c|c|} \hline
+  condição & ductilidade \\ \hline
+  A & 5\%   \\ \hline
+  B & 7\% \\ \hline
+  C & 14.5\% \\ \hline
+  \end{tabular}
+  \caption{ductilidade}
+ \end{table}
+    
+\end{itemize}
+
+\subsection*{Questão 2}
+Classificamos agora as 3 condições em relação à:
+\begin{itemize}
+ \item \textbf{Rigidez:} relacionado ao módulo de elasticidade
+ do material.
+ C < A < B
+
+ \item \textbf{Tenacidade:}Corresponde à capacidade do material de 
+absorver energia até sua ruptura.
+
+  A < B < C
+ 
+ \item \textbf{Resiliência:} a capacidade de um material absorver 
+energia quando este é deformado elasticamente
+
+ C < A < B
+ 
+ \item \textbf{Resistência e Fragilidade:}
+  A condição mais frágil é A e a mais resistente à tração é C.
+\end{itemize}
+
+\subsection*{Questão 3}
+
+Na fatura de um material dúctil vemos o corpo se deformar 
+e surgir uma zona na qual área diminui até a fratura. A 
+forma do corpo de prova após a fratura
+é irregular e curva. Já na fratura frágil a superfície de fratura
+é visualmente plana.
+\subsection*{Questão 4}
+
+A dureza é a resistência do material à um esforço concentrado, 
+pontual. Um mesmo material
+apresenta resistência diferente à diferentes esforços e portanto a 
+dureza não é uma medida absoluta. 
+As diferentes durezas, a saber, Rockwell, Brinell e Vickers, aplicam 
+diferentes esforços ao corpo de prova e são adequadas para situações
+específicas.
+
+\begin{itemize}
+ \item \textbf{penetrador}:Na dureza Brinell o material é pressionado 
+com uma esfera, na Vickers,
+com uma pirâmide e na Rockwell com um cone ou esfera. 
+ 
+\end{itemize}
+
+\subsection*{Questão 5}
+\subsection*{Questão 6}
+\subsection*{Questão 7}
+
+
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@       REFERÊNCIAS     @@@@@@@@@@@@@@@@@@@@@@
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+\begin{thebibliography}{9}    
+   \bibitem{ADL-NISE}
+      Nise, N.S.
+      \emph{Engenharia de Sistemas de Controle}
+     5ª ed.
+    LTC, 2009.
+
+   \bibitem{ADL-OGATA}
+      Ogata, K.
+      \emph{Moder Control Engeeniring}
+     5ª ed.
+    Pearson, 2010.
+   
+\end{thebibliography}
+\end{document}
+
+
