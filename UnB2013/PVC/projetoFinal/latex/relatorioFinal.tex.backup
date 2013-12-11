@@ -98,7 +98,6 @@ Uma dificuldade que surge nesse algoritmo, é que cores parecidas podem
 ser geradas com combinações diferentes de canais RGB. Para contornar 
 esse problema, \textbf{torna-se
 útil trabalhar com a imagem em componentes HSV}. HSV é sigla para:
-\textbf{REVISAR ESSA DEFINIÇÃO DE HSV!}
 \begin{itemize}
  \item 
  \textit{hue}: indica a cor
@@ -334,7 +333,7 @@ diferentes. Marcamos com uma cruz o objeto detectado.
   \begin{tabular}{cc}
 	\includegraphics[scale = 0.5]{../images/input.jpg}& 
 	\includegraphics[scale = 0.5]{../images/outputCross.jpg} \\
-	(a)entrada & (b)saída \\
+	{\scriptsize(a)entrada} & {\scriptsize(b)saída} \\
 	%	     \multicolumn{2}{c}{\scriptsize(a) }  
   \end{tabular}  
   \caption{detecção de objetos por cor}
@@ -344,31 +343,95 @@ diferentes. Marcamos com uma cruz o objeto detectado.
 \subsection{Kalman para Estabilização}
 
 Nas imagens a seguir vemos o funcionamento do filtro de kalman.
-Novamente, o x marca a detecção por cores e marcamos com um círculo
-o objeto sendo detectado por kalman. Notamos que o círculo não 
-acompanha fielmente a cruz. Quando o objeto está em movimento o 
-círculo está logo atrás do objeto, enquanto a cruz o segue 
-fielmente.No entanto, quando tampamos o objeto, a cruz se perde, 
-enquanto o círculo continua marcando sua posição.
+Em \ref{fig:detecSimples}(a) marcamos a detecção por cores com um x e
+a detecção com kalman com um círculo. Vemos que com objetos parados 
+os dois coincidem. Em \ref{fig:detecSimples}(b) notamos que o 
+círculo não acompanha fielmente a cruz: quando o objeto está em 
+movimento o círculo está logo atrás do objeto, enquanto a cruz 
+continua marcando exatamente.No entanto, quando tampamos o objeto em 
+\ref{fig:detecSimples}(c), a cruz se perde, 
+enquanto o círculo continua marcando sua posição. Em 
+\ref{fig:detecSimples}(d) vemos o filtro estabilizar a detecção. 
+Marcamos em azul a trajetória do objeto azul como detectado pelo
+algoritmo baseado em cores e em rosa pela algoritmo de Kalman.
+Vemos que apesar da trajetória do objeto ter sido oscilante,
+a trajetória de Kalman é bem suave.
 
 \begin{figure}[!htp]
   \centering
   \begin{tabular}{cc}
 	\includegraphics[scale = 0.5]{../images/outputCircle.jpg}& 
 	\includegraphics[scale = 0.5]{../images/outoutOnMove.jpg} \\
-	(a)objetos parados & (b)objeto em movimento \\
-	\includegraphics[scale = 0.5]{../images/outputOnHidden.jpg}\\	
-	\multicolumn{2}{c}{\scriptsize(a) objeto escondido }  
+	{\scriptsize(a)objetos parados} & {\scriptsize(b)objeto em 
+movimento} \\
+	\includegraphics[scale = 
+	      0.5]{../images/outputOnHidden.jpg}&
+	\includegraphics[scale = 
+		  0.5]{../images/outputKalmanStable.jpg}\\	
+	{\scriptsize(c) objeto escondido}& {\scriptsize(d) 
+estabilização da detecção}\\ 
+	%\multicolumn{2}{c}{\scriptsize(a) objeto escondido }  
   \end{tabular}  
-  \caption{detecção de objetos por cor}
-  \label{fig:detecSimples}
+  \caption{funcionamento do filtro de Kalman}
+  \label{fig:KalmanPast}
   \end{figure}
 
+  \subsection{Kalman para Previsão de Colisões}
 
+  Na figure \ref{fig:KalmanFuture} vemos o filtro de Kalman prevendo
+  a trajetória futura e prevendo uma colisão. Em 
+\ref{fig:KalmanFuture}(a) marcamos com pontos verdes as previsões do 
+filtro e em \ref{fig:KalmanFuture}(b) marcamos com um X preto o local
+da futura colisão previsto pelo filtro.
+  \begin{figure}[!htp]
+  \centering
+  \begin{tabular}{cc}
+	\includegraphics[scale = 0.5]{../images/outputFuture.jpg}& 
+	\includegraphics[scale = 0.5]{../images/outputColision.jpg} \\
+	{\scriptsize(a)prevendo posições futuras} & 
+{\scriptsize(b)prevendo uma colisão} \\
+	%\multicolumn{2}{c}{\scriptsize(a) objeto escondido }  
+  \end{tabular}  
+  \caption{Filtro de Kalman para prever colisões}
+  \label{fig:KalmanFuture}
+  \end{figure}
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 %@@@@@@@@@@@@@@       Análise         @@@@@@
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 \section{Discussão}
+
+Observamos que, como previsto, o filtro sofre um retardo em acompanhar
+o objeto em movimento. Isso se deve a própria natureza do filtro: o filtro
+não acredita fielmente nas medidas, de modo que ele demora a se convencer de 
+que o objeto está realmente em movimento. Esse ponto negativo, o retardo, é
+contrabalanceado pela estabilização do rastreamento em situações onde o 
+sensor possui resposta oscilante ou até mesmo falha em detectar. O trabalho
+mostra como o filtro de Kalman pode ser utilizado na melhora do processamento
+de sinais de forma geral, uma vez que a mesma ideia poderia ser aplicada para
+diferentes tipos de sensores, bastando achar um modelo adequado.
+
+A previsão de colisões também foi obtida, apesar de não com a mesma
+antecedência que se esperava inicialmente. A ideia inicial
+era que o filtro fosse capaz de prever colisões com uma grande distância das mesmas,
+mas nosso código só é capaz marcar o ponto de interseção das trajetórias
+quando os objetos estão a poucos centímetros do impacto. Apesar de nosso
+'oráculo' não ser tão eficiente quanto gostaríamos, em muitos sistemas a distância de
+alguns centímetros pode ser suficiente para a tomada de decisões: no controle do movimento
+de robôs móveis, por exemplo, uma câmera com visão superior do cenário poderia ser usada
+para evitar que os mesmos colidissem. 
+
+A limitação da utilização do filtro para previsões do futuro se deve ao fato dele
+não possuir energia: se pararmos de alimentar o filtro com dados novos, o valor estimado
+converge para um patamar fixo, não sendo possível extrapolar indefinidamente a
+trajetória. Apesar disso, a utilização de kalman utilizando as definições do OpenCV
+é simples e direta e pode-se obter resultados relativamente bons com baixo custo
+de desenvolvimento.
+
+Notamos também que  a detecção por cores se
+mostra eficiente para as condições dadas
+e possui certa tolerância à parâmetros de iluminação e distância dos objetos,
+tornando-se ótima se for possível controlar a iluminação do ambiente monitorado.
+
 
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -385,35 +448,50 @@ enquanto o círculo continua marcando sua posição.
 \bibitem{livroPVC}
 Forsyth, D.A. , \emph{Computer Vision: a Modern Approach}, 1ªed.
 
-\bibitem{artigo}
-  Vidal, F.B. e Alcalde, V.H.C. \emph{Motion Segmentation in 
-Sequential 
-  Images Based on the Differential Optical Flow} 
-
 \bibitem{docsOpenCV}
  Documentação do OpenCV
  Disponível em: http://docs.opencv.org
-	 Acesso em 21 de Novembro de 2013.
+	 Acesso em 10 de Dezembro de 2013.
 
-   \bibitem{drawArrows}
-    Dan Casas, \emph{how to plot velocity vectors as arrows using
-                       sigle static image}.
+   \bibitem{KF1}
+    Shil, Roy \emph{Simple Kalman filter for tracking using OpenCV2.2}.
     Disponível em: 
-http://stackoverflow.com/questions/10161351/opencv-how-to-plot-velocit
-y-vectors-as-arrows-in-using-single-static-image
-    Acesso em 21 de Novembro de 2013.
+  http://www.morethantechnical.com/2011/06/17/simple-kalman-filter-for-
+  tracking-using-opencv-2-2-w-code/
+    Acesso em 10 de Dezembro de 2013.
 
-    \bibitem{kmeans}
-    Utkarsh Sinha, \emph{K-Means clustering in OpenCV}.
+    \bibitem{KF2}
+    \emph{Opencv kalman filter prediction without new observtion}.
     Disponível em: 
-http://www.aishack.in/2010/08/k-means-clustering-in-opencv/
-    Acesso em 21 de Novembro de 2013.
+    http://stackoverflow.com/questions/18403918/opencv-kalman-filter-prediction-without-new-observtion
 
-    \bibitem{BGsubtract}
-    Mateusz Stankiewicz, \emph{Background detection with OpenCV}.
-    Disponível em : http://mateuszstankiewicz.eu/?p=189
-    Acesso em 21 de Novembro de 2013. 
-\end{thebibliography}
+    Acesso em 10 de Dezembro de 2013.
+
+    \bibitem{KF3}
+    Sinha,Utkarsh. \emph{Tracking colored objects in OpenCV}.
+    Disponível em: 
+    http://www.aishack.in/2010/07/tracking-colored-objects-in-opencv/
+    Acesso em 10 de Dezembro de 2013.
+
+    
+    \bibitem{Colordetect}
+    Fernando, Shermal. \emph{Color Detection \& Object Tracking}.
+    Disponível em : http://opencv-srf.blogspot.com.br/2010/09/object-detection-using-color-seperation.html
+    Acesso em 10 de Dezembro de 2013.
+
+    \bibitem{Qt1}
+    \emph{Documentação do Qt}.
+    Disponível em: 
+    http://qt-project.org/doc/qt-5.1/qtdoc/reference-overview.html
+    Acesso em 10 de Dezembro de 2013.
+
+    \bibitem{Qt2}
+     Bucky Roberts. \emph{C++ GUI with Qt Tutorial }.
+    Disponível em: 
+    http://www.youtube.com/watch?v=6KtOzh0StTc\&list=SP2D1942A4688E9D63
+    Acesso em 10 de Dezembro de 2013.
+    
+    \end{thebibliography}
 
 \end{document}
 

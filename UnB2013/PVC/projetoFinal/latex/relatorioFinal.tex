@@ -98,7 +98,6 @@ Uma dificuldade que surge nesse algoritmo, é que cores parecidas podem
 ser geradas com combinações diferentes de canais RGB. Para contornar 
 esse problema, \textbf{torna-se
 útil trabalhar com a imagem em componentes HSV}. HSV é sigla para:
-\textbf{REVISAR ESSA DEFINIÇÃO DE HSV!}
 \begin{itemize}
  \item 
  \textit{hue}: indica a cor
@@ -220,8 +219,8 @@ agilizar o desenvolvimento.
 equivalentes da imagem de entrada com cores no intervalo especificado 
 e preto no resto. A rotina é chamada para cada cor que se quer 
 detectar. Se quisermos detectar n objetos, devemos determinar um 
-intervalo para as n cores e teremos ao final n imagens como aquela em
-\textbf{REFERÊNCIA AQUI}
+intervalo para as n cores e teremos ao final n imagens binárias,
+cada uma indicando a distribuição de uma determinada cor no frame atual.
 
 \item \textbf{Determinando o Centro dos Objetos}
 
@@ -401,12 +400,70 @@ da futura colisão previsto pelo filtro.
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 \section{Discussão}
 
+Observamos que, como previsto, o filtro sofre um retardo em acompanhar
+o objeto em movimento. Isso se deve a própria natureza do filtro: o filtro
+não acredita fielmente nas medidas, de modo que ele demora a se convencer de 
+que o objeto está realmente em movimento. Esse ponto negativo, o retardo, é
+contrabalanceado pela estabilização do rastreamento em situações onde o 
+sensor possui resposta oscilante ou até mesmo falha em detectar. O trabalho
+mostra como o filtro de Kalman pode ser utilizado na melhora do processamento
+de sinais de forma geral, uma vez que a mesma ideia poderia ser aplicada para
+diferentes tipos de sensores, bastando achar um modelo adequado.
+
+A previsão de colisões também foi obtida, apesar de não com a mesma
+antecedência que se esperava inicialmente. A ideia inicial
+era que o filtro fosse capaz de prever colisões com uma grande distância das mesmas,
+mas nosso código só é capaz marcar o ponto de interseção das trajetórias
+quando os objetos estão a poucos centímetros do impacto. Apesar de nosso
+'oráculo' não ser tão eficiente quanto gostaríamos, em muitos sistemas a distância de
+alguns centímetros pode ser suficiente para a tomada de decisões: no controle do movimento
+de robôs móveis, por exemplo, uma câmera com visão superior do cenário poderia ser usada
+para evitar que os mesmos colidissem. 
+
+A limitação da utilização do filtro para previsões do futuro se deve ao fato dele
+não possuir energia: se pararmos de alimentar o filtro com dados novos, o valor estimado
+converge para um patamar fixo, não sendo possível extrapolar indefinidamente a
+trajetória. Apesar disso, a utilização de kalman utilizando as definições do OpenCV
+é simples e direta e pode-se obter resultados relativamente bons com baixo custo
+de desenvolvimento.
+
+Notamos também que  a detecção por cores se
+mostra eficiente para as condições dadas
+e possui certa tolerância à iluminação e distância dos objetos.
+Uma limitação do método utilizado para detecção dos centros, é que ele é extremamente
+dependente do controle do ambiente. Se o ambiente possuir cores semelhantes aquelas detectadas,
+o método dos momentos nos dará o ponto médio entre o objeto e o ruído, o que na maioria
+dos casos destrói a detecção. Para melhorar a detecção do centro poderíamos utilizar o kmeans com
+dimensões de espaço e de cor, dessa forma não só o centro geométrico de uma cor seria levado em conta,
+mas também a distribuição e aglomeração desta.
+
+\section{Trabalhos Futuros}
+
+Uma ideia a ser trabalhado para melhorar o campo de visão do futuro é a utilização
+do filtro para estabilização do movimento junto com métodos numéricos para integrar
+a equação do movimento. O filtro poderia ser usado, por exemplo, para estabilizar
+a detecção e estimar valores de posição e velocidade dos objetos sendo monitorados.
+Com esses valores e técnicas numéricas, a equação do movimento pode ser integrada
+e pode-se obter uma extrapolação arbitrária da trajetória. Poderíamos então utilizar
+a informação de erro do filtro de Kalman para determinar a confiabilidade da nossa
+extrapolação, uma vez que os erros também seriam integrados e acumulados. Dessa forma,
+se o erro de Kalman for pequeno, podemos confiar e integrar o movimento até um certo ponto, 
+e se o erro for grande, paramos a extrapolação mais cedo.
+
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 %@@@@@@@@@@@@@@       Conclusão         @@@@@@
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 \section{Conclusão}
+O trabalho utilizou técnicas de segmentação de cores, transformações morfológicas
+e filtragem de kalman para desenvolver um aplicativo capaz de prever a colisão entre
+objetos coloridos a distâncias da ordem de centímetros. As limitações do método 
+são evidentes, mas para os casos de teste sob ambiente controlado a previsão
+foi obtida eficientemente. O trabalho mostra a diversidade de aplicações do filtro
+de Kalman: desde estabilização de detecção até previsão do futuro, o filtro
+funciona adequadamente desde que seja definido por um modelo apropriado.
+
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 %@@@@@@@@@@@@@@       REFERÊNCIAS     @@@@@@@@@
@@ -416,35 +473,50 @@ da futura colisão previsto pelo filtro.
 \bibitem{livroPVC}
 Forsyth, D.A. , \emph{Computer Vision: a Modern Approach}, 1ªed.
 
-\bibitem{artigo}
-  Vidal, F.B. e Alcalde, V.H.C. \emph{Motion Segmentation in 
-Sequential 
-  Images Based on the Differential Optical Flow} 
-
 \bibitem{docsOpenCV}
  Documentação do OpenCV
  Disponível em: http://docs.opencv.org
-	 Acesso em 21 de Novembro de 2013.
+	 Acesso em 10 de Dezembro de 2013.
 
-   \bibitem{drawArrows}
-    Dan Casas, \emph{how to plot velocity vectors as arrows using
-                       sigle static image}.
+   \bibitem{KF1}
+    Shil, Roy \emph{Simple Kalman filter for tracking using OpenCV2.2}.
     Disponível em: 
-http://stackoverflow.com/questions/10161351/opencv-how-to-plot-velocit
-y-vectors-as-arrows-in-using-single-static-image
-    Acesso em 21 de Novembro de 2013.
+  http://www.morethantechnical.com/2011/06/17/simple-kalman-filter-for-
+  tracking-using-opencv-2-2-w-code/
+    Acesso em 10 de Dezembro de 2013.
 
-    \bibitem{kmeans}
-    Utkarsh Sinha, \emph{K-Means clustering in OpenCV}.
+    \bibitem{KF2}
+    \emph{Opencv kalman filter prediction without new observtion}.
     Disponível em: 
-http://www.aishack.in/2010/08/k-means-clustering-in-opencv/
-    Acesso em 21 de Novembro de 2013.
+    http://stackoverflow.com/questions/18403918/opencv-kalman-filter-prediction-without-new-observtion
 
-    \bibitem{BGsubtract}
-    Mateusz Stankiewicz, \emph{Background detection with OpenCV}.
-    Disponível em : http://mateuszstankiewicz.eu/?p=189
-    Acesso em 21 de Novembro de 2013. 
-\end{thebibliography}
+    Acesso em 10 de Dezembro de 2013.
+
+    \bibitem{KF3}
+    Sinha,Utkarsh. \emph{Tracking colored objects in OpenCV}.
+    Disponível em: 
+    http://www.aishack.in/2010/07/tracking-colored-objects-in-opencv/
+    Acesso em 10 de Dezembro de 2013.
+
+    
+    \bibitem{Colordetect}
+    Fernando, Shermal. \emph{Color Detection \& Object Tracking}.
+    Disponível em : http://opencv-srf.blogspot.com.br/2010/09/object-detection-using-color-seperation.html
+    Acesso em 10 de Dezembro de 2013.
+
+    \bibitem{Qt1}
+    \emph{Documentação do Qt}.
+    Disponível em: 
+    http://qt-project.org/doc/qt-5.1/qtdoc/reference-overview.html
+    Acesso em 10 de Dezembro de 2013.
+
+    \bibitem{Qt2}
+     Bucky Roberts. \emph{C++ GUI with Qt Tutorial }.
+    Disponível em: 
+    http://www.youtube.com/watch?v=6KtOzh0StTc\&list=SP2D1942A4688E9D63
+    Acesso em 10 de Dezembro de 2013.
+    
+    \end{thebibliography}
 
 \end{document}
 
