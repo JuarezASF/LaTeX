@@ -1,0 +1,91 @@
+\section{Procedimentos}
+Para determinar e estudar os diversos parâmetros do sistema, realizaram-se 5 testes. Cada teste é descrito nas subseções seguinte. Ao final da seção diversar figuras ilustram o diagrama de blocos de cada montagem.
+
+\subsection{1º Teste - Determinando \texorpdfstring{$K_m, K_t$ e T}{Lg}}
+
+\begin{itemize}
+	\item Para determinar $K_m$ aplicamos uma tensão contínua de intensidade conhecida sobre o motor DC. A tensão é aplicada diretamente sobre o terminal marcado com $u_2$, pois esse é o terminal que alimenta o driver do motor. Assim que o motor atinge regime permanente, ligamos acima do eixo o estroboscópio. A frequência do estroboscópio é ajustada até que o parafuso no eixo do motor seja visto parado. Um cuidado deve ser tomado: devido a simetria do eixo, se a frequência do estroboscópio for metade da do eixo, o parafuso também será visto parado. Dessa forma, deve se procurar a menor frequência que 'para' o eixo e anotar o seu dobro como a real velocidade do eixo. O procedimento é repetido para 5 frequências e uma tabela é montada.
+    
+    \item
+    	Em cada medição da etapa anterior, medimos também a tensão dada pela saída $v_4$ - essa é a saída do tacômetro. Montamos outra tabela com a velocidade do motor(dado pelo estroboscópio) e a tensão medida em $v_4$. Ao final das medidas desliga-se a planta.
+    
+    \item Nessa etapa alimentamos a planta com um sinal de onda quadrada em $u_2$. A frequência deve ser tal que possa-se observar a saída dada em $v_4$ atingir regime permanente. Em nosso experimento utilizamos 1Hz. Mediu-se então o valor máximo atingido em $v_4$ e procurou-se o instante, a partir do início da subida do sinal, em que o sinal atingiu 63\% do valor final.  
+\end{itemize}
+
+\subsection{2º Teste - Observando a não-linearidade}
+Para observar os efeitos de não-linearidade do sinal descritos na introdução:
+\begin{itemize}
+\item primeiramente, aplicamos em $U_2$ um sinal de onda triangular de frequência 0.1 Hz e observamos no osciloscópio o sinal de entrada e a saída dada pelo tacômetro em $V_4$.
+
+\item entramos agora com um sinal triangular de alta amplitude (14V) e observamos novamente a entrada e a saída do sistema no osciloscópio.
+\end{itemize}
+
+\subsection{3º Teste - Sistema de malha fechada de primeira ordem}
+
+\begin{itemize}
+	\item Primeiramente fechamos a malha ao conectar a saída do tacômetro $V_4$ com a entrada negativa do somador em $E_2$. Em seguida ligamos a saída do somador $U_1$ com a entrada do drive do motor em $U_2$. Jogamos então um sinal de onda quadrada de amplitude 6V e frequência 1Hz. Medimos os valores de $E_1$, $V_4$ e constante de tempo.
+    
+    \item A figura \ref{fig:moduloAmplificador} a seguir mostra esquematicamente a função das impedâncias presentes no kit
+    \begin{figure}[H]
+  \centering
+	\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{images/moduloAmplificador.png}
+\caption{esquemático das impedâncias do módulo amplificador}
+\label{fig:moduloAmplificador}
+\end{figure}
+
+para a segunda etapa desse teste desfazemos a ligação $U_1-U_2$ e ligamos a saída do bloco amplificador $V_1$ com a entrada do drive do motor $U_2$. Fizemos os valores de impedância como segue: $Z_1 = 0 \Omega$,$Z_2$ = aberto, $Z_3 = 2.2 k \Omega$, $Z_4 = 22 k \Omega$ e $Z_5 =$ aberto. Repetimos as medidas feitas na primeira etapa. 
+
+\end{itemize}
+
+\subsection{4º Teste - Sistema de Malha Fechada de 2ª Ordem}
+Para acrescentar um polo ao sistema, ligaremos um componente capacitivo ao estágio de ganho do sistema. A montagem dos bornes é a mesma utilizada no 3º teste, mas dessa vez fazemos:
+$Z_1 = 2 k \Omega$,$Z_2 = \frac{1}{s(1 \mu F )}$, $Z_3 = 2.2 k \Omega$, $Z_4 = 22 k \Omega$ e $Z_5 =$ aberto.
+A amplificação será dado por 1 + $\frac{Z_4}{Z_3}$ e fazemos então dois ensaios: um com amplificação unitária e outro com amplificação 11. Esperamos dessa forma observar dois comportamentos do sistema: um comportamento subamortecido e outro superamortecido. No caso do superamortecido medimos a constante de tempo resultante e no caso subamortecido medimos o sobrevalor percentual e o tempo de pico.
+
+\subsection{5º Teste - Malha Fechada de 3ª Ordem}
+Nessa etapa acrescentamos um terceiro polo ao sistema ao ligar uma capacitor 
+$C_4 = 1 \mu F$ em paralelo com $R_4 = 2k \Omega$, também fazemos $R_1 = 2k \Omega$. O objetivo dessa etapa é somente observar o comportamento de um sistema de terceira ordem. 
+
+\subsection{Diagrama de Blocos dos Diversos Sistemas}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{diagrams/teste1.png}
+\caption{Sistema em malha aberta com entrada direto no estágio de potência}
+\label{fig:diagram1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{diagrams/realimentacaoSemGanho.png}
+\caption{Sistema em malha fechada com realimentação negativa}
+\label{fig:diagram2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{diagrams/realimentacaoComGanho.png}
+\caption{Realimentação com ganho adicional}
+\label{fig:diagram3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{diagrams/2ordem_semganho.png}
+\caption{Modelo em 2ª Ordem sem ganho adicional}
+\label{fig:diagram4}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{diagrams/2ordem_comganho.png}
+\caption{Modelo em 2ª Ordem com ganho adicional}
+\label{fig:diagram5}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{diagrams/3ordem.png}
+\caption{Modelo em malha fechada de 3ª Ordem depois do acréscimo do ultimo polo}
+\label{fig:diagram6}
+\end{figure}

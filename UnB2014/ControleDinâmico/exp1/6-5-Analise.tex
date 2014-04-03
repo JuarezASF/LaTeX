@@ -1,0 +1,88 @@
+\subsection{5º Teste}
+\paragraph{}
+O sistema de $3^a$ ordem construído em laboratório consiste em adicionar um capacitor em paralelo à realimentação do Amp-Op. Dessa forma, o ganho não-inversor do Amp-Op conta com uma impedância. Isso é demonstrado abaixo:
+
+\paragraph{} O ganho não inversor é dado por:\\
+\begin{equation}
+FT(s)=\frac{O(s)}{I(s)}=1+\frac{Z_2}{Z_1}
+\end{equation}
+Onde $Z_4$ é a impedância de realimentação.
+No caso, $Z_4$ é dado pela associação em paralelo de um resistor e um capacitor e $Z_3$ é dado por um resistor:
+\begin{equation}
+FT(s)=1+\frac{\frac{1}{sC}||R_4}{R_3}=1+\frac{\frac{R_4}{R_3}}{1+sCR_4}=\frac{s+\frac{\frac{R_4}{R_3}+1}{R_4C}}{s+\frac{1}{R_4C}}
+\end{equation}
+
+Os valores utilizados foram de C=$1\mu F$, $R_4=22k\Omega$ e $R_3=2.2k\Omega$. Dessa forma, a FT do bloco de ganho é dada por:
+
+\begin{equation}
+FT_{ganho}=\frac{s+500}{s+45.45}
+\end{equation}{}
+
+Que é um bloco de $1^a$ ordem.
+
+Adicionalmente, ainda no módulo dinâmico, há uma divisão de tensão entre $Z_1$ e $Z_2$. Essa divisão, lembrando que $Z_1=2.2k\Omega$ e $Z_2$ é a impedância de um capacitor de $1\mu F$, pode ser modelada da seguinte forma:
+
+\begin{equation}
+FT_{divisor}=\frac{Z_2}{Z_1+Z_2}=\frac{\frac{1}{sC}}{\frac{1}{sC}+R_1}
+\end{equation}
+
+\begin{equation}
+FT_{divisor}=\frac{\frac{1}{R_2C}}{s+\frac{1}{R_2C}}=\frac{454.54}{s+454.54}
+\end{equation}
+
+Por fim, a FT do motor-tacômetro é obtida utilizando-se os valores de K e T:
+
+\begin{equation}
+FT_{sistema}=\frac{K}{1+sT}|_{K=0.957, T=24.8ms}=\frac{38.59}{s+40.32}
+\end{equation}
+
+
+\paragraph{}
+O sistema foi modelado a partir da \emph{toolbox} Simulink do software Matlab e sua simulação é mostrada abaixo:
+
+
+\begin{figure*}[ht]
+\centering
+\includegraphics[scale = 0.6]{images/matlab_diagram.png}
+\caption{Diagrama de Blocos do sistema de 3a ordem.}
+\label{fig:blockdiagram-3a-ordem}
+\end{figure*}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{images/matlab_resposta_2.png}
+\caption{Resposta ao sistema de 3a ordem obtida em simulação.}
+\label{fig:3a-ordem-resposta-simulada}
+\end{figure}
+
+Novamente, com o matlab a função de transferência é calculada:
+
+\begin{equation}
+\begin{array}{l}
+    \boxed{F.T.
+    = \frac{46.32 s + 2.316e04}{  0.02641 s^3 + 3.465 s^2 + 197.7 s + 2.536e04}} \\
+    \mbox{(F.T. para malha fechada de 3ª ordem)}
+\end{array}
+\end{equation}
+
+
+e os polos:
+
+\begin{equation}
+\begin{array}{l}
+    \boxed{p =    1.0e+02 * 
+    \left[ \begin{array}{l}
+  -1.3033          \\
+  -0.0045 + 0.8584i \\
+  -0.0045 - 0.8584i \\
+    \end{array} \right]
+} \\
+    \mbox{(polos para malha fechada de 3ª ordem)}
+\end{array}
+\end{equation}
+
+Vemos que um dos polos possui parte real  mais negativa que os outros dois. Isso faz com que sua resposta caia muito mais rapidamente que a resposta aos outros dois polos e seu efeito não é facilmente observável. Mesmo assim a resposta do sistema é altereada devido ao terceiro polo.
+
+Notamos que a simulação obtida difere um pouco do comportamento observado em laboratório, mas que, em ambos os casos, a adição do terceiro polo aumenta a oscilação do sistema.
+

@@ -1,0 +1,34 @@
+\section{Introdução}
+A peça chave da planta em estudo é o motor de corrente contínua. Como indicado pelo nome, esse tipo de motor é alimentado com uma tensão contínua $u_{in}(t)$ e produz uma velocidade angular de rotação $w(t)$. Sejam $U_{in}(s)$ e $\Omega(s)$ as transformadas de Laplace de $u_{in}(t)$ e $w(t)$ respectivamente, o funcionamento do motor é tema bem conhecido e a função de transferência é dada por:
+
+\begin{equation}
+		\frac{\Omega(s)}{U_{in}(s)} = \frac{K_m}{1 + s \cdot T}
+         \label{eq:U-W}
+\end{equation}
+
+onde $K_m$ é uma constante de ganho característica de cada motor e T está relacionado com a constante de tempo do sistema. Para medir a velocidade de rotação do eixo é comum fazer-se uso de um tacômetro. O tacômetro é acoplado ao eixo girante e produz em seus terminais de saída uma tensão $u_{tac}(t)$ proporcional à velocidade do eixo por um fator $K_t$. Dessa forma, podemos relacionar a transformada $U_{tac}(s)$ de $u_{tac}(t)$ com $U_{in}(s)$ por:
+
+\begin{equation}
+		\frac{U_{tac}(s)}{U_{in}(s)} = \frac{K_m \cdot K_t}{1 + s \cdot T}
+\end{equation}
+
+Podemos então estudar a planta ao controlar a entrada $u_{in}(t)$ e analisar a saída do tacômetro $u_{tac}(t)$. Com essa análise podemos determinar a constante T e a constante de ganho resultante $K = K_m \cdot K_t$. Se possuirmos uma forma de medir $K_m$ por outro meios, podemos determinar também $K_t$. Os métodos para essa determinação serão vistos na primeira etapa desse experimento. 
+
+
+Outra propriedade importante em sistemas de controle é a sua linearidade. Sejam $y_1(t)$ e $y_2(t)$  as respostas de um sistema a entradas $x_1(t)$ e $x_2(t)$, um sistema é dito linear se a resposta a uma combinação linear das entradas $x_1(t)$ e $x_2(t)$ produzir a mesma combinação linear de $y_1(t)$ e $y_2(t)$. Isto é, para um sistema linear:
+\begin{equation}
+	F(a \cdot x_1(t) + b \cdot x_2(t)) = aF(x_1) + bF(x_2)
+\end{equation}
+ 
+ Dois efeitos comuns de não linearidade podem ser verificada graficamente: saturação de um sistema e a faixa de zona morta. A saturação do sistema ocorre quando aumentamos gradativamente a energia de entrada do sistema e notamos que, apartir de um certo ponto, o sistema muda sua resposta drasticamente. A faixa de zona morta corresponde a resposta do sistema para baixas intensidades da entrada. Idealmente qualquer entrada deveria produzir uma alteração na saída, mas para muitos sistemas a entrada deve subir acima de um mínimo crítico para que haja uma resposta. Na prática, dificilmente nos deparamos com um sistema realmente linear, mas dentro de uma certa faixa de atuação alguns sistemas podem ser satisfatoriamente aproximados por um modelo linear.
+
+
+
+Abordaremos também no experimento um sistema de malha fechada. Em tal sistema um sinal relacionado à variável sendo controlada - no caso, a velocidade de rotação do motor - 
+é comparado com um valor estabelecido produzindo um sinal de erro relativo. Esse erro relativo passa por um estágio de amplificação e atua sobre o sistema, fechando a malha. 
+Ao variarmos os parâmetros desse estágio de ganho podemos observar diferentes resposta no sistema e, ao acrescentar componentes
+capacitivos aumentamos a ordem do sistema. Sistemas de ordem mais alta apresentam diferentes respostas, mas de forma generalizada pode-se dizer que em ordens mais altas temos maior oscilação da variável sendo controlada.
+
+
+
+

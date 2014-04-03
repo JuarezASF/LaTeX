@@ -1,0 +1,143 @@
+\subsection{1º Teste}
+\paragraph{}
+Pelo teorema do valor final, temos:\\
+\begin{equation}
+f(\infty)=\lim_{t\rightarrow 0} s\cdot F(s)
+\end{equation}
+
+\paragraph{}
+Aplicando isso à equação da função de transferência assumindo uma função degrau de entrada com amplitude genérica A, temos:
+\begin{equation}
+U_{tac}(s)=U_{in}(s)\frac{K_MK_T}{1+sT}=\frac{A}{s}\cdot\frac{K_MK_T}{1+sT} 
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+U_{tac}(\infty)=\lim_{s \rightarrow 0}s\cdot F(s)=\lim_{s \rightarrow 0}\cancel{s}\frac{A}{\cancel{s}}\cdot\frac{K_MK_T}{1+sT} \\
+=A\cdot K_M\cdot K_T= A\cdot K
+\end{array}
+\end{equation}
+
+\paragraph{}
+Denota-se K para o produto dos coeficientes $K_M$ e $K_T$. Ou seja, é possível calcular o coeficiente K pela fórmula:
+\begin{equation}
+K=\frac{U_{tac}(\infty)}{A}
+\label{eq:procedimento1-2}
+\end{equation}
+onde A é a amplitude da entrada rm forma de onda quadrada. O resultado é aplicado aos dados da tabela \ref{tab:teste1} e mostrado a seguir:
+
+%COLOCANDO ESSE [H] O ERRO DE COMPILAÇÃO SUMIU
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$U_2(V)$ & $V_4(V)$ & $K=\frac{V_4}{U_2}$\\
+\hline
+6.020 & 5.76 & 0.957\\
+\hline
+4.140 & 3.84 & 0.928\\
+\hline
+3.033 & 2.72 & 0.897\\
+\hline
+1.422 & 1.12 & 0.788\\
+\hline
+\end{tabular}
+\caption{Cálculo de K}
+\label{tab:analise1}
+\end{table}
+
+Vemos que, em nossas medidas, o ganho total do sistema parece variar com a amplitute do sinal de entrada. Para prosseguirmos devemos escolher um ganho específico. Escolhemos fazer todos os procedimentos então com uma amplitude de 6.00V e para isso:
+
+\begin{equation}
+\boxed{
+	K = 0.957
+    }
+\end{equation}
+
+Podemos aplicar o mesmo teorema para a equação \ref{eq:U-W}:
+
+\begin{equation}
+\begin{array}{l}
+\Omega(s) = U_{in}(s)\frac{K_m}{1 + s \cdot T} \\
+w(\infty)=\lim_{s \rightarrow 0}\cancel{s}\frac{A}{\cancel{s}}\cdot\frac{K_M}{1+sT} \\
+=A\cdot K_M
+\end{array}
+\end{equation}
+
+De forma que determinamos $K_M$ por:
+
+\begin{equation}
+	K_M = \frac{w(\infty)}{A}
+\end{equation}
+
+As contas são feitas na tabela a seguir:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$U_2(V)$ & $\omega (rpm)$ & $\frac{w(\infty)}{A}$(rpm/V)\\
+\hline
+6.020 & 11500 & 1.9103E03\\
+\hline
+4.140 & 7600 & 1.8357E3\\
+\hline
+3.033 & 5500 & 1.8134E3\\
+\hline
+1.422 & 2120 & 1.4909E3\\
+\hline
+\end{tabular}
+\caption{Cálculo de $K_M$}
+\label{tab:teste1-analise2}
+\end{table}
+
+Novamente escolhemos o valor de ganho para 6V:
+
+\begin{equation}
+	\boxed{K_M = 1910}
+\end{equation}
+
+Agora voltamos para $K_t$:
+
+\begin{equation}
+\begin{array}{l}
+	K = K_MK_t = \frac{V_4(\infty)}{A} \\
+    \mbox{, mas }K_M = \frac{w(\infty)}{A}\\
+    \Rightarrow K = \frac{w(\infty)}{A} K_t = \frac{V_4(\infty)}{A} \\
+    \therefore K_t = \frac{V_4(\infty)}{w(\infty)}
+\end{array}
+\end{equation}
+
+a tabela mostra os cálculos:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+ $\omega (rpm)$ & $V_4(V)$ & $\frac{V_4(\infty)}{w(\infty)}$(V/rpm)\\
+\hline
+11500 & 5.76 & 0.5009E-3 \\
+\hline
+ 7600 & 3.84 & 0.5053E-3\\
+\hline
+5500 & 2.72 & 0.4945E-3\\
+\hline
+2120 & 1.12 & 0.5283E-3\\
+\hline
+\end{tabular}
+\caption{Cálculo de $K_t$}
+\label{tab:teste1-analise3}
+\end{table}
+
+E então:
+\begin{equation}
+	\boxed{K_t = 0.5009E-3}
+\end{equation}
+
+
+\paragraph{}
+A constante de tempo foi medida utilizando-se o fato de que o intervalo de tempo que ela representa é da partida do sinal até que o mesmo atinja 63\% de seu valor final. O valor medido foi de 
+
+\begin{equation}
+    \boxed{\tau = 24.8ms}
+\end{equation}

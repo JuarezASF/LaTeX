@@ -1,0 +1,159 @@
+\subsection{3º Teste}
+\paragraph{}
+Primeiramente, são deduzidas abaixo as equações referentes ao sistema com realimentação de primeira ordem. O diagrama de blocos referente ao sistema é mostrado abaixo.
+
+\input{diagrams/diagramaA.tex}
+
+\paragraph{}
+Para o sistema com realimentação negativa, sabe-se que a função de transferência é da forma:
+\begin{equation}
+FT(s)=\frac{G(s)\cdot H(s)}{1+H(s)F(s)}
+\end{equation}
+Onde G(s) é o ganho dado pelo módulo de ganho, H(s) é a função de transferência do sistema motor-tacômetro e F(s) é o ganho de realimentação. Para os experimentos realizados com realimentação, F(s) é tipicamente unitário.
+
+\paragraph{}
+Logo, a função de transferência do sistema realimentado pode ser dada por:\\
+\begin{equation}
+FT(s)=\frac{V_4}{E_1}=\frac{G\cdot \frac{K}{1+sT}}{1+G\cdot\frac{K}{1+sT}}=\frac{G\cdot K}{1+ sT + G\cdot K}
+\end{equation}
+
+\begin{equation}
+FT(s)=\frac{\frac{G\cdot K}{1 + G\cdot K}}{1+ s\frac{T}{1 + G\cdot K} }
+\label{eq:eqDoJuara}
+\end{equation}
+
+\paragraph{}
+Aplica-se agora o Teorema do valor final para verificar o ganho do sistema realimentado com entrada degrau:\\
+\begin{equation}
+v_4(\infty)= \lim_{s\rightarrow 0} \cancel{s}\cdot\frac{A}{\cancel{s}} \frac{G\cdot K}{1+ sT + G\cdot K} = \frac{AGK}{1+GK}
+\end{equation}
+
+\paragraph{}
+Para o primeiro caso, de ganho adicional unitário, tem-se que o valor de $v_4(\infty)$ será dado por:
+\begin{equation}
+v_4(\infty)=\frac{AGK}{1+GK}|_{G=1}=\frac{AK}{K+1}
+\end{equation}
+
+Onde A denota a amplitude do degrau utilizado. Ou seja, o valor de $K_1$ é dado por:\\
+\begin{equation}
+K_1=\frac{v_4(\infty)}{A}=\frac{K}{K+1}
+\end{equation}
+
+Utilizando o valor de K apropriado para a situação (K=0.957), calcula-se um valor teórico para esse ganho $K_1$:
+\begin{equation}
+\boxed{K_{1 - teórico}=\frac{K}{K+1}=\frac{0.957}{1+0.957}\approx 0.4890}
+\end{equation}
+
+
+O valor prático é obtido da seguinte forma:
+\begin{equation}
+K_{1 - prático}=\frac{v_4(\infty)}{A}=\frac{6.56}{14.2}
+\end{equation}
+
+\begin{equation}
+\begin{array}{c}
+\boxed{K_{1 - prático} \approx 0.4620} \\ \mbox{ (K de malha fechada sem ganho)}
+\end{array}
+\end{equation}
+
+O mesmo pode ser feito para o sistema com ganho. Nesse sistema, utilizou-se resistores de 22k$\Omega$ e 2.2k$\Omega$ de forma que o ganho do AmpOp não-inversor totaliza 11, ou seja, G(s)=11.
+
+Dessa forma, temos:\\
+\begin{equation}
+v_4(\infty)=\frac{AGK}{1+GK}|_{G=11}=\frac{11AK}{11K+1}
+\end{equation}
+
+E o novo ganho, denotado $K_2$ é dado por:\\
+\begin{equation}
+K_2=\frac{v_4(\infty)}{A}=\frac{v_4(\infty)}{E_1}=\frac{11K}{11K+1}
+\end{equation}
+
+Realizando o procedimento análogo, temos os seguintes valores teórico e experimental para $K_2$:
+
+\begin{equation}
+\begin{array}{l}
+    K_{2 - prático} = \frac{V_4}{E_1} = \frac{9.6}{10.4}\\
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{c}
+\boxed{K_{\mbox{2 - prático}} = 0.865} \\ \mbox{ (K de malha fechada com ganho)}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+    K_{2 - teórico} = \frac{11K}{11K+1} = \frac{11 . 0.957}{11 . 0.957 + 1} \\
+    \boxed{K_{\mbox{2 - teórico}} = 0.913 }
+\end{array}
+\end{equation}
+
+Podemos comparar o erro percentual entre as previsões teóricas e experimentais pela forma:
+
+\begin{equation}
+  \epsilon = \frac{|X_{exp} - X_{teo}|}{X_{teo}}
+\end{equation}
+
+para os ganhos $K_1$ e $K_2$ temos:
+
+\begin{equation}
+\begin{array}{l}
+    \epsilon_1 = 4.9\% \\
+    \epsilon_2 = 5.3\% \\
+\end{array}
+\end{equation}
+
+Vemos que os dois erros são relativamente baixos e compatíveis com a precisão das medidas tomadas. Verifica-se aqui concordância entre as previsões teóricas e os resultados experimentais.
+
+
+Passamos agora para a análise das constantes de tempo. Vemos pela equação \ref{eq:eqDoJuara} que a constante de tempo do sistema será dada por:
+
+\begin{equation}
+    \tau ' = \frac{\tau}{1 + G.K}
+\end{equation}
+
+para G = 1, temos:
+
+\begin{equation}
+\begin{array}{l}
+    \tau '_{G = 1} = \frac{\tau}{1 + G.K} = \frac{24.8e-3}{1 + 1 \cdot 0.957} \\
+    \boxed{\tau '_{G = 1} = 12.7 \mbox{ms} } \\
+    \mbox{($\tau$ ' para malha fechada sem ganho)}
+\end{array}
+\end{equation}
+
+para G = 11, temos:
+
+\begin{equation}
+\begin{array}{l}
+    \tau '_{G = 11} = \frac{\tau}{1 + G.K} = \frac{24.8e-3}{1 + 11 \cdot 0.957} \\
+    \boxed{\tau '_{G = 11} = 2.2 \mbox{ms} } \\
+    \mbox{($\tau$ ' para malha fechada com ganho)}
+\end{array}
+\end{equation}
+
+Notamos que a adição do ganho diminuiu em torno de 5x a constante de tempo. Podemos resumir o sistema com ganho na função de transferência:
+
+\begin{equation}
+\begin{array}{l}
+    \boxed{F.T._{\mbox{\begin{tabular}{l}
+    1º ordem \\
+    G = 11, malha fechada
+    \end{tabular} }}
+    = \frac{0.865}{1 + 0.0022s}} \\
+    \mbox{(F.T. para malha fechada com ganho)}
+\end{array}
+\end{equation}
+
+e o polo é:
+
+\begin{equation}
+\begin{array}{l}
+    \boxed{p_{\mbox{\begin{tabular}{l}
+    1º ordem \\
+    G = 11, malha fechada
+    \end{tabular} }} = - 454.55} \\
+    \mbox{(polo para malha fechada com ganho)}
+\end{array}
+\end{equation}

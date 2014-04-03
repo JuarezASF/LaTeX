@@ -1,0 +1,46 @@
+\subsection{4º Teste}
+
+Para o caso com ganho, que gerou uma resposta sub-amortecida, podemos calcular o fator de amortecimento $\xi$ e a frequência natural $w_n$:
+
+\begin{equation}
+\begin{array}{l}
+    \xi = \frac{-ln(O.S.)}{\sqrt{\pi^2 + \ln^2(O.S.)}} \\
+    \xi = \frac{-ln(0.18681)}{\sqrt{\pi^2 + \ln^2(0.18681)}} \\
+    \boxed{\xi = 0.471}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+    w_n = \frac{\pi}{T_p \sqrt{1 - \xi^2}} \\
+    w_n = \frac{\pi}{0.052 \sqrt{1 - 0.471^2}}\\
+    \boxed{w_n = 68.488 \mbox{  rad/sec}}
+\end{array}
+\end{equation}
+
+Para o caso em que a resposta foi sobre-amortecida, podemos aproximar o sistema de segunda ordem por um de primeira. Um sistema de primeira ordem está caracterizado pela sua constante de tempo. Para esse sistema temos então:
+
+\begin{equation}
+    \boxed{\tau = 29 ms}
+\end{equation}
+
+Com a ajuda da rotina feedback() do matlab a função de transferência é calculada:
+
+\begin{equation}
+\begin{array}{l}
+    \boxed{F.T.
+    = \frac{10.53}{4.96e-5 s^2 + 0.0268 s + 11.53}} \\
+    \mbox{(F.T. para malha fechada de 2ª ordem com G = 11)}
+\end{array}
+\end{equation}
+
+com o comando pole(), também do matlab, obtém-se os polos da função
+
+\begin{equation}
+\begin{array}{l}
+    \boxed{p = 1.0e+02( -2.7016 \pm 3.9926i)
+} \\
+    \mbox{(polos para malha fechada de 2ª ordem com G = 11)}
+\end{array}
+\end{equation}
+

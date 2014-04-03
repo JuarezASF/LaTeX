@@ -1,0 +1,66 @@
+\section{Análise de Dados}
+\subsection{Considerações Prévias}
+A seguir são demonstradas algumas relações que auxiliam o entendimento do experimento.
+Primeiramente, são apresentadas as funções de transferência:
+
+Para o sistema de primeira ordem, é sabido:
+\begin{equation}
+H(s)=\frac{V_4}{U_2}= \frac{K_MK_T}{1+sT}= \frac{K}{1+sT}
+\end{equation}
+
+O mesmo sistema, agora com um ganho G constante, e em \emph{feedback} negativo, é dado por:
+\begin{equation}
+H_1(s)=\frac{V_4}{E_1}=\frac{G\cdot H(s)}{1+G\cdot H(s)}=\frac{GK}{1+sT+GK}
+\end{equation}
+
+O polo desse sistema é $p_1=-\frac{1+GK}{T}$.
+
+Em seguida, adicionando um bloco de primeira ordem no caminho direto (dado por $D(s)=\frac{1}{1+sR_1C_2}$), desenvolvemos a seguinte expressão para o sistema de $2^a$ ordem de malha fechada:
+
+\begin{equation}
+H_2(s)=\frac{V_4}{E_1}=\frac{D(s)\cdot H_1(s)}{1+D(s)\cdot H_1(s)}=
+\end{equation}
+
+\begin{equation}
+=\frac{\frac{1}{1+sR_1C_2}\cdot \frac{GK}{1+sT+GK}}{1+\frac{1}{1+sR_1C_2}\cdot \frac{GK}{1+sT+GK}}
+\end{equation}
+
+Logo,
+\begin{equation}
+H_2(s)=\frac{V_4}{E_1}=\frac{KG}{s^2(R_1C_2T)+s(R_1C_2+T)+(1+KG)}
+\end{equation}
+
+Os pólos apresentados por esse sistema são:
+\begin{equation}
+\begin{array}{c}
+ \frac{-R_1C_2+T+\sqrt{(R_1C_2+T)^2-4R_1C_2T(1+KG)}}{2R_1C_2T}  \\
+ \frac{-R_1C_2+T-\sqrt{(R_1C_2+T)^2-4R_1C_2T(1+KG)}}{2R_1C_2T}
+\end{array}
+\end{equation}
+
+Por fim, para calcular a FT do sistema de 3a ordem, basta substituir o ganho G, antes constante, por um ganho com impedância:
+
+\begin{equation}
+G(s)=1+\frac{Z}{R_3}=\frac{s+\frac{\frac{R_4}{R_3}+1}{R_4C}}{s+\frac{1}{R_4C}}=\frac{s+\beta}{s+\alpha}
+\end{equation}
+
+Fazendo essa substituição, encontra-se o sistema de 3a ordem:
+
+\begin{equation}
+H_3=\frac{V_4}{E_1}=
+\end{equation}
+\begin{equation}
+=\frac{(s+\beta)K}{(1+sR_1C_2)(s+\alpha)(1+sT)+K(s+\beta)}
+\end{equation}
+
+\input{6-1-Analise.tex}
+\input{6-2-Analise.tex}
+\input{6-3-Analise.tex}
+\input{6-4-Analise.tex}
+\input{6-5-Analise.tex}
+
+
+
+
+
+

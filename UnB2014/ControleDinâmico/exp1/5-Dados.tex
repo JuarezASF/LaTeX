@@ -1,0 +1,94 @@
+\section{Dados Experimentais}
+Para ordenar a apresentação os dados são dispostos na ordem das etapas do experimento.
+\subsection{1º Teste}
+\paragraph{}
+Abaixo é mostrada a tabela com os valores de entrada e saída obtidos, assim como os valores calculados para K.
+
+
+%COLOCANDO ESSE [H] O ERRO DE COMPILAÇÃO SUMIU
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$U_2(V)$ & $\omega (rpm)$ & $V_4(V)$\\
+\hline
+6.020 & 11500 & 5.76\\
+\hline
+4.140 & 7600 & 3.84\\
+\hline
+3.033 & 5500 & 2.72\\
+\hline
+1.422 & 2120 & 1.12\\
+\hline
+\end{tabular}
+\caption{Dados da parte 1.}
+\label{tab:teste1}
+\end{table}
+
+Em seguida, mediu-se o intervalo de tempo para que a entrada atingisse 63\% de seu valor final:
+
+
+\begin{equation}
+\boxed{\tau=24.8ms}
+\end{equation}
+
+
+\subsection{2º Teste}
+As figuras \ref{fig:dadosB_nao_linearidade} e \ref{fig:dadosB_saturacao} a seguir mostram os resultados obtidos.
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{images/nao_linearidade.jpg}
+\caption{zona morta}
+\label{fig:dadosB_nao_linearidade}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{images/saturacao.jpg}
+\caption{saturação}
+\label{fig:dadosB_saturacao}
+\end{figure}
+
+\subsection{3º Teste}
+Os dados dos procedimentos são mostrados na tabela a seguir:
+
+%COLOCANDO ESSE [H] O ERRO DE COMPILAÇÃO SUMIU
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+			& $E_{1}$ & $V_4$\\  \hline
+sem ganho 	& 14.2 V & 6.56 \\ \hline
+com ganho 	& 10.4   & 9.0 \\ \hline
+\end{tabular}
+\caption{Dados da parte 3}
+\label{tab:teste3}
+\end{table}
+
+\subsection{4º Teste}
+Observou-se uma resposta transitória característica de segunda ordem sub-amortecida ao acrescentar o ganho. A resposta do sistema sem ganho foi sobre-amortecida. Para o último caso aproximamos medimos apenas a constante de tempo:
+
+\begin{equation}
+\begin{array}{cc}
+    \boxed{\tau = 29 ms} & \mbox{, resposta amortecida} \\
+\end{array}
+\end{equation}
+
+Para o caso sub-amortecido medimos o sobrevalor percentual e o tempo de pico:
+\begin{equation}
+\begin{array}{l}
+    O.S. \% = 18.681 \% \\
+    t_p = 52 ms \\
+\end{array}
+\end{equation}
+
+\subsection{5º Teste}
+O resultado da construção desse sistema é mostrado abaixo:\\
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[width = 0.4\textwidth, height=6cm,keepaspectratio]{images/dia3_resposta_ordem3.jpg}
+\caption{Comportamento em osciloscópio do sistema de $3^a$ ordem.}
+\label{fig:3a-ordem-response}
+\end{figure}
