@@ -1,0 +1,246 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} 
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}			%para imagens
+\usepackage{epstopdf} 			%resolve problemas eps-pdf
+\usepackage{fancyhdr}			% para o cabeçalho bonito
+\usepackage{caption}				%para legendas
+\usepackage{placeins} 			%controlar o lugar dos floats
+\usepackage{hyperref}
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  \usebeamerfont{title}\inserttitle\par
+  \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par
+  \bigskip
+ %% \usebeamerfont{author}\insertauthor\par
+  \usebeamerfont{institute}\insertinstitute\par
+  \usebeamerfont{date}\insertdate\par
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+}
+
+
+\usetheme{Warsaw}
+\title[Sistemas Hidráulicos e Pneumáticos]{ SHP - Seminário \\ Mineração}
+\author{Danilo \\ Felipe Moreira \\ Juarez A.S.F. \\ Raphael Resende}
+\institute{Universidade de Brasília}
+\date{\today}
+
+% \setbeamertemplate{headline}{}
+%%para desativar o índice que aparece em cimaS
+\begin{document}
+
+
+\begin{frame}
+        \titlepage
+\end{frame}
+
+\begin{frame}{}
+	\frametitle{Integrantes}
+	 \begin{tabular}{lr}
+		Danilo           			& 11/0000000 \\
+		Felipe Moreira Ramos 		& 11/0011295 \\
+		Juarez A.S.F.				& 11/0032829 \\
+		Raphael Resende             & 11/0070712
+	\end{tabular}
+
+\end{frame}
+
+\section{Sistemas Hidráulicos}
+\begin{frame}
+	\frametitle{Uso de Sistemas Hidráulicos}
+    \begin{itemize}
+        \item Na atividade de mineração muitas vezes queremos sedimentar uma material rochoso, seja para removê-lo da estrutura sendo construída, seja para processá-lo posteriormente. Grandes estruturas rochosas requerem elevados esforços para serem quebradas.
+        \item Além disso, o transporte rápido de grandes quantidades de material requer altíssima potência.
+        \item Equipamentos de mineração fazem grande uso de tecnologias \textbf{hidráulicas} pela sua sua capacidade de reunir \textbf{elevada potência em pouco espaço}.
+        \item Aplicações
+            \begin{itemize}
+                \item martelo hidráulico
+                \item escavadeira
+                \item mineração hidráulica  
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{Martelo Hidráulico}
+\begin{frame}
+	\frametitle{Martelo Hidráulico}
+	\begin{itemize}
+	\item Um martelo hidráulico é um potente martelo de percussão acoplado a uma escavadeira para demolir estruturas de concreto ou rochas. Sua potência vem de um sistema hidráulico auxiliar da escavadora, que é acoplado a uma válvula operada pelo pé do operador.
+	\item Na escavação de terrenos para grandes construções, o martelo hidráulico é utilizado para sedimentar estruturas rochosas resistentes.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Martelo Hidráulico(Sandvic)}
+	http://mining.sandvik.com/
+    \begin{figure}
+    	\centering
+    	\includegraphics[scale = 0.4]{images/martelo.jpg}
+		\caption{martelo hidráulico}
+		\label{fig:martelo}
+    \end{figure}
+    Utilizado para sedimentar grandes estruturas rochosas
+\end{frame}
+
+\begin{frame}
+	\frametitle{Martelo Hidráulico(Sandvic) - especificações}
+    \begin{figure}
+    	\centering
+    	\includegraphics[scale = 0.7]{images/tabelaMartelo.jpg}
+		\caption{características}
+		\label{fig:tabelaMartel}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Martelo Hidráulico - video}
+\href{https://www.youtube.com/watch?v=ZH6zKVYxUhk}{Video - Martelo Hidráulico}
+\end{frame}
+
+
+\subsection{Escavadeiras}
+
+\begin{frame}
+	\frametitle{Escavadeiras}
+    \begin{itemize}
+        \item Com a alta do preço do petróleo acima de 50 dólares/barril a partir de 2005 muita atenção passou a ser dedicada à procura de novas fontes de energia.
+        \item Areia betuminosa(tar sands) (também chamada areia oleosa)
+        \item É mais caro extrair óleo da areia, mas estima-se que 2/3 das reservas de óleo do mundo estejam em forma de areia oleosa
+        \item o Canadá possui metade da areia betuminosa do mundo
+        \item Antes de processar a areia e retirar dela o seu óleo, grandes quantidades desta devem ser transportadas de reservas para as unidades de processamento. A escavadeira Terex's RH400 é utilizada para remover e depositar sobre os caminhões grandes quantidades de areia oleosa 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Escavadeiras}
+Maior escavadeira do mundo: Escavadeira Terex's RH400
+    \begin{itemize}
+        \item Peso: 1078 t
+        \item Capacidade 98 t
+        \item 14 bombas hidráulicas
+        \item 6 pistões
+        \item pressão máxima 5440psi
+        \item curiosidades:
+            \begin{itemize}
+            \item capaz de carregar um caminhão com 3 movimentações
+            \item recorde: 9900 t/hr em testes de performance e mais de 6050 t/hr em média
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Escavadeiras}
+    \begin{figure}
+    	\centering
+    	\includegraphics[scale = 0.2]{images/escavadeiraTerex.jpg}
+		\caption{escavadeira hidráulica Terex's}
+		\label{fig:escavadeiraExemplo}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Escavadeiras}
+    \begin{figure}
+    	\centering
+    	\includegraphics[scale = 1.0]{images/escavadeira.jpg}
+		\caption{escavadeira hidráulica}
+		\label{fig:escavadeira}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Escavadeiras}
+    \begin{figure}
+    	\centering
+    	\includegraphics[scale = 0.8]{images/escavadeira2.jpg}
+		\caption{escavadeira hidráulica}
+		\label{fig:escavadeira2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Manutenção}
+          Volker Boernke, diretor de projeto da linha de escavação O\&K: 
+        \begin{itemize}
+            \item "Our machines are used 24 hours a day, 365 days a year in really harsh mining conditions — and quite often also severe climactic conditions. Nevertheless, the customers expect uptime well above 90\%"
+            \item "the main criteria for us to select a supplier are quality, reliability, and after-sales-support in the long run"
+        \end{itemize}
+\end{frame}
+
+\subsection{Mineração Hidráulica}
+\begin{frame}
+	\frametitle{Mineração Hidráulica}
+\begin{itemize}
+    \item Uso de jatos de água de alta pressão para mover material rochoso e sedimentos 
+    \item Danos no ambiente muito altos – sedimentos vão para outra região através dos rios, erosão e alagamentos;
+    \item versão primitiva do processo desenvolvido pelos romanos:
+    \begin{itemize}
+    \item \href{http://en.wikipedia.org/wiki/Hydraulic_mining}{wikipedia}: Os romanos guardavam grandes quantidades de água em um reservatório imediatamente acima da área a ser minada; a água era então liberada rapidamente. A onda resultante de água removia excesso de solo em torno dos depósitos de minério e expunha o veio da rocha. Os veios de outro eram estão minerados usando uma variedade de técnicas, dentre elas o poder da água era novamente usado para remover detritos
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Mineração Hidráulica}
+\begin{itemize}
+    \item A técnica foi muito utilizada nos Estados Unidos durante a corrida do outro.
+    \item Novamente armazenava-se água a elevadas altitudes, mas, diferentemente dos romanos, o fluxo de água é canalizado por um tubo, formando verdadeiros canhões de água.
+    \item não havia uma bomba hidráulica propriamente dita, a função desta era feita pela gravidade, mas a técnica mostra o poder das pressões hidráulicas na prática da mineração.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Mineração Hidráulica}
+    \begin{figure}
+    	\centering
+    	\includegraphics[scale = 0.5]{images/mineHidr1.jpg}
+		\caption{mineração hidráulica}
+		\label{fig:mineHidr1}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Video}
+\href{https://www.youtube.com/watch?v=ac45MKG0m7M}{Video - Mineração Hidráulica}
+\end{frame}
+
+\section{Sistemas Pneumáticos}
+\subsection{Bomba de Diafragma}
+\begin{frame}
+	\frametitle{Uso de Sistemas Pneumáticos}
+    \begin{itemize}
+        \item Devido a versatilidade e portabilidade das bombas pneumáticas, sistemas desse tipo também são utilizados em atividades de suporte à mineração. Por exemplo: a remoção de água das minas.
+        \item Bombas comuns não podem ser utilizadas devido a presença de rochas na água. Motores elétricos são grandes, pesados e trazem os perigos da eletricidade. 
+        \item Um design simples comumente encontrado é a \textbf{bomba de diafragma}. 
+        \begin{itemize}
+            \item o ar pressurizado cria ciclicamente diferença de pressão entre duas câmeras separadas por um diafragma.
+            \item o sistema é capaz de bombear água com resíduos rochosos de até 1 polegada de diâmetro
+            \item: fonte : http://hydraulicspneumatics.com/mining/air-provides-pumping-power
+        \end{itemize}
+        \item ver figura \ref{fig:bombaDiafragma}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Bomba de Diafragma}
+\begin{figure}
+    	\centering
+    	\includegraphics[scale = 0.3]{images/bombaDiafragma.jpg}
+		\caption{bomba de diafragma PitBoss}
+		\label{fig:bombaDiafragma}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Video}
+\href{https://www.youtube.com/watch?v=DuC5mmkArrc}{ Video -Funcionamento de uma bomba de diafragma}
+\end{frame}
+
+\end{document}
