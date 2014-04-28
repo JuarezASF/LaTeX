@@ -9,7 +9,16 @@
 \usepackage{caption}				%para legendas
 \usepackage{placeins} 			%controlar o lugar dos floats
 \usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
 
+\lstset{language=Java,
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    morekeywords={MidiSystem, Soundbank, Synthesizer}
+}
 \defbeamertemplate*{title page}{customized}[1][]
 {
   \usebeamerfont{title}\inserttitle\par
@@ -196,26 +205,54 @@ Alguns componentes utilizados na interface:
   \end{itemize}
 \end{frame}
 
-\subsection{Controle Pause}
+\subsection{Controle Stop}
 \begin{frame}
   \frametitle{Controle de Pause}
   \begin{itemize}
    \item A classe de sequenciador MIDI implementada em Java apresenta as funcionalidades:
     \begin{enumerate}
      \item start: inicia a sequência de onde estiver
-     \item stop: para a sequência e seta a posição atual para seu início
+     \item stop: para a sequência
      \item goto: posiciona a sequência no número de tiques desejado
     \end{enumerate}
-    \item Para implementar a função de pause devemos guardar o instante atual(em tiques)
-    antes de pararmos a música.
-    \item Ao clicar em play novamente, devemos posicionar nesse instante salvo e então
-    darmos start.
+    \item Para implementar a função de stop devemos parar com stop e setar a posição(em tiques) para
+    zero.
   \end{itemize}
 \end{frame}
 
 
+\subsection{Implementando LoadSF}
+\begin{frame}[fragile]
+  \frametitle{Load SoundBank}
+	\begin{itemize}
+   		\item É preciso manter uma instância do SF atual   
+   		\begin{tiny}
+		\begin{lstlisting}
+			//no construtor
+	   		banco = MidiSystem.getSynthesizer().getDefaultSoundbank();		
+    			\end{lstlisting}
+   		\end{tiny}    	
+    		\item É preciso descarregar todo o SF antigo
+	\begin{tiny}\begin{lstlisting}
+    			Synthesizer sintetizador = MidiSystem.getSynthesizer();
+				sintetizador.unloadAllInstruments(banco);
+    			\end{lstlisting}\end{tiny}   	 	
+   	 	\item Carregar novo banco de som
+   	 	\begin{tiny}\begin{lstlisting}
+		    	Soundbank novo_banco = MidiSystem.getSoundbank(new File(sf_adress));
+    			sintetizador.loadAllInstruments(novo_banco);
+			banco = novo_banco;
+    			\end{lstlisting}\end{tiny}
+     \end{itemize}
+     
+\begin{lstlisting}
+
+	
 
 
+
+\end{lstlisting}
+\end{frame}
 
 
 \end{document}
