@@ -21,15 +21,15 @@
   \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
 }
 
-
+%DEFINE TEMA BEAMER A SER UTILIZADO
 \usetheme{Warsaw}
-\title[Sistemas Hidráulicos e Pneumáticos]{ SHP - Seminário \\ Mineração}
-\author{Danilo \\ Felipe Moreira \\ Juarez A.S.F. \\ Raphael Resende}
+%DEFINIÇÃO DE TÍTULO, AUTORES .....
+\title[Introdução a Computação Sônica]{ ICS - Trabalho I \\ MIDI Player}
+%\title[pequeno título que vai no bottom da página]{título grande}%
+\author{Juarez A.S.F. 11/0032829}
 \institute{Universidade de Brasília}
 \date{\today}
 
-% \setbeamertemplate{headline}{}
-%%para desativar o índice que aparece em cimaS
 \begin{document}
 
 
@@ -37,210 +37,185 @@
         \titlepage
 \end{frame}
 
-\begin{frame}{}
-	\frametitle{Integrantes}
-	 \begin{tabular}{lr}
-		Danilo           			& 11/0000000 \\
-		Felipe Moreira Ramos 		& 11/0011295 \\
-		Juarez A.S.F.				& 11/0032829 \\
-		Raphael Resende             & 11/0070712
-	\end{tabular}
+\AtBeginSection[]
+{
+%%página com layout da sessão ao início de cada sessão
+ \begin{frame}<beamer>
+   \tableofcontents[currentsection,currentsubsection]
+ \end{frame}
+}
 
-\end{frame}
-
-\section{Sistemas Hidráulicos}
-\begin{frame}
-	\frametitle{Uso de Sistemas Hidráulicos}
+\begin{frame}{Requisitos}
+	\frametitle{Requisitos}
     \begin{itemize}
-        \item Na atividade de mineração muitas vezes queremos sedimentar uma material rochoso, seja para removê-lo da estrutura sendo construída, seja para processá-lo posteriormente. Grandes estruturas rochosas requerem elevados esforços para serem quebradas.
-        \item Além disso, o transporte rápido de grandes quantidades de material requer altíssima potência.
-        \item Equipamentos de mineração fazem grande uso de tecnologias \textbf{hidráulicas} pela sua sua capacidade de reunir \textbf{elevada potência em pouco espaço}.
-        \item Aplicações
-            \begin{itemize}
-                \item martelo hidráulico
-                \item escavadeira
-                \item mineração hidráulica  
-            \end{itemize}
+	\item Desenvolver uma interface gráfica em Java que implemente um tocador MIDI com as funcionalidades básicas:
+	\begin{itemize}
+	 \item Controle Play/Pause
+	 \item Stop
+	 \item Posicionamento do instante inicial
+	 \item Controle de volume
+	 \item Exibição de parâmetros partitura da música que está sendo (ou está para ser) tocada: 
+	    \begin{itemize}
+	     \item fórmula de compasso
+	     \item metro
+	     \item andamento
+	     \item armadura de tonalidade
+	     \item indicação em tempo real[hh mm ss]
+	    \end{itemize}
+	\end{itemize}
     \end{itemize}
 \end{frame}
 
-\subsection{Martelo Hidráulico}
+\section{Classes Desenvolvidas}
+\subsection{MidiPlayer}
 \begin{frame}
-	\frametitle{Martelo Hidráulico}
+	\frametitle{MidiPlayer}
 	\begin{itemize}
-	\item Um martelo hidráulico é um potente martelo de percussão acoplado a uma escavadeira para demolir estruturas de concreto ou rochas. Sua potência vem de um sistema hidráulico auxiliar da escavadora, que é acoplado a uma válvula operada pelo pé do operador.
-	\item Na escavação de terrenos para grandes construções, o martelo hidráulico é utilizado para sedimentar estruturas rochosas resistentes.
+		\item Encapsula as funcionalidades do tocador
+		\item Utiliza mecanismo de composição e não de herança.
+		\item atributos:
+		\begin{itemize}
+			\item File arqMidi
+			\item Sequencer sequenciador;
+			\item Sequence  sequencia;
+			\item long tickPosition;
+		\end{itemize}
+		\item métodos de controle: play, \textbf{pause}, stop, goTo.
+		\item métodos informativos: getDuracao, getResolucao ....
 	\end{itemize}
 \end{frame}
 
-
+\subsection{LogWindow}
 \begin{frame}
-	\frametitle{Martelo Hidráulico(Sandvic)}
-	http://mining.sandvik.com/
-    \begin{figure}
-    	\centering
-    	\includegraphics[scale = 0.4]{images/martelo.jpg}
-		\caption{martelo hidráulico}
-		\label{fig:martelo}
-    \end{figure}
-    Utilizado para sedimentar grandes estruturas rochosas
+	\frametitle{LogWindow}
+	\begin{itemize}
+		\item Estende a classe JScrollPane
+		\item é simplesmente uma tela de texto para reportar mensagens 
+		durante o programa. Mensagens de erro são impressas em vermelho,
+		de warning em amarelo....
+		\item atributos:
+		\begin{itemize}
+			\item JTextPane logArea
+		\end{itemize}
+		\item métodos:
+		\begin{itemize}
+			\item report, reportGood, reportBad, reportWarning..
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\subsection{GUI}
+\begin{frame}
+	\frametitle{GUI}
+	\begin{itemize}
+		\item Estende a classe JFrame
+		\item contém diversos componentes dos pacotes java.awt e javax.swing
+		\item possui botões de play/pause e stop
+		\item menu 'file' para carregar arquivo midi
+		\item sliders de posicionamento para tempo e volume
+		\item tabela para informar dados da partitura
+	\end{itemize}
+\end{frame}
+
+\section{Interface Gráfica em JAVA}
+
+\subsection{Componentes Utilizados}
+\begin{frame}
+	\frametitle{Componentes}
+Alguns componentes utilizados na interface:	
+	\begin{itemize}
+		\item \textbf{ImageIcon, Icon e JButton} para botões
+		\item \textbf{JSlider} para entrada/saída de informações de tempo
+		\item \textbf{JLabel e JTable} para informações textuais
+		\item \textbf{JMenu, JMenuItem e JMenuBar} para menu
+		\item \textbf{JFileChooser} para navegar e carregar arquivo 
+		\item \textbf{JTimer} para controlar tempo com que o JSlider é atualizado
+	\end{itemize}
+\end{frame}
+
+\subsection{Layout}
+\begin{frame}
+  \frametitle{Composição de Layouts}
+  \begin{itemize}
+   \item Para posicionarmos espacialmente os componentes como desejamos, utilizamos uma composição de layouts.
+   \item O layout mais externo é um BorderLayout
+   \begin{figure}
+	\includegraphics[scale=0.5]{./images/BorderLayout.png}
+	\caption{BorderLayout}
+	\label{fig:BL}
+   \end{figure}
+   \item Cada parte desse layout externo possui um layout próprio, como FlowLayout ou GridLayout
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Martelo Hidráulico(Sandvic) - especificações}
-    \begin{figure}
-    	\centering
-    	\includegraphics[scale = 0.7]{images/tabelaMartelo.jpg}
-		\caption{características}
-		\label{fig:tabelaMartel}
-    \end{figure}
+ \frametitle{Layouts Utilizados}
+ \begin{figure}
+  \includegraphics[scale=0.5]{./images/GridLayout.png}
+  \caption{GridLayout}
+ \end{figure}
+ 
+ \begin{figure}
+  \includegraphics[scale=0.5]{./images/FlowLayout.png}
+  \caption{FlowLayout}
+ \end{figure} 
 
 \end{frame}
 
+
+
+\section{Problemas Encontrados}
+\subsection{JSlider de Tempo}
 \begin{frame}
-	\frametitle{Martelo Hidráulico - video}
-\href{https://www.youtube.com/watch?v=ZH6zKVYxUhk}{Video - Martelo Hidráulico}
-\end{frame}
-
-
-\subsection{Escavadeiras}
-
-\begin{frame}
-	\frametitle{Escavadeiras}
+    \frametitle{Slider de Tempo}
     \begin{itemize}
-        \item Com a alta do preço do petróleo acima de 50 dólares/barril a partir de 2005 muita atenção passou a ser dedicada à procura de novas fontes de energia.
-        \item Areia betuminosa(tar sands) (também chamada areia oleosa)
-        \item É mais caro extrair óleo da areia, mas estima-se que 2/3 das reservas de óleo do mundo estejam em forma de areia oleosa
-        \item o Canadá possui metade da areia betuminosa do mundo
-        \item Antes de processar a areia e retirar dela o seu óleo, grandes quantidades desta devem ser transportadas de reservas para as unidades de processamento. A escavadeira Terex's RH400 é utilizada para remover e depositar sobre os caminhões grandes quantidades de areia oleosa 
+     \item O JSlider usado para mostrar o tempo da música possui duas funcionalidades:
+     \begin{enumerate}
+      \item mostrar o tempo
+      \item capturar o instante em que o usuário deseja posicionar a música
+     \end{enumerate}
+     \item O seja, apresentas funcionalidade de entradas e saídas de dados.
+     \item A alteração do seu posicionamento pode ser feita:
+     \begin{enumerate}
+      \item \textbf{internamente} pela controle da passagem do tempo
+      \item \textbf{externamente} pelo mouse do usuário ao posicionar o slider ou ao clicar no botão stop.
+     \end{enumerate}
+    \item Enquanto o usuário estiver posicionando o Slider, a música continua tocando, mas deve-se desabilitar
+    a passagem do tempo.
     \end{itemize}
-\end{frame}
+    \end{frame}
 
 \begin{frame}
-	\frametitle{Escavadeiras}
-Maior escavadeira do mundo: Escavadeira Terex's RH400
-    \begin{itemize}
-        \item Peso: 1078 t
-        \item Capacidade 98 t
-        \item 14 bombas hidráulicas
-        \item 6 pistões
-        \item pressão máxima 5440psi
-        \item curiosidades:
-            \begin{itemize}
-            \item capaz de carregar um caminhão com 3 movimentações
-            \item recorde: 9900 t/hr em testes de performance e mais de 6050 t/hr em média
-            \end{itemize}
-    \end{itemize}
+  \frametitle{Slider de Tempo}
+  \begin{itemize}
+   \item Criamos uma variável controleExterno que é setada verdadeira quando o usuário está segurando
+   o cursor do slider(isMoving). 
+   \item Enquanto essa variável está setada, ignoramos as mudanças de relógio
+   \item Quando o usuário solta o cursos, posicionamos a música no instante desejado e 
+   setamos essa variável de controle para falso novamente.
+  \end{itemize}
 \end{frame}
 
+\subsection{Controle Pause}
 \begin{frame}
-	\frametitle{Escavadeiras}
-    \begin{figure}
-    	\centering
-    	\includegraphics[scale = 0.2]{images/escavadeiraTerex.jpg}
-		\caption{escavadeira hidráulica Terex's}
-		\label{fig:escavadeiraExemplo}
-    \end{figure}
+  \frametitle{Controle de Pause}
+  \begin{itemize}
+   \item A classe de sequenciador MIDI implementada em Java apresenta as funcionalidades:
+    \begin{enumerate}
+     \item start: inicia a sequência de onde estiver
+     \item stop: para a sequência e seta a posição atual para seu início
+     \item goto: posiciona a sequência no número de tiques desejado
+    \end{enumerate}
+    \item Para implementar a função de pause devemos guardar o instante atual(em tiques)
+    antes de pararmos a música.
+    \item Ao clicar em play novamente, devemos posicionar nesse instante salvo e então
+    darmos start.
+  \end{itemize}
 \end{frame}
 
 
-\begin{frame}
-	\frametitle{Escavadeiras}
-    \begin{figure}
-    	\centering
-    	\includegraphics[scale = 1.0]{images/escavadeira.jpg}
-		\caption{escavadeira hidráulica}
-		\label{fig:escavadeira}
-    \end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Escavadeiras}
-    \begin{figure}
-    	\centering
-    	\includegraphics[scale = 0.8]{images/escavadeira2.jpg}
-		\caption{escavadeira hidráulica}
-		\label{fig:escavadeira2}
-    \end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Manutenção}
-          Volker Boernke, diretor de projeto da linha de escavação O\&K: 
-        \begin{itemize}
-            \item "Our machines are used 24 hours a day, 365 days a year in really harsh mining conditions — and quite often also severe climactic conditions. Nevertheless, the customers expect uptime well above 90\%"
-            \item "the main criteria for us to select a supplier are quality, reliability, and after-sales-support in the long run"
-        \end{itemize}
-\end{frame}
-
-\subsection{Mineração Hidráulica}
-\begin{frame}
-	\frametitle{Mineração Hidráulica}
-\begin{itemize}
-    \item Uso de jatos de água de alta pressão para mover material rochoso e sedimentos 
-    \item Danos no ambiente muito altos – sedimentos vão para outra região através dos rios, erosão e alagamentos;
-    \item versão primitiva do processo desenvolvido pelos romanos:
-    \begin{itemize}
-    \item \href{http://en.wikipedia.org/wiki/Hydraulic_mining}{wikipedia}: Os romanos guardavam grandes quantidades de água em um reservatório imediatamente acima da área a ser minada; a água era então liberada rapidamente. A onda resultante de água removia excesso de solo em torno dos depósitos de minério e expunha o veio da rocha. Os veios de outro eram estão minerados usando uma variedade de técnicas, dentre elas o poder da água era novamente usado para remover detritos
-    \end{itemize}
-\end{itemize}
-\end{frame}
 
 
-\begin{frame}
-	\frametitle{Mineração Hidráulica}
-\begin{itemize}
-    \item A técnica foi muito utilizada nos Estados Unidos durante a corrida do outro.
-    \item Novamente armazenava-se água a elevadas altitudes, mas, diferentemente dos romanos, o fluxo de água é canalizado por um tubo, formando verdadeiros canhões de água.
-    \item não havia uma bomba hidráulica propriamente dita, a função desta era feita pela gravidade, mas a técnica mostra o poder das pressões hidráulicas na prática da mineração.
-    \end{itemize}
-\end{frame}
 
-\begin{frame}
-	\frametitle{Mineração Hidráulica}
-    \begin{figure}
-    	\centering
-    	\includegraphics[scale = 0.5]{images/mineHidr1.jpg}
-		\caption{mineração hidráulica}
-		\label{fig:mineHidr1}
-    \end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Video}
-\href{https://www.youtube.com/watch?v=ac45MKG0m7M}{Video - Mineração Hidráulica}
-\end{frame}
-
-\section{Sistemas Pneumáticos}
-\subsection{Bomba de Diafragma}
-\begin{frame}
-	\frametitle{Uso de Sistemas Pneumáticos}
-    \begin{itemize}
-        \item Devido a versatilidade e portabilidade das bombas pneumáticas, sistemas desse tipo também são utilizados em atividades de suporte à mineração. Por exemplo: a remoção de água das minas.
-        \item Bombas comuns não podem ser utilizadas devido a presença de rochas na água. Motores elétricos são grandes, pesados e trazem os perigos da eletricidade. 
-        \item Um design simples comumente encontrado é a \textbf{bomba de diafragma}. 
-        \begin{itemize}
-            \item o ar pressurizado cria ciclicamente diferença de pressão entre duas câmeras separadas por um diafragma.
-            \item o sistema é capaz de bombear água com resíduos rochosos de até 1 polegada de diâmetro
-            \item: fonte : http://hydraulicspneumatics.com/mining/air-provides-pumping-power
-        \end{itemize}
-        \item ver figura \ref{fig:bombaDiafragma}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Bomba de Diafragma}
-\begin{figure}
-    	\centering
-    	\includegraphics[scale = 0.3]{images/bombaDiafragma.jpg}
-		\caption{bomba de diafragma PitBoss}
-		\label{fig:bombaDiafragma}
-    \end{figure}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Video}
-\href{https://www.youtube.com/watch?v=DuC5mmkArrc}{ Video -Funcionamento de uma bomba de diafragma}
-\end{frame}
 
 \end{document}
