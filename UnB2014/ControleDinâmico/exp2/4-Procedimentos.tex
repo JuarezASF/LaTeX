@@ -1,0 +1,70 @@
+\section{Procedimentos}
+O experimento foi feito em três momentos:
+\begin{itemize}
+\item no primeiro dia apenas ligamos o kit e verificamos seu funcionamento 
+\item no segundo dia estudamos as relações teóricas entre as variáveis do circuito determinando as funções de transferência envolvidas
+\item no terceiro e no quarto dia medimos as constantes envolvidas e de importância para a malha de controle.
+\end{itemize}
+
+Em primeiro lugar, a montagem do kit foi sempre feita seguido os passo a seguir:
+
+\begin{enumerate}
+    \item Deve-se colocar o imã base centralizado na prateleira da base com a face branca para cima.
+    \item Posicione, também centralizado sobre a base, o estator.
+    \item Coloque o rotor com a haste para baixo dentro do conjunto.
+    \item Posicionando a placa superior da mesa, deposite o ultimo imã com a face branca para baixo.
+    \item Verifique se o kit está bem centralizado e faça os ajustes necessários.
+    \item Ligue as placas eletrônicas na seguinte ordem:
+    \begin{enumerate}[i.]
+        \item Conecte a placa principal a placa menor;
+        \item Conecte o cabo multivias do estator â placa principal;
+        \item Conecte a fonte de alimentação à placa principal;
+    \end{enumerate}
+    \item Com a placa principal posicionada na vertical e a fonte ligada observe o comportamento dos 4 LED's, eles correspondem aso sensores do conjunto
+    \item Movimente cuidadosamente o rotor e observe o acendimento e desligamento deles, isso significa que o kit está em pleo funcionamento
+    \item Com isso o rotor já está levitando porém deve necessitar de uma leve correção que deve ser feita de forma manual
+    \item Se o rotor estiver levitando estático e os LEDS da placa principal estão apagados e isso conclui que o kit está pronto para o experimento
+\end{enumerate}
+
+Para a aquisição dos valores do sistema foi necessário colocar um calço, que consiste em uma placa de madeira e uma de cerâmica para servir de apoio para a haste do eixo do rotor, evitando assim variações bruscas do sistema que podem levar à instabilidade. Teve-se ainda cuidado com qualquer contato com a mesa ou objetos sobre ela pois qualquer vibração da mesa influencia as medidas do sensor de posição e dificultam o trabalho experimental.
+
+A seguir descrevemos os procedimentos realizados no terceiro momento
+do experimento com o objetivo de se determinar as constantes envolvidas.
+
+\subsection{$K_s$}
+
+
+
+Antes de montar o kit, pesamos o rotor.
+Para se determinar $K_s$ devemos, depois de feita a montagem, movimentar o rotor para posições de extrema direita e esquerda e observar o comportamento de $S_{s1}$. Anota-se então os valores máximos e mínimos atingidos por esse sinal. Devemos também medir
+o comprimento da abertura da janela por onde passa o deixe de luz.
+A medida é feita com um paquímetro.
+
+\subsection{\texorpdfstring{$\omega_r$}{Lg}}
+O segundo parâmetro a ser aferido é $\omega_r $ deve-se retirar o calço e puxar cuidadosamente o rotor para aproximadamente 1 cm e solta-lo de maneira que ele oscile. Com o osciloscópio em varredura lenta, mede-se os canais $ S_{s1} $ e $ S_{s2} $ simultaneamente para captar o sinal. Congele a imagem e utilize os cursores para medir o tempo de oscilação, $ T_{med} $, e a quantidade de oscilações, $ N_{per} $ que é calculada pela expressão abaixo.
+
+\begin{equation}
+    \omega_r = 2\pi\frac{N_{per}}{T_{med}}
+\end{equation}
+
+\subsection{$k_f$}
+O parâmetro $ k_f $ corresponde à constante negativa da mola no deslocamento lateral, a demostrado pela formula:
+\begin{equation}
+    k_f = m\omega_r^2,
+\end{equation}
+que se encontra em um roteiro auxiliar do experimento.
+
+\subsection{$K_{if}$}
+O ultimo parâmetro a ser encontrado é aferido juntamente com a validação do modelo proposto. Se consideramos que $ R_r  = 0 $ e $ R_{pot} = 1 $ o diagrama da Figura \ref{ig:blk-diag} pode ser simplificado como visto na Figura \ref{fig:blk-diag-sim}.
+A placa de aquisição de dados fornece o sinal $ I_b $, além do $ S_s $ e das entradas para a saída do gerador de sinal, e pela expressão que rege a relação dos dois sinais, os dois são sempre em fase ou com fazer invertida. Aplicando uma senoide e aguardando uma fração de tempo é possível ver o regime permanente senoidal. E a partir desse sinal que se deve calcular o $K_{if}$, entretanto para se consiga a mais perfeita medição deve-se diminuir o nível DC, para isso é só reposicionar o uma superior e ajustar a amplitude no gerador de funções para que $ I_b $ seja em torno de $ 300 mV $ em baixas frequência, e em altas $ S_s $ de aproximadamente $ 400 mV $.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.25]{diagrams/block-diagram-simplificado.jpg}
+\caption{Diagrama de blocos simplificado.}
+\label{fig:blk-diag-sim}
+\end{figure}
+
+\subsection{Frequência Zero}
+Para realizar tal medida aplique uma onda quadrada com uma frequência  muito baixa, a ponto de ser perceptível no osciloscópio o assentamento do sinal antes do próximo degrau. Anota-se o valor da variação de $S_s$ e de $I_b$ em regime permanente em relação às
+condições iniciais.

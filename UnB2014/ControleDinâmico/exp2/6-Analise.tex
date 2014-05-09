@@ -1,0 +1,204 @@
+\section{Análise de Dados}
+Inicialmente determinamos os parâmetros $K_r$, $K_R$, $K_{ifsr}$ e $K_{f}$  a partir dos dados calculados:
+\begin{itemize}
+\item \textbf{$K_s$} pode ser determinado a partir da fórmula:
+\begin{equation}
+     K_s = \frac{S_{Smax} - S_{Smin}}{d}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+	     $K_s$ = 1031.58 V/m 
+        }
+\end{equation}
+
+\item \textbf{$K_R$} pode ser determinado a partir da fórmula:
+\begin{equation}
+     K_R = m \omega_r^2
+\end{equation}
+\begin{equation}
+    \boxed{
+         $K_R$ = 53.6243 $\frac{kg}{s^2}$
+        }
+\end{equation}
+
+
+\item \textbf{$K_{ifsr}$}
+
+
+O cálculo de $K_{ifsr}$ é feito pela fórmula:
+\begin{equation}
+    K_{ifsr} = \frac{S_s}{I_b} \cdot \left( 1 + (\frac{2 \pi f}{\omega_r}^2)\right)
+\end{equation}
+
+O cálculo é feito para os valores no domínio do tempo e da frequência e apresentados nas tabelas a seguir:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+$f(Hz)$ & $\theta$ & $\frac{S_S}{I_b}$ & $K_{ifsr}$  \\
+\hline
+0 & 0 & 51.25 & 51.25\\
+\hline
+5 & $0^o$ &6.852 &41.028  \\
+\hline
+10 &$0^o$ &2.9 & 86.075\\
+\hline
+15 &$0^o$ &1.58 & 72.507 \\
+\hline
+20 &$0^o$ &0.735 &59.415 \\
+\hline
+25 &$0^o$ &0.653 &82.137 \\
+\hline
+30 &$0^o$ &0.607 &109.686 \\
+\hline
+\end{tabular}
+\caption{Cálculo de $K_{ifrs}$ no domínio do tempo}
+\label{tab:ch1-tempo2}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$f(Hz)$ & $\frac{S_S}{I_b}$ & $K_{ifsr}$  \\
+\hline
+0 & 51.25 & 51.25\\
+\hline
+5 &11.11 & 66.53  \\
+\hline
+10 &3.224 &67.540   \\
+\hline
+15 &1.5845 & 72.713 \\
+\hline
+20 &0.682 & 55.094 \\
+\hline
+25 &0.613 & 77.039 \\
+\hline
+30 &0.544 & 98.246 \\
+\hline
+\end{tabular}
+\caption{Cálculo de $K_{ifrs}$ no domínio da frequeência}
+\label{tab:ch1-freq2}
+\end{table}
+
+Vemos que os valores do parâmetro $K_{ifsr}$ variam consideravelmente, é necessário então calcular a média e o desvio padrão dessa medida para cada uma das situações: domínio do tempo e domínio da frequência.
+
+Os valores obtidos foram:\\
+\begin{itemize}
+\item 
+Para o domínio do tempo:\\
+    \begin{equation}
+        \overline{K_{ifsr}}= \mu =  71.7283
+        \end{equation}
+    
+    \begin{equation}
+        \sigma_{Kifsr}= 23.3418
+    \end{equation}
+
+\item
+Para o domínio da frequência:\\
+    \begin{equation}
+        \overline{K_{ifsr}}= \mu =  69.7731
+    \end{equation}
+
+    \begin{equation}
+        \sigma_{Kifsr}= 15.5254
+    \end{equation}
+\end{itemize}
+\item \textbf{$K_{f}$}
+
+
+O valor de $K_{if}$ é obtido a partir da seguinte equação:\\
+\begin{equation}
+K_{ifsr}=\frac{-K_{if}K_s}{k_r} \Rightarrow K_{if}=\frac{-K_{ifsr}\cdot 53.6243}{1031.58}
+\end{equation}
+
+
+Como $K_{if}$ é obtido a partir de $K_{ifsr}$ multiplicado por constante, a distribuição probabilística dos valores não é afetada e a média e a variância de $K_{if}$ podem ser calculadas a partir da média e variância de $K_{ifsr}$ pela mesma fórmula. Dessa forma, tem-se:\\
+\begin{itemize}
+\item 
+No domínio do tempo:
+    \begin{equation}
+        \overline{K_{if}} = -3.7286
+    \end{equation}
+
+    \begin{equation}
+        |\sigma_K|=1.2134
+    \end{equation}
+\item 
+No domínio da frequência:\\
+    \begin{equation}
+        \overline{K_{if}} =-3.6270
+    \end{equation}
+
+    \begin{equation}
+        |\sigma_K|= 0.8071
+    \end{equation}
+\end{itemize}
+
+Por fim, a partir do princípio de máxima verossimilhança, obtém-se um valor único de média e variância combinadas:\\
+\begin{equation}
+        \overline{K_{if}}=\frac{\frac{x_A}{\sigma_A^2}+\frac{x_B}{\sigma_B^2}}{\frac{1}{\sigma_A^2}+\frac{1}{\sigma_B^2}}
+\end{equation}
+
+\begin{equation}
+    \boxed{
+        \overline{K_{if}}= -3.6582
+    }
+\end{equation}
+
+\begin{equation}
+\sigma_{Kif}^2=\left(\frac{1}{\sigma_1^2}+\frac{1}{\sigma_2^2} \right)^{-1} \approx 0.4516
+\end{equation}
+Logo, 
+\begin{equation}
+\sigma_{Kif}\approx 0.672
+\end{equation}
+
+\end{itemize}
+
+Calcula-se agora a função de transferência G(s) do compensador. Sabe-se que ela é dada por uma divisão de tensão por impedâncias:\\
+\begin{equation}
+\frac{E_P}{S_M}=\frac{12k\Omega}{12k\Omega+(47k\Omega|| \frac{1}{s\cdot C})}
+\end{equation}
+Onde $C=1\mu F$.
+\begin{equation}
+    \boxed{
+        \frac{E_P}{S_M}=\approx \frac{s+21.277}{s+104.601}
+    }
+\end{equation}
+
+
+
+Nota-se que o compensador acima é um compensador de avanço de fase.
+
+Tendo obtidos todos os parâmetros descritivos do sistema, é possível montar o seguinte diagrama de blocos para simulação no simulink:\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.60]{images/simulink-blocks.jpg}
+\caption{Diagrama de blocos utilizado para simulação.}
+\label{fig:simulink_blocks}
+\end{figure}
+
+Simulando a entrada para uma das frequências utilizadas (5Hz, no caso), obtém-se a seguinte resposta, onde os sinais mostrados são Ib e Ss:\\
+
+\begin{figure}[H]
+\centering
+\includegraphics{images/simulation.jpg}
+\caption{Resposta simulada do sistema.}
+\label{fig:simulation}
+\end{figure}
+
+Para efeito de comparação, é mostrada abaixo a resposta real obtida em laboratório:\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.1]{images/onda3.jpg}
+\caption{Resposta real do sistema.}
+\label{fig:simulation-real}
+\end{figure}
+
+Nota-se que o ganho e a defasagem dos gráficos é extremamente similar ao que foi obtido em laboratório. Dessa forma, conclui-se que a modelagem do sistema se deu de forma efetiva.

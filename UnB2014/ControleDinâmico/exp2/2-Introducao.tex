@@ -1,0 +1,103 @@
+\section{Introdução}
+ A engenharia de forma geral está interessada em sistemas que possam ser controlados e seu comportamento previsto. Isto é mais facilmente atingido em sistemas que estejam equilibrados. Além disso, é interessante que o equilíbrio seja estável. 
+ 
+ Equilíbrio ocorre quando todas as forças que atuam no sistema estão contrabalanceadas e não há aceleração linear ou angular. Podemos ainda classificar o equilíbrio em relação a sua estabilidade.
+Em um equilíbrio instável o sistema se encontra em um ponto crítico onde qualquer que seja a perturbação inserida o sistema deixará de estar equilibrado e se afastará da posição de equilíbrio. Por outro lado, no equilíbrio estável as forças que atuam no sistema são tais que restauram o estado de equilíbrio do sistema mesmo sob ação de perturbações. As figuras \ref{fig:intro-instavel} e \ref{fig:intro-estavel} a seguir mostram exemplos de sistema tipicamente estável e instável.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/instavel.png}
+\caption{Típico sistema instável}
+\label{fig:intro-instavel}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/estavel.png}
+\caption{Típico sistema estável}
+\label{fig:intro-estavel}
+\end{figure}
+ 
+ Diferentemente dos sistemas mostrados nas imagens acima onde o peso é contrabalanceado pela força normal, neste experimento gostaríamos de equilibrar um corpo apenas por forças de origem eletromagnética. A princípio, desejava-se que uma haste permanecesse equilibrada apenas pela interação entre um campo magnético externo e um ímã colocado em sua ponta. No entanto, de acordo com o teorema de Earnshaw, nenhuma partícula pode estar em equilíbrio estável sob ação somente de forças eletrostáticas. Isso, aplicada à situação magnética, nos diz que não é possível realizar a levitação de um corpo utilizando-se apenas de ímãs.
+
+
+Dessa forma, entra no projeto a necessidade de um atuador externo para permitir o equilíbrio da haste. Queremos adicionar componentes a um sistema magnético que transformem um equilíbrio instável como o da figura \ref{fig:intro-instavel} em um sistema estável como na figura \ref{fig:intro-estavel}.
+A ideia chave é o uso de bobinas para controlar o campo magnético resultante sob a haste. Um sensor de posição mede o afastamento da haste da posição central e circuitos acessórios comparam o sinal do sensor com um valor desejado, determinando o sinal de controle que deve ser enviado às bobinas para corrigir o campo magnético. O objetivo é que a  força magnética desse campo corrigido leve a haste
+para a posição desejada.   
+
+
+O sistema é mostrado na figura \ref{fig:system}. O campo resultante no rotor é a soma do campo produzido pelos ímãs superior e e inferior e o o produzido pelas bobinas. O campo devido aos ímãs é constante e o produzido pelas bobinas depende da corrente que passa por elas. É justamente sob essa última parcela que atua nosso sistema de controle: controlamos a corrente pelas bobinas de forma que essa modifique o campo produzido e o novo campo leve a haste para onde quisermos. A polaridade do campo produzido pelas bobinas é detalhada na figura \ref{fig:atuador}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{diagrams/sistema-em-funcionamento.jpg}
+\caption{Sistema em funcionamento.}
+\label{fig:system}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{diagrams/atuador.jpg}
+\caption{Bobinas controlam a parcela variável do campo magnético do sistema.}
+\label{fig:atuador}
+\end{figure}
+
+Para se entender o controle realizado, será preciso determinar as
+relações entre as variáveis existente em nosso sistema. Com esse 
+objetivo mostramos a seguir os diversos circuitos que fazem parte da
+malha de controle.
+
+
+O circuito da figura a seguir trata o sinal recebido dos sensores. 
+O objetivo do tratamento é fazer com que o sinal seja zero na posição central de equilíbrio e positivo ou negativo dependendo em qual direção longe do equilíbrio a haste se encontra. 
+O sensor é indicado na figura pelo foto transistor Ft e o sinal tratado passado para o resto do sistema é Ss.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{diagrams/sensor-posicao.jpg}
+\caption{Circuito do sensor de posição utilizado.}
+\label{fig:sensorposicao}
+\end{figure}
+
+Na figura a seguir vemos o circuito somador-amplificador utilizado.
+Esse circuito recebe o sinal Ss da etapa anterior e compara com 
+o sinal Ref que indica a posição desejada. A saída desse módulo é o sinal Sm.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{diagrams/somador-amplificador.jpg}
+\caption{Circuito do somador-amplificador utilizado.}
+\label{fig:somad-amplif}
+\end{figure}
+
+Na figura a seguir vemos o circuito do compensador utilizado. O objetivo do compensador é acrescentar polos e zeros na malha do sistema de modo que este passe a ser estável e a apresentar a resposta dinâmica desejada. Esse bloco recebe o sinal Sm produzido 
+pelo somador-amplificador e produz o sinal Ep que irá para o circuito dos atuadores. 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{diagrams/compensador.jpg}
+\caption{Circuito do compensador utilizado.}
+\label{fig:compens}
+\end{figure}
+
+Na figura a seguir vemos o circuito do atuador. As bobinas(os atuadores em si) são representadas por Be e Bd. Os transistores vistos no circuito irão amplificar a corrente do sinal de entrada. Além disso, os diodos representados são leds e indicam visualmente em qual sentido o controle está sendo feito, isto é, se o campo produzido está tentando restaurar perturbações a direita ou a esquerda do ponto de equilíbrio.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{diagrams/atuador-circuito.jpg}
+\caption{Circuito do atuador utilizado.}
+\label{fig:atuadorcirc}
+\end{figure}
+
+O diagrama de blocos a seguir mostra a malha de controle do sistema.
+
+
+\FloatBarrier
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.25]{diagrams/block-diagram.jpg}
+\caption{Diagrama de blocos do sistema.}
+\label{fig:blk-diag}
+\end{figure}
+\FloatBarrier
+
+O experimento consistirá então em estudar as relações entre as variáveis do sistema e em determinar as constantes envolvidas na malha de controle.
