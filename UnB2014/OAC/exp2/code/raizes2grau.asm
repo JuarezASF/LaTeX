@@ -1,15 +1,20 @@
+#Universidade de BrasÃ­lia - 1Âº de 2014 - OrganizaÃ§Ã£o e Arquitetura de Computadores
+# LaboratÃ³rio 2 - Parte A - questÃ£o 1
+# Alunos: Juarez e grupo
+# Professor: Lamar
+
 .data
-	str_entrada : .asciiz "Consideramos o polinômio p(x) = a*x^2 + b*x + c. \n\n"
+	str_entrada : .asciiz "Consideramos o polinï¿½mio p(x) = a*x^2 + b*x + c. \n\n"
 	str_entre_a : .asciiz " Entre com o coeficiente a: \n \t"
 	str_entre_b : .asciiz "\n Entre com o coeficiente b: \n \t"
 	str_entre_c : .asciiz "\n Entre com o coeficiente c: \n \t"
-	str_1	: .asciiz "O polinômio entrado foi: \n \n \t p(x) = "
+	str_1	: .asciiz "O polinï¿½mio entrado foi: \n \n \t p(x) = "
 	str_x2: .asciiz "*x^2 + "	
 	str_x1: .asciiz "*x^1 + "
 	str_x0: .asciiz "*x^0"
 	newl: .asciiz "\n"
 	tab: .asciiz "\t"	
-	str_2	: .asciiz "As raízes do polinômio são: \n \tr1 = "
+	str_2	: .asciiz "As raï¿½zes do polinï¿½mio sï¿½o: \n \tr1 = "
 	str_3	: .asciiz "r2 = "
 	str_4	: .asciiz " + i* "
 	
@@ -25,7 +30,7 @@
 
 #	STATUS ATUAL:
 # O PROGRAMA FUNCIONA PARA OS CASOS COMUNS. FALTA LIDAR COM OS CASOS DEGENERADOS
-#POR EXEMPLO, SE A == 0, ENTÃO O POLINÔMIO NÃO É DE ESGUNDA ORDEM. DEVEMOS TRATAR ESSE CASO
+#POR EXEMPLO, SE A == 0, ENTï¿½O O POLINï¿½MIO Nï¿½O ï¿½ DE ESGUNDA ORDEM. DEVEMOS TRATAR ESSE CASO
 
 main:
 	#imprime string de entrada
@@ -156,9 +161,9 @@ show_pol:
 	
 calcula_raizes_grau_2:
 #recebe: coeficientes a,b,c em f0,f1,f2 (single)
-#faz: calcula raízes de p(x) = a*x^2 + b*x + c e coloca os valores na pilha (single)
-#retorna: $a0: 1 se raízes reais, nesse caso os valores estão em 0(sp), 4(sp) 
-#		2 se raÃ­zes complexas; nesse caso as raízes são 0(sp) + i*4(sp) e 8(sp) *i*12(sp)
+#faz: calcula raï¿½zes de p(x) = a*x^2 + b*x + c e coloca os valores na pilha (single)
+#retorna: $a0: 1 se raï¿½zes reais, nesse caso os valores estï¿½o em 0(sp), 4(sp) 
+#		2 se raÃ­zes complexas; nesse caso as raï¿½zes sï¿½o 0(sp) + i*4(sp) e 8(sp) *i*12(sp)
 #altera: a0
 #utiliza: f0, f1,f2,f3,f4,f5,f6,f7,f8,f9,f10,f11,f12,f13,f14,f15,f16,f17, f30, f31
 
@@ -185,7 +190,7 @@ calcula_raizes_grau_2:
 	swc1	$f30, 4($sp)
 	swc1	$f31, 0($sp)
 	
-	# conversão para double
+	# conversï¿½o para double
 	cvt.d.s $f4, $f0 # f4 = (double)a
 	cvt.d.s $f6, $f1 # f6 = (double)b
 	cvt.d.s $f8, $f2 # f8 = (double)c
@@ -312,8 +317,8 @@ mostra_raizes_grau_2:
 #faz: imprime raÃ­zes de acordo com o formato dado em a0
 #retorna: nada
 #altera: nada
-	#strings dessa função
-	#str_2	: .asciiz "As raízes do polinômio são: \n \t r1 = "
+	#strings dessa funï¿½ï¿½o
+	#str_2	: .asciiz "As raï¿½zes do polinï¿½mio sï¿½o: \n \t r1 = "
 	#str_3	: .asciiz "r2 =  "
 	#str_4	: .asciiz " + i* "
 	
@@ -325,7 +330,7 @@ mostra_raizes_grau_2:
 	la $a0, str_2
 	syscall
 	
-	#decide qual modo de impressão baseado em a0
+	#decide qual modo de impressï¿½o baseado em a0
 	li $t0, 1
 	beq $t3, $t0, mostra_raizes_grau_2__raizes_reais
 	li $t0, 2
@@ -338,7 +343,7 @@ mostra_raizes_grau_2:
 	lwc1 $f2, 8($sp)
 	lwc1 $f3, 12($sp)
 	
-	#mostra primeira raíz
+	#mostra primeira raï¿½z
 	li $v0, 2
 	mov.s $f12, $f0 
 	syscall
@@ -351,12 +356,12 @@ mostra_raizes_grau_2:
 	la $a0, tab
 	syscall
 	
-	#texto da segunda raíz
+	#texto da segunda raï¿½z
 	li $v0, 4
 	la $a0, str_3
 	syscall
 
-	#mostra segunda raíz
+	#mostra segunda raï¿½z
 	li $v0, 2
 	mov.s $f12, $f2 
 	syscall
@@ -369,7 +374,7 @@ mostra_raizes_grau_2:
 	j mostra_raizes_grau_2__exit
 	
 	mostra_raizes_grau_2__raizes_complexas:
-	#mostra Re da primeira raíz
+	#mostra Re da primeira raï¿½z
 	li $v0, 2
 	mov.s $f12, $f0 
 	syscall
@@ -379,7 +384,7 @@ mostra_raizes_grau_2:
 	la $a0, str_4
 	syscall
 	
-	#mostra Im da primeira raíz
+	#mostra Im da primeira raï¿½z
 	li $v0, 2
 	mov.s $f12, $f1 
 	syscall
@@ -392,12 +397,12 @@ mostra_raizes_grau_2:
 	la $a0, tab
 	syscall
 	
-	#texto da segunda raíz
+	#texto da segunda raï¿½z
 	li $v0, 4
 	la $a0, str_3
 	syscall
 
-	#mostra Re da segunda raíz
+	#mostra Re da segunda raï¿½z
 	li $v0, 2
 	mov.s $f12, $f2 
 	syscall
@@ -407,7 +412,7 @@ mostra_raizes_grau_2:
 	la $a0, str_4
 	syscall
 	
-	#mostra Im da segunda raíz
+	#mostra Im da segunda raï¿½z
 	li $v0, 2
 	mov.s $f12, $f3
 	syscall
@@ -430,7 +435,7 @@ positive_sqrt:
 #L = f2; M = f4, R = f6 (double)
 #recebe x = f0	
 #utiliza f0, f2, f4, f6, f8, f10, t0, t1, ra
-#restaura todo o estado a excessão de f0,f1,f30 e f31
+#restaura todo o estado a excessï¿½o de f0,f1,f30 e f31
 #retorna sqrt(X) em f30(double)
 
 
