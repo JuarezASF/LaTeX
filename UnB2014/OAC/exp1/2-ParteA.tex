@@ -1,0 +1,350 @@
+\section{Assembly MIPS}
+
+\subsection{Ordenação}
+
+\subsubsection{}
+\paragraph{} A tabela \ref{tab:Aquest1-a} a seguir mostra os resultados obtidos. Os resultados
+foram obtidos com o código 'sort.s' disponível no moodle e o vetor de
+entrada V[10]={5,8,3,4,7,6,8,0,1,9}. Para se obter a versão
+decrescente da rotina foi preciso apenas mudar a linha de comparação, trocando o
+comando \textbf{beq} por \textbf{bne} no loop for2 da rotina sort.
+
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|r|c|c|}\hline
+							& Crescente & Decrescente \\ \hline
+		Instruções tipo R 	& 	255(31\%)		& 276(32\%) \\ \hline
+		Instruções tipo I 	& 	472(58\%)		& 499(58\%) \\ \hline
+		Instruções tipo J 	& 	75(9\%)		& 81(9\%) \\ \hline
+		Total 				&	802 	& 856 \\ \hline
+	\end{tabular}
+	\caption{}
+	\label{tab:Aquest1-a}
+\end{table}
+
+\subsubsection{}
+\paragraph{} Olhando toda a lista de execução do algoritmo, foram encontrados três exemplos distintos de pseudo-instruções. As instruções \emph{load address}, \emph{load immediate} e \emph{move}. Nenhuma das três existe na linguagem assembly mips, mas o montador substitui da seguinte forma:
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|c|c|}\hline
+	Pseudo-instruções 	& Instruções Reais \\ \hline
+	la \$a0, label 		&	lui \$t0, adress \\ \hline
+	li \$t0, imediato	&	addiu \$t0, \$zero, imediato \\ \hline
+	move \$t0, \$t1		&	addu \$t0, \$zero, \$t1 \\ \hline
+	\end{tabular}
+	\caption{Substituição de pseudo-instruções por instruções reais}
+\end{table}
+\subsubsection{}
+
+\newcommand*{\escape}[1]{\texttt{\textbackslash#1}}
+
+\paragraph{}O valor 589834 armazenado no endereço 0x10010028 está relacionado com os 
+caracteres ASCII \textbf{\escape{n}} e \textbf{\escape{t}} declarados logo após o vetor de
+entrada no começo do programa. Notamos que 589834 é escrito em binário como
+0x0009000a, a concatenação de 0x0009 com 0x000a.
+Na tabela ASCII os valores para  \escape{n} e \escape{t} são, respectivamente, 10 e 9. Observando o padrão da tabela, vemos que a posição do dado na memória depende da ordem em que ele foi inserido, elementos inseridos primeiros tem menor índice na memória. O primeiro char inserido, e portanto de menor endereço, foi \escape{n} = 0x000a. Quando o Mars interpretou a word, no entando, esse byte foi colocado na parte menos significativa. Ou seja, o elemento de menor endereço é aquele menos significativo. 
+Concluímos então que estamos diante de uma representação Little-endian.
+\subsubsection{}
+
+\begin{itemize}
+	\item[•]
+		Sendo I o número de instruções, CPI o número de ciclos de clocks
+		por instruções e T o período de clock, sabemos que o tempo de execução
+		$t$ é dado por:
+		\begin{equation}
+			t = I \cdot CPI \cdot T
+		\end{equation}
+		Com CPI = 1, T = 1/f = 1/50M = 2 x $10^{-8}$, $I_1 = 802$ e $I_2 = 856$
+		temos:
+		\begin{equation}
+			\begin{array}{l}
+				t_{1} = 16.04 \mu s \\
+				t_{2} = 17.12 \mu s \\
+			\end{array}
+		\end{equation}		 
+		
+	\item[•]
+	O melhor caso do algoritmo é o caso em que ele não tem que fazer nenhuma troca e o pior caso, o caso em que ele tem que fazer todas as trocas possíveis. Para analisar o custo vamos escrever o algoritmo em pseudo-código:
+
+	\begin{verbatim}
+para i = 0 ate i = n-1:
+        para j = i-1 ate j = 0
+                se v[j] > v[j+1]
+                        troca(v[j],v[j+1])
+                caso contrario
+                        next i
+        fim iteracao j
+fim iteracao i
+	\end{verbatim}
+
+       \paragraph{} No melhor caso, simplesmente faremos uma comparação entre cada elemento
+        e seu sucessor. Essa comparação é feita n-1 vezes, do primeiro índice
+        até o penúltimo e a complexidade é O(n).
+
+       \paragraph{} No pior caso o vetor está completamente desordenado e em cada iteração
+        de i, realizamos trocas em toda iteração j. Temos n iterações em i, 
+        e, para cada i, temos i-1 iterações em j. O custo total está relacionado 
+        com o produto n(n-1) e portanto a complexidade é O($n^2$).
+
+         \paragraph{}Para verificar os resultados teóricos, foi utilizada a fermenta do mars para fazer a contagem de instruções para o melhor e o pior caso para vários tamanhos do vetor e os resultados são claros, a teoria é sustentada por esses resultados. Vale o comentário que o pior caso para n=50 precisou de 26 mil operações enquanto o melhor caso para n=500 precisou de 17544, a diferença de escala realmente é absurda.
+         
+         \begin{figure}[H]
+                 \centering
+                 \includegraphics[scale = 0.4]{../images/Q1_D_2_graph}
+                \caption{Tempo de execução para o melhor e o pior caso}
+                 \label{fig:graph_1D_2}
+         \end{figure}
+\end{itemize}
+
+\subsection{Compilador MIPS GCC}
+
+\subsubsection{}
+
+\paragraph{}Os resultados dos testes realizados para comparação são mostrados 
+na tabela a seguir.
+\hspace{-2 cm}
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|c|c|c|c|c|c|}\hline
+Tipo de Instrução &Assembly &
+ C & C, -O1& 
+C -O2& C -O3 \\ \hline
+Tipo R& 255 (31\%) &
+731 (33\%)&
+199 (27\%)&
+191(27\%)&
+*226 (41\%) \\ \hline
+Tipo I &
+472 (58\%)&
+1456 (66\%)&
+503 (70\%)&
+504 (72\%)&
+*312 (57\%) \\ \hline
+Tipo J &
+75 (9\%) &
+12 (0\%)&
+10 (1\%)&
+1 (0\%)&
+*7 (1\%)\\ \hline
+Total &
+802&
+2199&
+712&
+696&
+*545 \\ \hline
+	\end{tabular}
+	\caption{Quantidade e tipos de instruções para cada versão do bubblesort}
+	\label{tab:A2_1}
+\end{table}
+
+\paragraph{}Vários problemas foram encontrados para fazer com que o código assembly gerado
+pelo cross-compiler fosse rodado no MARS:
+\begin{itemize}
+        \item  É necessário retirar todas as diretivas para o montador que não
+        sejam reconhecidas pelo MARS. O tedioso processo é feito apertando o botão
+        \emph{assembly} do MARS e comentando uma a uma as diretivas não reconhecidas informadas na janela de log do programa.
+        \item j \$31 final não funciona, o programa monta, mas na execução não fecha de forma limpa. É necessário retirar essa linha e usar um syscall (\$v0=10) para fechar o programa de forma limpa.
+        \item Trocar o .rdata por .data
+        \item Apagar os “j putchar” e “j printf” que o mars não reconhece
+        \item Substituir estruturas do tipo
+                \begin{verbatim}
+      lui $at,%hi(LABEL)
+      addiu $T0,$AT,%lo(LABEL)
+                \end{verbatim}
+               por:
+               \begin{verbatim}
+      la $t0, label
+               \end{verbatim}
+        \item Adicionar a diretiva .data se durante a otimização essa diretiva for apagada e houver uma string/caractere a ser escrito na tela.
+        \item  Adicionar a diretiva .text se alguma otimização retirá-la.
+        \item  É necessário prestar atenção sempre que houver alguma instrução após um jump para trocar o jump com essa instrução logo abaixo dela, para que essa instrução seja executada.
+        \item Em uma das estruturas para o sort, é necessário prestar atenção quando o sort dá problema, pois possivelmente é na ordem de duas instruções. Um caso relativamente grave que ocorreu foi a inversão de um comando de jump com um comando de aumento do contador que resultou em um contador que só conta quando faz uma troca.
+        \item  Não usar printf (“\%d “) ou coisas do tipo, separar em imprimir o numero e depois em um comando separado imprimir o texto, pois assim quando o compilador passar para C ele vai separar em printf + putchar e fica mais fácil de ajudar o mars.
+        \item  Ao fazer um scanf usando o syscall, é necessário salvar na pilha após pegar o valor. 
+        \item  Às vezes o slt tenta usar um número diretamente no lugar do terceiro argumento, quando isso acontece basta trocar por slti.
+\end{itemize}
+
+\subsubsection{}
+\paragraph{} A tabela na imagem a seguir mostra os resultados esperados dos diferentes
+parâmetros de compilação
+         \begin{figure}[H]
+                 \centering
+                 \includegraphics[scale = 0.4]{../images/tabelaOtimizacao}
+                \caption{otimizações do gcc}
+                 \label{fig:A2_2}
+         \end{figure}
+
+
+\paragraph{} Das informações da tabela temos acesso apenas ao tamanho do código e da quantidade de instruções, que permite estimar o tempo de execução. As informações estão na tabela a seguir. Vemos que as diferenças devem estar no tempo de compilação, uso de memória,
+tempo de execução e no tamanho do código produzido.
+
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|c|c|c|c|c|c|}\hline
+&
+Escrito em Assembly&
+C, -O0&
+C, -O1&
+C, -O2&
+C,-O3 \\ \hline
+Nº de instruções &
+802&
+2199&
+712&
+696&
+*545 \\ \hline
+Tamanho &
+1.19 KB&
+2.94 KB&
+1.95 KB&
+1.89 KB&
+3.41 KB \\ \hline
+	\end{tabular}
+	\caption{}
+	\label{tab:}
+\end{table}
+\paragraph{} Até onde podemos ver, os resultados concordam com a tabela. O único resultado não previsto pela tabela é que a otimização O3 criou um programa grande em tamanho ocupado na memória.
+
+\subsubsection{}
+\paragraph{} O código iterativo é mostrado a seguir:
+\begin{tiny}
+    \lstinputlisting{../code/anexo1.asm}
+\end{tiny}   
+
+\paragraph{}
+O código para calcular Fibonacci recursivamente é apresentado a seguir:
+\begin{tiny}
+    \lstinputlisting{../code/anexo2.asm}
+\end{tiny}   
+
+\subsubsection{}
+\paragraph{} O código iterativo em C é mostrado a seguir:
+\begin{tiny}
+    \lstinputlisting[language=C]{../code/anexo3.asm}
+\end{tiny}   
+
+\paragraph{} O código recursivo em C é mostrado a seguir:
+\begin{tiny}
+    \lstinputlisting[language=C]{../code/anexo4.asm}
+\end{tiny}   
+
+
+\subsubsection{}
+\paragraph{}Os códigos da etapa foram cross-compilados para assembly mips com as diretivas requeridas.
+Temos então 10 códigos em assembly:
+\begin{itemize}
+       \item 2 códigos escritos diretamente por nós, 1 recursivo e outro iterativo
+       \item 4 códigos produzidos com o cross-compiler para fibonacci iterativo
+       \item 4 códigos produzidos com o cross-compiler para fibonacci recursivo
+\end{itemize}
+
+\paragraph{} Os códigos produzidos pelo coss-compiler foram debugados para serem
+rodados no MARS. Não consegui-se, no entanto, debugar o código recursivo gerado com -O3. O código
+foi debugado o suficiente para rodar no MARS, mas a resposta calculada não condiz com a esperada(
+o código calcula alguma coisa e termina sem erro, mas a sequência não corresponde a de Fibonacci). Todos
+os outros foram debugados e funcionam. Os códigos foram então testados para n $\in \{1,5,10,15,20\}$ e obteve-se o gráfico
+a seguir:
+         \begin{figure}[H]
+                 \centering
+                 \includegraphics[scale = 0.7]{../images/Q2_E_graph}
+                \caption{Comparação dos algoritmos desenvolvidos}
+                 \label{fig:graph_1D_2}
+         \end{figure}
+\paragraph{} Note a diferença na escala dos eixos. Observa-se que a escala de contagem de iterações
+para o algoritmo recursivo é muito maior que a do algoritmo iterativo. Damos um zoom na escala
+para avaliar o comportamento para os menores n:
+
+         \begin{figure}[H]
+                 \centering
+                 \includegraphics[scale = 0.7]{../images/Q2_E_graph_low}
+                \caption{Comparação dos algoritmos desenvolvidos(zoom)}
+                 \label{fig:graph_1D_2}
+         \end{figure}
+         
+        \paragraph{}Notamos que o comportamento do algoritmo iterativo parece linear,
+        e o recursivo deve ser parabólico, se não exponencial. Por fim, notamos que 
+        a melhor otimização é aquela feita com a diretiva -O3. No entanto, não conseguimos
+        fazer a otimização -O3 funcionar e não podemos escolher esta como a melhor. Para
+        prosseguirmos, escolheríamos a melhor otimização que funciona: -O2. No entanto, para
+        os dois algoritmos essa otimização foi somente um pouco melhor que o código escrito a mão.
+        Por simplicidade, escolhemos o código feito a mão como aquele com melhor custo/benefício
+        em relação ao trabalho que dá fazer ele funcionar e o resultado obtido.
+        
+        \subsubsection{}
+        \begin{enumerate}
+        \item Com o tamanho limitado de memória em 1 milhão de espaços para words e cada vez que chamamos a pilha guardamos três words nela, é possível fazer 333.333 acessos à pilha. Considerando que o tanto de coisas guardadas na pilha em um dado momento é proporcional ao “comprimento” da árvore de recursão, é fácil ver que retirando os 5 espaços (20 words) que a função principal usa, seria possível calcular até o Fib(333331) com esse tamanho de memória disponível.
+        
+        \item Não é possível verificar esse número na prática, basta ver que para cada 1 número que subimos no n, o número de instruções cresce próximo de 10x (e a taxa de crescimento é crescente ainda por cima) para observar que o programa passará dias fazendo contas.
+Por isso, precisamos modelar o tempo de execução. Para isso faremos uma regressão
+dos dados já conhecidos sob uma fórmula proposta. Notamos claramente o comportamento exponencial dos dados, propomos:
+\begin{equation}
+        c(n) = a*exp(b*n)
+\end{equation}
+
+A regressão foi feita em cima dos dados
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|r|r|} \hline
+	n        & número de operações \\ \hline
+	1&		33		\\ \hline
+5	&	201\\ \hline
+10	&	2145		\\ \hline
+15	&	23697		\\ \hline
+20	&	267713\\ \hline
+25	&	2913441 \\ \hline
+	\end{tabular}
+	\caption{Número de instruções por n - Algoritmo Recursivo feito a mão}
+	\label{tab:}
+\end{table}
+
+A regressão obtida com o gnuplot é mostrada a seguir:
+
+\begin{equation}
+        c(n) = ( 19.0 \pm   0.2)exp((0.4776 \pm  0.0003)*n)
+\end{equation}
+O gráfico é mostrado a seguir:
+         \begin{figure}[H]
+                 \centering
+                 \includegraphics[scale = 0.4]{../images/AQ2F}
+                \caption{Algoritmo recursivo de escolha, dados e regressão exponencial}
+         \end{figure}
+
+Com isso colocando na fórmula do tempo de execução obtemos:
+
+\begin{equation}
+        c(333331) = ( 19.0)exp((333331)*333331)
+\end{equation}
+
+O número não pode ser calculado na calculadora HP 50g. Concluímos que 
+o tempo seria, para fins práticos, infinitos. Vemos que o problema
+para calcular Fibonacci recursivamente é de tempo de processamento e 
+não de memória.
+
+        \end{enumerate}
+        
+        \subsubsection{}
+        \begin{enumerate}
+        \item O maior número inteiro possível de se descrever em MIPS32 é 2147483647 (com sinal e o dobro sem sinal). Usando a fórmula de binet é fácil obter os números máximos dentro do limite de cada forma de representação. Usando o mesmo argumento da A2f, a quantidade de memória é proporcional ao comprimento da árvore de recursão, a obtenção da tabela a seguir é análoga ao processo feito na questão f1.
+        \begin{table}[H]
+        	\centering 
+        	\begin{tabular}{|r|r|r|r|r|}\hline          
+  & Signed 32 bits & Unsigned 32 bits & Signed 64 bits & Unsigned 64 bits \\ \hline 
+Fib(n) max & & & & \\ \hline
+Memória utilizada &  584 bytes & 596 bytes & 148 bytes & 1160 bytes
+\\ \hline
+        	\end{tabular}
+        	\caption{}
+        	\label{tab:}
+        \end{table}
+
+\item Fazendo um processo análogo ao feito na A2.f, encontramos os seguintes valores de tempo de execução
+\begin{table}
+	\centering 
+	\begin{tabular}{|r|r|r|r|r|}\hline
+& Signed 32 bits & Unsigned 32 bits & Signed 64 bits & Unsigned 64 bits \\ \hline
+Tempo & s & s & s & s \\ \hline
+	\end{tabular}
+	\caption{}
+	\label{tab:}
+\end{table}
+        \end{enumerate}

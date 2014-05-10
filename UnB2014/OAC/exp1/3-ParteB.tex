@@ -1,0 +1,148 @@
+\section{Verilog}
+\renewcommand\thesubsubsection{\Alph{section}.\arabic{subsection}.\arabic{subsubsection}}
+\subsection{Implementação de Driver de 7 Segmentos}
+    \paragraph{} O teste da placa pode ser visto em:
+    \url{http://www.youtube.com/watch?v=zjfapP_vkDw}
+    
+\subsection{Implementação de um Somador de 4 bits}
+
+
+
+\subsubsection{Desenho Esquemático}
+
+\begin{enumerate}[label=(\alph*)]
+\item Os blocos desenvolvidos são mostrados a seguir:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.6]{../images/half_adder}
+    \caption{Meio Somador}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.6]{../images/somador_completo}
+    \caption{Somador Completo}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.6]{../images/somador_4bits}
+    \caption{Somador de 4 bits}
+\end{figure}
+
+
+\item O resultado da simulação temporal com T = 10ns é mostrado a seguir:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.4]{../images/simulacao_blocos_esquematicos}
+    \caption{Somador de 4 bits}
+\end{figure}
+
+\paragraph{}Esta simulação ficou mais condizente com os resultado dos tempos dos caminhos completos feitos por cada implementação, este tinha o tempo de atraso de 9,39ns, que foi o maior tanto na simulação temporal quanto no maior tempo de atraso de propagação.
+
+\paragraph{} O resultado da simulação funcional é mostrado a seguir. O resultado é o mesmo para
+esse e os dois itens subsequentes, por isso será mostrado apenas uma vez.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.4]{../images/simulacao_funcional}
+    \caption{Simulação Funcional}
+\end{figure}
+
+
+\item
+O link para o vídeo no youtube mostrando o resultado pode ser visto em:
+
+
+\url{http://www.youtube.com/watch?v=ZspIA5N1yYg}
+\end{enumerate}
+\subsubsection{Nível de Portas Lógicas}
+\begin{enumerate}[label=(\alph*)]
+\item Os blocos desenvolvidos são mostrados a seguir;
+\begin{itemize}
+
+    \item meio somador
+\begin{tiny}
+    \lstinputlisting[language=verilog]{../code/parteB_portas/half_addv.v}
+\end{tiny}   
+
+    \item somador completo
+\begin{tiny}
+    \lstinputlisting[language=verilog]{../code/parteB_portas/full_addv.v}
+\end{tiny}   
+    \item somador 4bits
+\begin{tiny}
+    \lstinputlisting[language=verilog]{../code/parteB_portas/add4v.v}
+\end{tiny}  
+\end{itemize}
+
+\item  O resultado da simulação temporal com T = 10ns é mostrado a seguir:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.4]{../images/simulacao_portas_logicas}
+    \caption{Somador de 4 bits}
+\end{figure}
+
+\paragraph{}Nessa simulação também houve o mesmo problema que esperava-se, o da propagação de atrasos, mas mesmo assim ainda nota-se que o atraso da saída que foi de 5,24ns, o que não foi esperado pelo fato de que a implementação comportamental, tinha o tempo de execução menor que o de portas, e agora a de portas mostra-se com um tempo te atraso de propagação menor, conclui-se então que uma implementação que tenha um caminho com maior tempo de atraso, não necessariamente terá o maior atraso de propagação.
+
+\paragraph{}O resultado da simulação funcional é o mesmo do item a.
+\item
+O link para o vídeo no youtube mostrando o resultado pode ser visto em:
+
+\url{http://www.youtube.com/watch?v=ZspIA5N1yYg}
+\footnote{O link é o mesmo. Já que os resultados obtidos foram os mesmos, filmou-se apenas uma vez}
+\end{enumerate}
+\subsubsection{Descrição Comportamental}
+\begin{enumerate}[label=(\alph*)]
+\item
+ O bloco desenvolvido é mostrado a seguir;
+
+\begin{tiny}
+    \lstinputlisting[language=verilog]{../code/add4cv.v}
+\end{tiny}   
+
+\item
+O resultado da simulação temporal com T = 10ns é mostrado a seguir:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale = 0.4]{../images/simulacao_comportamental}
+    \caption{Somador de 4 bits}
+\end{figure}
+
+
+
+\paragraph{}O quadro acima mostra o resultado da soma dos valores de A com os valores de B, mostrando ainda os atrasos, o atraso da primeira mudança de chave foi 6,28ns, mas conforme a propagação dos atrasos vai aumentando começam a aparecer alguns valores que imprevisíveis por momentos muito pequenos, mas ainda assim o valor correto aparece por mais tempo no estudo analítico da simulação temporal do esquemático comportamental, então fica um tipo de ciclo que os valores aparecem por mais e menos tempo.
+
+
+\paragraph{}O resultado da simulação funcional é o mesmo do item a.
+\item
+O link para o vídeo no youtube mostrando o resultado pode ser visto em:
+
+\url{http://www.youtube.com/watch?v=ZspIA5N1yYg}
+\footnote{O link é o mesmo. Já que os resultados obtidos foram os mesmos, filmou-se apenas uma vez}
+\end{enumerate}
+\subsubsection{}
+\begin{enumerate}[label=(\alph*)]
+    \item  O número de elementos lógicos utilizados pelas três formas de implementação é igual, pelo fato de que o Quartus interpreta as três de um jeito semelhante.
+
+    \item Para a implementação esquemática o maior TPD foi para o bit menos significativo da entrada A para o bit mais significativo da soma:
+
+\begin{equation}
+    A[0] \rightarrow Soma[3] = 11.020ns
+\end{equation} 
+
+Para a implementação a nível de portas lógicas o maior TPD foi para o segundo bit menos significativo da entrada A para o bit mais significativo da soma:
+\begin{equation}
+    A[1] \rightarrow Soma[3] = 10.756ns
+\end{equation} 
+
+Para a implementação a nível comportamental o maior TPD foi do Carry in para o Carry out: 
+
+\begin{equation}
+    Cin \rightarrow Cout = 10.679ns
+\end{equation} 
+
+
+Apesar de termos o mesmo resultado ao fim das três implementações, podemos perceber que a nível comportamental temos uma otimização de desempenho, pois o maior TPD foi o menor dentre os três.
+\end{enumerate}
