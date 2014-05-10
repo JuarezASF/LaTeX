@@ -1,4 +1,4 @@
-#Universidade de Brasília - 1º de 2014 - Organização e Arquitetura de Computadores
+﻿#Universidade de Brasília - 1º de 2014 - Organização e Arquitetura de Computadores
 # Laboratório 2 - Parte A - questão 1
 # Alunos: Juarez e grupo
 # Professor: Lamar
@@ -8,13 +8,13 @@
 	str_entre_a : .asciiz " Entre com o coeficiente a: \n \t"
 	str_entre_b : .asciiz "\n Entre com o coeficiente b: \n \t"
 	str_entre_c : .asciiz "\n Entre com o coeficiente c: \n \t"
-	str_1	: .asciiz "O polin�mio entrado foi: \n \n \t p(x) = "
+	str_1	: .asciiz "O polinômio entrado foi: \n \n \t p(x) = "
 	str_x2: .asciiz "*x^2 + "	
 	str_x1: .asciiz "*x^1 + "
 	str_x0: .asciiz "*x^0"
 	newl: .asciiz "\n"
 	tab: .asciiz "\t"	
-	str_2	: .asciiz "As ra�zes do polin�mio s�o: \n \tr1 = "
+	str_2	: .asciiz "As raízes do polinômio são: \n \tr1 = "
 	str_3	: .asciiz "r2 = "
 	str_4	: .asciiz " + i* "
 	
@@ -30,7 +30,7 @@
 
 #	STATUS ATUAL:
 # O PROGRAMA FUNCIONA PARA OS CASOS COMUNS. FALTA LIDAR COM OS CASOS DEGENERADOS
-#POR EXEMPLO, SE A == 0, ENT�O O POLIN�MIO N�O � DE ESGUNDA ORDEM. DEVEMOS TRATAR ESSE CASO
+#POR EXEMPLO, SE A == 0, ENTãO O POLINôMIO NãO é DE ESGUNDA ORDEM. DEVEMOS TRATAR ESSE CASO
 
 main:
 	#imprime string de entrada
@@ -317,8 +317,8 @@ mostra_raizes_grau_2:
 #faz: imprime raízes de acordo com o formato dado em a0
 #retorna: nada
 #altera: nada
-	#strings dessa fun��o
-	#str_2	: .asciiz "As ra�zes do polin�mio s�o: \n \t r1 = "
+	#strings dessa função
+	#str_2	: .asciiz "As raízes do polinômio são: \n \t r1 = "
 	#str_3	: .asciiz "r2 =  "
 	#str_4	: .asciiz " + i* "
 	
@@ -384,7 +384,7 @@ mostra_raizes_grau_2:
 	la $a0, str_4
 	syscall
 	
-	#mostra Im da primeira ra�z
+	#mostra Im da primeira raíz
 	li $v0, 2
 	mov.s $f12, $f1 
 	syscall
@@ -397,12 +397,12 @@ mostra_raizes_grau_2:
 	la $a0, tab
 	syscall
 	
-	#texto da segunda ra�z
+	#texto da segunda raíz
 	li $v0, 4
 	la $a0, str_3
 	syscall
 
-	#mostra Re da segunda ra�z
+	#mostra Re da segunda raíz
 	li $v0, 2
 	mov.s $f12, $f2 
 	syscall
@@ -412,7 +412,7 @@ mostra_raizes_grau_2:
 	la $a0, str_4
 	syscall
 	
-	#mostra Im da segunda ra�z
+	#mostra Im da segunda raíz
 	li $v0, 2
 	mov.s $f12, $f3
 	syscall
@@ -435,7 +435,7 @@ positive_sqrt:
 #L = f2; M = f4, R = f6 (double)
 #recebe x = f0	
 #utiliza f0, f2, f4, f6, f8, f10, t0, t1, ra
-#restaura todo o estado a excess�o de f0,f1,f30 e f31
+#restaura todo o estado a excessão de f0,f1,f30 e f31
 #retorna sqrt(X) em f30(double)
 
 
