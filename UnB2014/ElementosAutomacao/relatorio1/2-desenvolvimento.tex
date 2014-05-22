@@ -1,0 +1,209 @@
+\section{Descrição do Problema}
+\paragraph{}Consideramos o sistema na figura a seguir:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/planta.png}
+	\caption{Planta Automatizada}
+	\label{fig:planta}
+\end{figure}
+\paragraph{}
+O objetivo da automação é desenvolver um sistema baseado em esteiras, sensores e um atuador que classifique as caixas colocadas manualmente sobre a esteira em duas categorias de acordo com seu tamanho.
+Para a implementação da seleção utilizaremos três esteiras transportadoras \textbf{E1, E2} e  \textbf{E3} movimentadas por três motores \textbf{M1, M2} e  \textbf{M3}. Inicialmente as caixas são colocadas pelos operários de forma manual em\textbf{ E1}. Sensores \textbf{S1} posicionados na esteira devem
+então detectar a caixa e dar partida no motor \textbf{M1} que movimentará a esteira. O motor deve ficar ligado tempo suficiente para que a caixa atinja
+a outra ponta da esteira e seja então direcionado para a esteira correspondente. A seleção será feita por sensores \textbf{S4} dispostos ao final da esteira \textbf{E1}. Com base nos dados de \textbf{S4} um controlador irá decidir se a porta deve permanecer fechada, direcionando a caixa para a esteira \textbf{E2}, ou abrindo-a, fazendo com que a caixa siga para \textbf{E3}. A chegada da caixa  em \textbf{E2} ou \textbf{E3}
+ é detectada por sensores\textbf{ S2 }ou \textbf{S3}, respectivamente, que devem então acionar os respectivos motores.
+
+\section{Especificações da Automação}
+\paragraph{}As figuras a seguir detalham o processo:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/detalhamento1.png}
+	\caption{detalhes do processo: destaque para a posição horizontal dos sensores}
+	\label{fig:planta}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/detalhamento2.png}
+	\caption{detalhes do processo: destaque para a posição vertical dos sensores}
+	\label{fig:planta}
+\end{figure}
+
+\begin{enumerate}
+	\item colocação manual das caixas pelos operários em 1
+	\item  O sensor \textbf{S1} será posicionado no início da esteira \textbf{E1} a uma altura onde possa detectar as duas categorias de caixas.
+	\item O sensor S1 está ligado ao controlador por uma porta digital e quando acionado o controlador deve dar partida no motor trifásico 
+	M1	que movimenta a esteira E1. O controlador possui um contador T1 que mantém o motor ligado por 40 segundos desde o último acionamento de S1, isto é, toda vez que que S1 é acionado, resetamos o contador. Isso é feito para que a última caixa colocada tenha tempo 
+	de percorrer a esteira.
+	\item O acionamento do motor trifásico é feito com uma partida estrela-delta. Inicialmente a conexão das fases trifásicas é feita em
+	estrela. Esse tipo de conexão fornece menos tensão entre as bobinas e limita a corrente de partida. Assim que o motor adquiri rotação
+	e aumenta sua impedância, acionamos então a ligação em delta para dar potência total ao motor. Assumimos que um tempo de 2 segundos é adequado para esperar antes de chavear entre estrela e delta. Precisamos portanto de outro contador para medir esse tempo.
+	\item A seleção entre conexão delta ou estrela é feita pelo controle de duas chaves contatoras controladas pelo controlador. Essas são então duas saídas digitais do controlador.
+	\item  O sensor S4 é posicionado próximo da extremidade final da esteira E1 e vai ser o responsável por diferenciar as caixas. Ele é posicionado verticalmente de tal forma que somente caixas grandes são detectadas. Ao ser informado da presença de uma caixa grande, o controlador aciona o cilindro pneumático de dupla ação C1 para abrir a porta e permitir a passagem da caixa para E3.
+	\item O cilindro pneumático de dupla ação C1 é controlado por uma válvula 5/2 acionada por relê com retorno por mola. Quando o relê é acionado a válvula permite fluxo de tal forma que o cilindro avança e abre a porta. Quando o sinal deixa de atuar no relê, a mola retorna a válvula para a posição de retorno do cilindro e a porta fecha. 
+	\item Os sensores S2 e S3 fazem papel semelhante ao de S1 em suas respectivas esteiras. Quando acionados, o controlador deve iniciar
+	um contador de 40 segundos durante os quais o motor é mantido acionado. Para o acionamento do motor novamente é necessário
+	um circuito de partida estrela-delta com tempo em estrela de 2 segundos antes de chavear para delta. 
+	
+\end{enumerate}
+
+\section{Defnição dos Sensores}
+\paragraph{}Os 4 sensores utilizados detectaram os mesmos objetos e por isso serão todos de mesma natureza. De fato, serão todos iguais, mudando apenas o seu posicionamento na planta. Dentre os tipos comuns de sensores de proximidade, \textbf{descartamos}:
+\begin{itemize}
+	\item os indutivos pois nossas caixas não são metálicas a princípio
+	\item de efeito Hall, pois nossas caixas não possuem ímãs 
+	\item capacitivos, pois sua pequena faixa de detecção provavelmente não seria adequada.O operário tipicamente
+	colocará as caixas na esteira de qualquer jeito, de modo que pequenas variações na posição da caixa poderiam fazer com que essa passasse 	        despercebida pelo sensor.
+\end{itemize} 
+
+Nos restam então os sensores ultra-sônicos e óticos. Pela proximidade com que os sensores serão instalados, descartamos os sensores ultra-sônicos, uma vez que poderiam interferir um no outro. Escolhemos portante um sensor \textbf{ótico}.
+
+\paragraph{} Por simplicidade, procuramos um sensor cuja saída seja digital e de apena um bit. Isto é, só precisamos detectar presença, sem 
+ter que medir distância. O sensor escolhido foi o \textbf{SHARP GP2D15}.  Suas especificações são ilustradas na figura a seguir:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/sensor1.png}
+	\caption{dimensões do SHARP GP2D15}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/sensor2.png}
+	\caption{resposta do SHARP GP2D15}
+\end{figure}
+
+Notamos que o sensor deve ser instalado de forma que a caixa passe próximo a ele por não mais que 24 cm. Assim, quando não há caixa
+o sensor está medindo o fundo da sala e sua saída está em alto, quando a caixa passa a saída muda para baixo. Isso deve ser levado
+em consideração no desenvolvimento do programa.
+
+\section{Definição dos Atuadores}
+\paragraph{}Existem dois tipos de atuadores na planta: o motor trifásico e o cilindro pneumático de dupla ação.
+\begin{itemize}
+\item \textbf{Os motores trifásicos} serão utilizados apenas em uma direção, não sendo necessário então um circuito para inverter as fases. A forma de arranque dos motores vai ser estrela – delta, isto porque o arranque pelo método direto absorve uma alta corrente durante a conexão com a rede e pode danificar o sistema. O motor trifásico foi escolhido pelo alto torque que é capaz de produzir.
+
+\item \textbf{O cilindro de dupla ação} é utilizado para controlar a posição da porta. Quando em avanço o cilindro fecha a porta e quando
+em recuo a porta está fechada. O cilindro é controlado por uma válvula 5/2, justamente porque a porta só precisa está ou completamente
+fechada ou completamente aberta. Além disso, a escolha por um cilindro foi feita pela sua simplicidade e robustez. O cilindro é hidráulico porque, na forma como pensamos o sistema, a porta não é pesada e não requer elevados esforços.
+\end{itemize}
+
+\section{Variáveis de Entrada e Saída}
+A seguir listamos as variáveis de entrada do sistema para o controlador e de saída do controlador para o sistema.
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|c|l|}\hline
+	S1 &  indica a presença de caixa(qualquer) em E1 \\ \hline
+	S2 &  indica a presença de caixa(qualquer) em E2 \\ \hline		
+	S3 &  indica a presença de caix(qualquer)a em E3 \\ \hline		
+	S4 & S1 indica a presença de caixa grande em E1 \\ \hline	
+	\end{tabular}
+	\caption{variáveis de entrada para o controlador}
+\end{table}
+
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|c|l|}\hline
+	M1 & indica se o motor 1 está ligado ou não \\ \hline
+	M1\_e & indica se o motor 1 está ligado  em estrela ou não \\ \hline	
+	M1\_d & indica se o motor 1 está ligado  em delta ou não \\ \hline
+			M2 & indica se o motor 2 está ligado ou não \\ \hline
+	M2\_e & indica se o motor 2 está ligado  em estrela ou não \\ \hline	
+	M2\_d & indica se o motor 2 está ligado  em delta ou não \\ \hline
+		M3 & indica se o motor 3 está ligado ou não \\ \hline
+	M3\_e & indica se o motor 3 está ligado  em estrela ou não \\ \hline	
+	M3\_d & indica se o motor 3 está ligado  em delta ou não \\ \hline
+	C & indica acionamento ou não do cilindro \\ \hline
+	\end{tabular}
+	\caption{variáveis de saída do controlador}
+\end{table}
+
+\section{Diagrama Elétrico de Montagem da Planta}
+A seguir vemos o diagrama de montagem elétrico das fases do motor:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/ligacao_motor.png}
+	\caption{ligação elétrica do motor}
+\end{figure}
+
+A seguir vemos a montagem do controlador LP CompactLogix 5370 L2: 1769-L24ER-QB1B.
+Os pontos de entrada digital e pontos de saída digital estão localizados em um único módulo I / O incorporado.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/ligacao_controlador.png}
+	\caption{ligação elétrica do controlador com a planta}
+\end{figure}
+
+\section{Módulos da linha CompactLogix}
+Apresentamos algumas das opções encontradas:
+\begin{itemize}
+	\item CLP CompactLogix 5370 L2: 1769-L24ER-QB1B: possui módulo incorporado de entrada e saída
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/controlador1.png}
+	\caption{ligação elétrica do motor}
+\end{figure}
+
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|c|c|}\hline
+	Característica & 
+1769-L24ER-QB1B\\ \hline
+
+Memória disponível para o usuário &
+0,75 MB \\ \hline
+
+Cartão de memória &
+1784 –SD1 (1 GB) e 1784 –SD2 (2 GB) \\ \hline
+
+Portas de Comunicação &
+2 EtherNet/IP
+1 USB \\ \hline
+
+E / S incorporado &
+16 entradas de CC \\ &
+16 saidas de CC \\ &
+Conexões Ethernet / IP 
+\\ \hline
+
+8 EtherNet/IP &
+120 TCP
+\\ \hline
+
+Capacidade de expansão de modulo &
+4 módulos 1769
+\\ \hline
+
+Bateria & 
+Nenhuma
+\\ \hline
+Fonte de alimentação embutida &
+24 VCC\\ \hline
+	\end{tabular}
+	\caption{especificações }
+\end{table}
+	
+
+
+\item Em vez de usar um controlador com IO embutido, podemos usar um módulo de entrada e saída como o  1769-Q6XOW4:
+
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/IO.png}
+	\caption{módulo dedicado para IO}
+	\end{figure}
+	
+		\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/IO2.png}
+	\caption{módulo dedicado para IO possui 6 entradas digitais e 4 saídas digitas}
+	\end{figure}
+\end{itemize}
+\section{Programa em Ladder}
+Parte do código em Ladder é mostrado a seguir:
+		\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.3]{../images/ladder.png}
+	\caption{módulo dedicado para IO possui 6 entradas digitais e 4 saídas digitas}
+	\end{figure}
+	
+	A lógica para os outros atuadores é a mesma, sendo apenas repetição da estrutura mostrada acima.
+

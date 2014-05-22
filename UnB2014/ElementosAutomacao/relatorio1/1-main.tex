@@ -1,0 +1,40 @@
+\documentclass[a4paper,11pt]{article}
+\input{0-Headers}
+
+
+\renewcommand\thesection{\arabic{section}.}
+%\renewcommand\thesubsection{\Alph{section}.\arabic{subsection}}
+%\renewcommand\thesubsubsection{\Alph{section}.\arabic{subsection}.\alph{subsubsection}}
+
+
+\fancyhead[R]{Elementos de Automação - 1º/2014}%direito superior
+%\fancyhead[L]{\includegraphics[height=0.25in]{../images/logo_unb.pdf}}%esquerda superior
+\fancyhead[L]{}%esquerda superior
+\fancyfoot[C]{\thepage}%baixo centro
+
+
+
+%%If you need a line to separate the columns:
+\setlength{\columnseprule}{0.3mm}
+\begin{document}
+
+\MakeMyTitlePage
+{Elementos de Automação}
+{Avaliação II}
+{Projeto de Automação}
+{%autores
+		\begin{tabular}{llr} \
+		& & \\[0.05cm]		
+		Professor & Guilherme Caribé - turma A & \\
+		 
+		Alunos:& & \\
+	&	 Juarez Aires   			& 11/0032829\\ 
+	&	 Maurício Carrillo   			& 14/0075879 \\
+	[0.05cm]	
+		\end{tabular}
+}
+
+\input{2-desenvolvimento}
+\input{4-Referencias}
+
+\end{document}
