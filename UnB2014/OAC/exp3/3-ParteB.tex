@@ -1,0 +1,179 @@
+\section{Aritimética de Ponto Flutuante - Hardware}
+
+\subsection{ULA de Inteiros}
+	\subsubsection{Análise de Funções}
+A ULA implementada é uma versão bem mais completa do que a vista em sala, com um total de 18 operações. A ULA é uma parte do circuito que tem apenas dois registradores internos, HI e LO e os utiliza para operações de multiplicação e divisão (devido ao fato de essas operações causarem overflow frequentemente). Todas as outras operações têm seus resultados salvos ou no banco de registradores ou na memória. 
+Os componentes da ULA são:
+\begin{itemize}
+\item A e B, números de 32 bits que servem como entrada.
+\item Sinal de controle, parâmetro que escolhe a operação a ser realizada.
+\item ALUresult, o resultado da operação.
+\item Shamt, um parâmetro importante para as operações de sll, srl, e sra, já que nesse número consta o argumento da operação.
+\item Zero e Overflow, duas flags que são ligadas caso o resultado da operação atenda aos requisitos.
+\item Relógio para habilitar a operação e manter o sistema síncrono.
+\item Reset para zerar a memória da ULA (registradores HI e LO).
+\end{itemize}
+Para manter a tabela o mais limpa possível, apenas selecionamos as operações e colocamos os resultados finais, sem se preocupar com as flags, memória da ULA e casos específicos.
+	\begin{table}[H]
+	\begin{tabular}{|c|c|c|} \hline
+	Sinal de Controle & Operação & ALUresult \\ \hline
+0 & AND & A AND B \\ \hline
+1 & OR & A OR B \\ \hline
+2 & ADD & A + B \\ \hline
+3 & MFHI & HI \\ \hline
+4 & SLL & B << shamt \\ \hline
+5 & MFLO  & LO \\ \hline
+6 &  SUB  & A-B \\ \hline
+7  & SLT  & A<B: 0 else: 1 \\ \hline
+8  & SRL  & B >> shamt \\ \hline
+9  & SRA  & B >> shamt (si	gn extended) \\ \hline
+10  & XOR  & A XOR B \\ \hline
+11  & SLTU  & A < B \\ \hline
+12 &  NOR  & A NOR B \\ \hline
+13 &  MULT  & A * B \\ \hline
+14 &  DIV  & A / B \\ \hline
+15 &  LUI  & B << 16 \\ \hline
+16  & SLLV & B << A \\ \hline
+17 &  SRAV &  B >> A (sign extended) \\ \hline
+18  & SRLV  & B >> A \\ \hline
+Outro  & Padrão  & 0 \\ \hline
+	\end{tabular}
+	\caption{Opcode, operação e resultado}
+	\end{table}
+	
+	Casos especiais:
+\begin{itemize}
+\item mult e div colocam seu resultado tanto em hi/lo quanto na saída, mas o controle não cede permissão de escrita no banco de registradores da CPU com os resultados da operação, fazendo com que seja necessárias as instruções mfhi e mflo.
+\item Zero é uma flag que ativa sempre que todos os bits do resultado da operação são nulos.
+\item Overflow é uma flag que ativa quando o sinal do resultado não coincide com o sinal que é esperado devido à operação e os sinais dos dados de entrada. Essa é uma propriedade dos números em complemento de dois que facilita e detecção do overflow.
+\end{itemize}	
+
+
+\subsubsection{Verificação}
+Para s simulação, foi feita uma pequena quantidade de operações na ULA para verificar os resultados e confirmar seu funcionamento adequado. Testamos todas as operações e os resultados condizem com o esperado.
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/danilo_fig1_new.png}
+	\caption{Forma de onda de teste: entrada e saída}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{../images/danilo_fig2_new.png}
+	\caption{continuação}
+\end{figure}
+
+Todas as operações fazem sentido, já que os registradores inicializam vazios e, portanto as operações mfhi e mflo vão resultar em 0 antes de algum comando mult ou div.
+
+\subsubsection{Sintetizando na FPGA}
+Foi feito o teste do sistema na FPGA e de fato, foi verificado que as operações da ULA funcionam bem. Devido à pequena quantidade de entradas (temos 18 switches e 4 botões enquanto precisaríamos de 69 formas de entrada apenas  para ter os dois argumentos e o controle), para efeito de teste usamos entradas de 5 bits cada uma e mais o controle de 5 bits também.
+
+O link para o vídeo do teste pode ser visto \href{https://www.youtube.com/watch?v=dkLe0ooJMr4&feature=youtu.be}{aqui}.
+
+\subsubsection{Requisitos}
+Fazendo uma análise pelo timequest obtemos os seguintes parâmetros de desempenho:
+\begin{itemize}
+\item	Numero de elementos lógicos: 3945
+\item	Frequência máxima: 6.28 MHz
+\item	Setup Time: 153.18 ns
+\item	Hold Time: -6.061 ns (negativo? Segundo o google, é possível.)
+\item	Propagation Delay: 159.18 ns
+\end{itemize}
+
+
+\subsection{Banco de Registradores da CPU Principal}
+	\subsubsection{Construção} 
+	O banco de registradores é a memória mais rápida e cara de um processador. A
+	arquitetura mips tem um banco de 32 registradores de 4 bytes cada um e esses registradores tem função de leitura e escrita. A implementação pode ser feita como um módulo, retirando as responsabilidades de controle e seleção dos registradores para um módulo de controle separado e deixando para esse módulo apenas a leitura e escrita na sua memória interna.
+	
+	         \begin{figure}[H]
+	                 \centering
+	                 \includegraphics[scale = 0.2]{../images/danilo_fig2.png}
+	                \caption{banco de registradores}
+	         \end{figure}
+	         
+	         Para esse conjunto de entradas, temos como principais entradas os argumentos de 5 bits que selecionam os registradores para serem lidos ou sofrer a escrita. As outras entradas são o relógio para manter o sincronismo e sinais emitidos pelo controle que dão ou não permissão para resetar todos os registradores (iCLR) e permissão para escrever (iRegWrite).
+	        
+\subsubsection{Verificação}
+  	 	Em seguida fazendo o teste do banco de registradores. Para o teste verificamos que sempre na subida do relógio ocorre a escrita, e por isso os registradores que leem o valor só atualizam o valor um pouco depois da subida do relógio. Verificamos também que a escrita só ocorre se a permissão (iRegWrite) estiver ativa e o RST funciona perfeitamente.
+	         \begin{figure}[H]
+	                 \centering
+	                 \includegraphics[scale = 0.5]{../images/danilo_fig3.png}
+	                \caption{teste do banco de registradores}
+	         \end{figure}
+	\subsubsection{Requisitos}
+Fazendo a análise na ferramenta timequest, os parâmetros necessários para o datasheet são:
+\begin{itemize}
+\item Numero de elementos lógicos: 2149
+\item Frequência máxima: 52.23 MHz
+\item Setup Time: 10.832 ns
+\item Hold Time: -3.5 ns
+\item Propagation Delay: 21.692 ns
+\end{itemize}
+
+	
+	  
+
+\subsection{ULA de Ponto Flutuante}
+	\subsubsection{Análise de Funções}
+	A FPU tem uma aplicação bem mais específica que a CPU, ela trabalha com operações numéricas, portanto tem menos funcionalidades. A FPU a ser trabalhada tem 12 funções, onde as operações 1-7 são operações numéricas, 8-10 são funções lógicas que apenas alteram o banco de flags e mais duas operações que convertem o tipo de dado guardado para possibilitar a comunicação com a CPU.
+	\begin{table}[H]
+		\centering 
+		\begin{tabular}{|c|c|c|}\hline
+		Sinal de Controle & Operação & oresult \\ \hline
+1  & ADD  & A+B \\ \hline
+2 &  SUB &  A-B \\ \hline
+3 &  MUL &  A*B \\ \hline
+4  & DIV &  A/B \\ \hline
+5 &  SQRT  & \\ \hline
+6 &  ABS &  |A| \\ \hline
+7  & NEG &  -A \\ \hline
+8  & CEQ &  0* \\ \hline
+9 &  CLT  & 0* \\ \hline
+10  & CLE & 0* \\ \hline
+11  & CVTSW &  A single \\ \hline
+12  & CVTWS &  A word \\ \hline
+		\end{tabular}
+		\caption{Funcionalidades da ULA de ponto flutuante}
+	\end{table}
+	
+	\subsubsection{Simulação}
+	Para a simulação em forma de onda, coloquei os valores 4 e -4 e verifiquei os cálculos. Os valores são arbitrários e com a principal função de ter como resultados valores que não interferem na mantissa dos resultados e precisar de poucos ciclos (já que tem o mesmo expoente), assim facilitando a visualização e a correção dos erros.
+	  \begin{figure}[H]
+	                 \centering
+	                 \includegraphics[scale = 0.5]{../images/danilo_fig4.png}
+	                \caption{teste da ULA de ponto flutuante}
+	         \end{figure}
+	         
+	         \subsubsection{Sintetização da FPGA}
+	         Para o funcionamento, fizemos um experimento em verificar as operações com liberdade de alterar um operando e mantendo o outro fixo. O intuito é mostrar de forma simplificada que a FPU funciona de forma adequada sem precisar de muita complexidade no vídeo.
+	         O vídeo de teste se encontra \href{
+https://www.youtube.com/watch?v=1_VCYLCTwAA&feature=youtu.be}{aqui}
+	         
+	         \subsubsection{Requisitos}
+Ao fazer as simulações com o timequest, obtivemos os seguintes parâmetros de projeto:
+	         \begin{itemize}
+\item Numero de elementos lógicos: 3488
+\item Frequência máxima: 51.97 MHz
+\item Setup Time: 16.986 ns
+\item Hold Time: -0.387 ns
+\item Propagation Delay: 10.372 ns     
+	         \end{itemize}
+
+\subsection{Banco de Registradores do Coprocessador 1}
+
+\subsubsection{Construção}
+A banco de registradores da FPU é idêntico ao da CPU. A mudança da forma de se escrever os dados (da notação em inteira em complemento de dois para a notação em F.P.) e a ULA mais complicada não altera nada do ponto de vista dos registradores.
+
+\subsubsection{Verificação}
+Ele é idêntico ao banco da CPU, portanto o teste que foi aplicado lá funciona igualmente aqui. O banco funciona perfeitamente bem para um processador uniciclo e para um processador multiciclo, bastando o controle definir bem em que momento a permissão de escrita pode ser dada.
+
+\subsubsection{Requisitos}
+Ao fazer a análise pelo timequest, observamos pequenas diferenças em relação ao teste da ULA. A razão é que a implementação do banco de registradores não foi escrita exatamente com o mesmo arquivo e por isso os resultados acabam sendo levemente diferentes um do outro.  
+\begin{itemize}
+\item Numero de elementos lógicos: 2096
+\item Frequência máxima: 51.97 MHz
+\item Setup Time: 12.859 ns
+\item Hold Time: -3.487 ns
+\item Propagation Delay: 22.044 ns
+\end{itemize}

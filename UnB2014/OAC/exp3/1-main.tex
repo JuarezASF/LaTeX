@@ -1,0 +1,52 @@
+\documentclass[a4paper,11pt]{article}
+\input{0-Headers}
+
+
+
+%%DEFINE TIPO DE ENUMERAÇÃO DE SEÇÃO
+\renewcommand\thesection{\Alph{section}}
+\renewcommand\thesubsection{\Alph{section}.\arabic{subsection}}
+\renewcommand\thesubsubsection{\Alph{section}.\arabic{subsection}.\alph{subsubsection}}
+
+%%DEFINE TOPO DA PÁGINA
+\fancyhead[R]{OAC}%direito superior
+\fancyhead[L]{\includegraphics[height=0.25in]{../images/logo_unb.pdf}}%esquerda superior
+\fancyfoot[C]{\thepage}%baixo centro
+
+%%PARA CÓDIGO MIPS:
+\usepackage{mips}
+\lstset{language=[mips]Assembler,
+            basicstyle=\ttfamily\scriptsize,
+            keywordstyle=\color{blue}\ttfamily,
+            stringstyle=\color{red}\ttfamily,
+            commentstyle=\color{green}\ttfamily,
+            breaklines=true} 
+
+%%If you need a line to separate the columns:
+\setlength{\columnseprule}{0.3mm}
+\begin{document}
+
+\MakeMyTitlePage
+{Organização e Arquitetura de Computadores}
+{Experimento II}
+{Aritimética Computacional Fracionária}
+{%autores
+		\begin{tabular}{llr} \
+		& & \\[0.05cm]		
+		Professor & Marcus Vinícius Lamar - turma A & \\
+		
+		Alunos:& & \\
+	&	 Danilo Cardoso   			& 11/0010515 \\
+	&	 Gustavo Meneses   			& 10/0103766 \\
+	&	 Juarez Aires   			& 11/0032829\\ 
+	&	 Matheus Ramiro   			& 09/0125894 \\
+	[0.05cm]	
+		\end{tabular}
+}
+
+%%INCLUI SEÇÕES DO TRABALHO
+\input{2-ParteA}
+\input{3-ParteB}
+\input{4-Referencias}
+
+\end{document}
