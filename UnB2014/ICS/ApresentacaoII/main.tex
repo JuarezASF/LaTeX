@@ -53,11 +53,11 @@
    \tableofcontents[currentsection,currentsubsection]
  \end{frame}
 }
-
+\section{Requisitos}
 \begin{frame}{Requisitos}
 	\frametitle{Requisitos}
     \begin{itemize}
-	\item Desenvolver uma interface gráfica em Java que implemente três instrumentos aditivos 
+	\item Desenvolver uma interface gráfica em Java que implemente três instrumentos aditivos(ver figura a seguir) 
 	e seja capaz de tocar melodias e notas com ele. A interface deve possuir operações de:
 	\begin{itemize}
 	 \item Música
@@ -66,17 +66,51 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}
+ \frametitle{Dispositivo RAN}
+ \begin{figure}
+  \includegraphics[scale=0.6]{./images/meusInstrumentos.png}
+  \caption{Instrumentos a serem implementados}
+   \end{figure}
+\end{frame}
+
 \section{Classes Desenvolvidas}
 \subsection{Dispositivo RAN}
 \begin{frame}[fragile]
 	\frametitle{RAN}
+	\begin{itemize}
+		\item Vemos pelas especificações que \textbf{RAN precisa aceitar} como entrada
+		tanto uma \textbf{constante} como um \textbf{dispositivo}.
+		\item Dentre as classes disponíveis na API SomA, a única que faz
+		isso é \textbf{Oscilador}
+		\item Essa é a escolha natural para ter como classe base
+		\item Gostaríamos de poder setar a tabela SIN da classe oscilador
+		para aquela tabela gerada com números aleatório. Como isso não é possível,
+		\textbf{foi necessário uma gambiarra}.
+		\item \textbf{A frequência do sin é setada para 0 e sua fase para 90}. Desta forma temos um sinal constante em +1
+		\item a entrada da amplitude é um dispositivo multiplicador
+		\item as entradas desse multiplicador são duas envoltórias: Uma é gerada
+		aleatoriamente em -1 e +1 e a outra é uma envoltória de amplitude gerada pelo usuário
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Dispositivo RAN}
+ \begin{figure}
+  \includegraphics[scale=0.3]{./images/RAN.png}
+  \caption{Dispositivo RAN: esquemático da construção}
+   \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{RAN}
 Classe desenvolvida para gerar a envoltória aleatória.	
 	\begin{itemize}
-		\item extends Envoltoria
+		\item extends \textbf{Oscilador}
 		\item entradas controláveis: 
 		\begin{itemize}
 			\item f\_ran: define o número de amostras aleatórias geradas no intervalo
-			\item a: define a amplitude da envoltória gerada. Isto é, os números aleatórios vão de -A até +A
+			\item a: define a amplitude da envoltória gerada. Isto é, os números aleatórios vão de -A até +A. Pode ser uma constante ou um objeto Envoltoria.
 		\end{itemize}
 		\item fórmula utilizada para gerar números entre -A e +A :
 		\begin{tiny}	\begin{lstlisting}
@@ -101,6 +135,46 @@ Classe desenvolvida para gerar a envoltória aleatória.
   \caption{Dispositivo RAN, f\_ran = 60, A = 1}
  \end{figure} 
 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Dispositivo RAN - Detalhes}
+ \begin{itemize}
+ 	\item é necessário alterar a frequência do ruído quando
+ 	a duração da nota for alterada. Pois a frequência calcula
+ 	pontos no intervalo total da duração, mas o que importa é a
+ 	frequência por segundo!
+ 	\item precisamos então de uma variável para f\_ran\_atual e outra para f\_ran\_base
+ \end{itemize}
+\end{frame}
+
+\subsection{Instrumento 1}
+\begin{frame}
+ \frametitle{Instrumento 1}
+ \begin{itemize}
+ \item Extends \textbf{UnidadeH}
+ \item Como a unidade H é o menor instrumento possível, nossos instrumentos são todos
+ descendentes dela.
+ \item Criamos uma unidadeH com \textbf{super()} e pegamos o seu oscilador.
+ \item setamos então a entrada de ganho o oscilador para um dispositivo \textbf{RAN}
+ \item redefinimos então os métodos \textbf{setGanho} e \textbf{setDuracao} para atuarem no objeto \textbf{RAN}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/ins1.png}
+  \caption{Saída do Instrumento 1}
+ \end{figure} 
+\end{frame}
+\subsection{Instrumento 2}
+\begin{frame}
+ \frametitle{Instrumento 2}
+\end{frame}
+
+\subsection{Instrumento 3}
+\begin{frame}
+ \frametitle{Instrumento 3}
 \end{frame}
 
 
