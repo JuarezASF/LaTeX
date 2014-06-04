@@ -13,12 +13,28 @@
 \usepackage{color}
 \usepackage{xcolor}
 
-\lstset{language=Java,
-    basicstyle=\ttfamily,
-    keywordstyle=\bfseries,
-    showstringspaces=false,
-    morekeywords={MidiSystem, Soundbank, Synthesizer}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\tiny\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
 }
+\lstset{language=Java}
+
 \defbeamertemplate*{title page}{customized}[1][]
 {
   \usebeamerfont{title}\inserttitle\par
@@ -32,10 +48,11 @@
 
 %DEFINE TEMA BEAMER A SER UTILIZADO
 \usetheme{Warsaw}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
 %DEFINIÇÃO DE TÍTULO, AUTORES .....
 \title[Introdução a Computação Sônica]{ ICS - Trabalho II \\ Síntese Aditiva}
 %\title[pequeno título que vai no bottom da página]{título grande}%
-\author{Juarez A.S.F. 11/0032829}
+\author{Juarez Aires Sampaio Filho 11/0032829}
 \institute{Universidade de Brasília}
 \date{\today}
 
@@ -60,7 +77,7 @@
 	\item Desenvolver uma interface gráfica em Java que implemente três instrumentos aditivos(ver figura a seguir) 
 	e seja capaz de tocar melodias e notas com ele. A interface deve possuir operações de:
 	\begin{itemize}
-	 \item Música
+	 \item Música: tocar uma melodia ou ruídos interessantes
 	 \item Nota
 	 \end{itemize}
     \end{itemize}
@@ -81,8 +98,7 @@
 	\begin{itemize}
 		\item Vemos pelas especificações que \textbf{RAN precisa aceitar} como entrada
 		tanto uma \textbf{constante} como um \textbf{dispositivo}.
-		\item Dentre as classes disponíveis na API SomA, a única que faz
-		isso é \textbf{Oscilador}
+		\item Dentre as classes disponíveis na API SomA, escolhemos fazer isso utilizando como base a classe \textbf{Oscilador}
 		\item Essa é a escolha natural para ter como classe base
 		\item Gostaríamos de poder setar a tabela SIN da classe oscilador
 		para aquela tabela gerada com números aleatório. Como isso não é possível,
@@ -109,7 +125,7 @@ Classe desenvolvida para gerar a envoltória aleatória.
 		\item extends \textbf{Oscilador}
 		\item entradas controláveis: 
 		\begin{itemize}
-			\item f\_ran: define o número de amostras aleatórias geradas no intervalo
+			\item f\_ruido: define o número de amostras aleatórias geradas no intervalo
 			\item a: define a amplitude da envoltória gerada. Isto é, os números aleatórios vão de -A até +A. Pode ser uma constante ou um objeto Envoltoria.
 		\end{itemize}
 		\item fórmula utilizada para gerar números entre -A e +A :
@@ -117,9 +133,33 @@ Classe desenvolvida para gerar a envoltória aleatória.
 				float random = 2f*A*((float)Math.random()) - A;		    				
 		\end{lstlisting} \end{tiny}	
 		
-		\item possui método de visualização gerado com o pacote \textbf{jmathtool}					\item Toda vez que um dos dois parâmetros acima é atualizado, uma nova envoltória
-		é gerada. Pode-se também gerar uma nova envoltória a qualquer momento.
+		\item possui método de visualização gerado com o pacote \textbf{jmathtool}			
 	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+ \frametitle{Dispositivo RAN - Detalhes}
+ \begin{itemize}
+ 	\item A frequência f\_ruido nos dá o intervalo com que os pontos aleatório são gerados
+ 	em uma tabela onde a última posição é 720.
+ 	\item Isto é, os pontos são gerados em intervalos de $\frac{720}{f\_ruido}$
+ 	\item Ou seja, f\_ruido define o número de amostras aleatórias presentes na duração
+ 	de \textbf{toda} a envoltória.
+ 	\item \textbf{A sensação do ruído, no entanto, é sentida pela quantidade de pontos aleatórios em 1 segundo}.
+ 	\item Para mantermos a mesma sensação, é\textbf{ necessário alterar a frequência do ruído} quando a duração da nota for alterada, \textbf{de modo que dentro de 1 segundo tenhamos o mesmo
+ 	número de pontos aleatórios} que tínhamos antes.
+ 	\item Usamos então de uma variável para f\_ran\_atual e outra para f\_ran\_base
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Dispositivo RAN}
+ \begin{figure}
+  \includegraphics[scale=1.0]{./images/f_ruido.png}
+  \caption{f\_ruido define o intervalo com que os pontos aleatório são gerados}
+   \end{figure}
 \end{frame}
 
 \begin{frame}
@@ -129,25 +169,46 @@ Classe desenvolvida para gerar a envoltória aleatória.
   \caption{Dispositivo RAN, f\_ran = 2, A = 10}
    \end{figure}
 \end{frame}
+
    \begin{frame}
  \begin{figure}
   \includegraphics[scale=0.4]{./images/RAN_F_60.png}
   \caption{Dispositivo RAN, f\_ran = 60, A = 1}
  \end{figure} 
-
 \end{frame}
 
-\begin{frame}
- \frametitle{Dispositivo RAN - Detalhes}
- \begin{itemize}
- 	\item é necessário alterar a frequência do ruído quando
- 	a duração da nota for alterada. Pois a frequência calcula
- 	pontos no intervalo total da duração, mas o que importa é a
- 	frequência por segundo!
- 	\item precisamos então de uma variável para f\_ran\_atual e outra para f\_ran\_base
- \end{itemize}
+ \begin{frame}[fragile]
+ \frametitle{RAN - detalhes}
+ \begin{figure}
+ 	\begin{lstlisting}
+	private void setRAN(){
+		setFrequencia(0);
+		setFase(90);
+		envFinal = new Multiplicador(randomEnv, ganhoEnv);
+		setDispositivoAmplitude(envFinal);
+	}
+    			\end{lstlisting}
+    			
+    			\caption{detalhes do método de configuração}
+	\end{figure}
 \end{frame}
 
+ \begin{frame}[fragile]
+ \frametitle{RAN - detalhes}
+ \begin{figure}
+ 	\centering
+ 	\begin{lstlisting}
+	public void setDuracao(float d){
+		ganhoEnv.setDuracao(d);
+		this.duracao =  d;
+		f_ruido = d*f_ruido_base;
+		generateRandomEnv();
+		randomEnv.setDuracao(d);
+	}
+    			\end{lstlisting}
+	\caption{detalhes do método para configurar duração}	
+	\end{figure}
+\end{frame}
 \subsection{Instrumento 1}
 \begin{frame}
  \frametitle{Instrumento 1}
@@ -161,6 +222,31 @@ Classe desenvolvida para gerar a envoltória aleatória.
  \end{itemize}
 \end{frame}
 
+ \begin{frame}[fragile]
+ \frametitle{Instrumento 1 - construção}
+ \begin{figure}
+ 	\centering
+ 	\begin{lstlisting}
+	public Instrumento1(){
+		super();
+		initialize(); //inicializa as variaveis
+
+		setH(1.0f);
+		setGanho(1f);
+		setLambda(0.5f);
+		
+		ran.setGanho(env);
+		ran.setGanho(10);
+		ran.setF_ruido(60);
+		osci.setDispositivoAmplitude(ran);
+		osci.setFrequencia(440);
+		osci.setDuracao(5f);
+	}
+    			\end{lstlisting}
+	\caption*{}	
+	\end{figure}
+\end{frame}
+
 \begin{frame}
  \begin{figure}
   \includegraphics[scale=0.4]{./images/ins1.png}
@@ -170,40 +256,160 @@ Classe desenvolvida para gerar a envoltória aleatória.
 \subsection{Instrumento 2}
 \begin{frame}
  \frametitle{Instrumento 2}
+ \begin{itemize}
+ \item Extends \textbf{UnidadeH}
+ \item \textbf{Basta conectar os blocos}.
+ \item A figura a seguir ilustra a conexão entre os blocos.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.3]{./images/unidadeH.png}
+  \caption{Unidade H padrão: no trabalho desenvolvido, não utilizamos a env padrão
+  da unidade H}
+ \end{figure} 
+\end{frame}
+
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/instrumento2.png}
+  \caption{Esquemático do instrumento 2 tendo como base a unidade H}
+ \end{figure} 
+\end{frame}
+ \begin{frame}[fragile]
+ \frametitle{Instrumento 2 - construção}
+ 	\begin{lstlisting}
+public Instrumento2(){
+		super();
+		setLambda(0.5f);
+		ran = new RAN(20f, 10);
+		f_medio = 440;
+		f_medio_env = constantEnvoltoria(f_medio);
+		sum = new Somador(f_medio_env, ran);
+
+		//define envoltoria padrao
+		Curva curva = new Curva(720);
+		curva.addPonto(0f, 0f);
+		curva.addPonto(60f, 1000f);
+		curva.addPonto(450f, 1000f);
+		curva.addPonto(720f, 0f);
+		ganhoEnv = new Envoltoria();
+		ganhoEnv.setCURVA(curva);
+
+		
+		osci = getOscilador();
+		osci.setDispositivoAmplitude(ganhoEnv);
+		osci.setDispositivoFrequencia(sum);
+	}
+	    			\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/ins2.png}
+  \caption{Saída do Instrumento 2}
+ \end{figure} 
 \end{frame}
 
 \subsection{Instrumento 3}
 \begin{frame}
  \frametitle{Instrumento 3}
+  \begin{itemize}
+ \item Extends \textbf{UnidadeH}
+ \item Como no item anterior, \textbf{basta conectar os blocos necessários}.
+ \item Pode ser visto como uma extensão do Instrumento 2. As classes são muito semelhantes.
+ \item Apenas acrescentamos um somador e um oscilador ao instrumento 2.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/instrumento3.png}
+  \caption{Esquemático do instrumento 3 tendo como base a unidade H}
+ \end{figure} 
+\end{frame}
+
+
+ \begin{frame}[fragile]
+ \frametitle{Instrumento 3 - construção}
+ \begin{figure}
+ 	\centering
+ 	\begin{lstlisting}
+public Instrumento3(){
+		//propriedades da unidadeH
+		super();
+		setLambda(0.5f);
+		//RAN
+		ran = new RAN(100f, 10);//RAN(float amplitude, float new_f_ran)		
+		//Frequencia media
+		f_medio = 440;
+		f_medio_env = constantEnvoltoria(f_medio);
+		//F medio + RAN
+		sum1 = new Somador(f_medio_env, ran);
+		osciF = new Oscilador(1, 1, 0); //Oscilador(float a, float f, float p) 
+		sum2 = new Somador(sum1, osciF);
+		//define envoltoria padrao
+		Curva curva = new Curva(720);
+		curva.addPonto(0f, 0f);
+		curva.addPonto(60f, 1000f);
+		curva.addPonto(450f, 1000f);
+		curva.addPonto(720f, 0f);
+		ganhoEnv = new Envoltoria();
+		ganhoEnv.setCURVA(curva);
+		osci_out = getOscilador();
+		osci_out.setDispositivoAmplitude(ganhoEnv);
+		osci_out.setDispositivoFrequencia(sum2);
+	}    			\end{lstlisting}
+	\caption{}	
+	\end{figure}
+\end{frame}
+
+
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/ins3.png}
+  \caption{Saída do Instrumento 3}
+ \end{figure} 
+\end{frame}
+
+\subsection{Instrumento}
+\begin{frame}
+ \frametitle{Instrumento}
+ \begin{itemize}
+ \item Uma interface que os dispositivos anteriores devem interpretar
+ \item Possui métodos básicos que todos os instrumentos devem possuir
+ \item Facilita a manipulação de diferentes instrumentos dentro da interface gráfica
+ \end{itemize}
 \end{frame}
 
 
 \section{Interface Gráfica em JAVA}
 
-\subsection{Componentes Utilizados}
 \begin{frame}
-	\frametitle{Componentes}
-Alguns componentes utilizados na interface:	
-	\begin{itemize}
-		\item \textbf{ImageIcon, Icon e JButton} para botões
-		\item \textbf{JSlider} para entrada/saída de informações de tempo
-		\item \textbf{JLabel e JTable} para informações textuais
-		\item \textbf{JMenu, JMenuItem e JMenuBar} para menu
-		\item \textbf{JFileChooser} para navegar e carregar arquivo 
-		\item \textbf{JTimer} para controlar tempo com que o JSlider é atualizado
-	\end{itemize}
-\end{frame}
-
-\subsection{Layout}
-\begin{frame}
-  \frametitle{Composição de Layouts}
-
+	\begin{block}{Interface Gráfica}
+	Desenvolveu-se uma interface simples capaz de setar todos
+	os parâmetros dos instrumentos, selecionar diferentes instrumentos e
+	setar parâmetros pre-definidos para gerar sons interessantes	
+	\end{block}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/interface.png}
+  \caption{Interface gráfica desenvolvida}
+ \end{figure} 
+	
+ 
 \end{frame}
 
 
-
-
-\section{Problemas Encontrados}
+\section{Documentação e Referências}
+\begin{frame}
+  \frametitle{Documentação e Referências}
+  \begin{itemize}
+  \item \href{/home/juarez408/Documents/GitHub/GitCode/UnB2014/ICS/Trabalho2/doc/index.html}{Documentação produzida com javadoc}
+  \item \href{http://www.cic.unb.br/docentes/lcmm/sintese/javadoc/}{Documentação da API sintese}
+  \item \href{https://code.google.com/p/jmathplot/}{API jmathplot}
+  \end{itemize}
+\end{frame}
 
 
 
