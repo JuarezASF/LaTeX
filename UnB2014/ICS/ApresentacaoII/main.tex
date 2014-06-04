@@ -110,14 +110,6 @@
 	\end{itemize}
 \end{frame}
 
-\begin{frame}
- \frametitle{Dispositivo RAN}
- \begin{figure}
-  \includegraphics[scale=0.3]{./images/RAN.png}
-  \caption{Dispositivo RAN: esquemático da construção}
-   \end{figure}
-\end{frame}
-
 \begin{frame}[fragile]
 	\frametitle{RAN}
 Classe desenvolvida para gerar a envoltória aleatória.	
@@ -157,6 +149,22 @@ Classe desenvolvida para gerar a envoltória aleatória.
 \begin{frame}
  \frametitle{Dispositivo RAN}
  \begin{figure}
+  \includegraphics[scale=0.3]{./images/oscilador.png}
+  \caption{Dispositivo oscilador a partir do qual construímos RAN}
+   \end{figure}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Dispositivo RAN}
+ \begin{figure}
+  \includegraphics[scale=0.3]{./images/RAN.png}
+  \caption{Dispositivo RAN: esquemático da construção}
+   \end{figure}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Dispositivo RAN}
+ \begin{figure}
   \includegraphics[scale=1.0]{./images/f_ruido.png}
   \caption{f\_ruido define o intervalo com que os pontos aleatório são gerados}
    \end{figure}
@@ -165,16 +173,25 @@ Classe desenvolvida para gerar a envoltória aleatória.
 \begin{frame}
  \frametitle{Dispositivo RAN}
  \begin{figure}
-  \includegraphics[scale=0.4]{./images/RAN_F_2.png}
-  \caption{Dispositivo RAN, f\_ran = 2, A = 10}
+  \includegraphics[scale=0.2]{./images/f_ran_10.png}
+  \caption{f\_ran = 10}
    \end{figure}
 \end{frame}
 
-   \begin{frame}
+\begin{frame}
+ \frametitle{Dispositivo RAN}
  \begin{figure}
-  \includegraphics[scale=0.4]{./images/RAN_F_60.png}
-  \caption{Dispositivo RAN, f\_ran = 60, A = 1}
- \end{figure} 
+  \includegraphics[scale=0.2]{./images/f_ran_60.png}
+  \caption{f\_ran = 60}
+   \end{figure}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Dispositivo RAN}
+ \begin{figure}
+  \includegraphics[scale=0.2]{./images/f_ran_300.png}
+  \caption{f\_ran = 300}
+   \end{figure}
 \end{frame}
 
  \begin{frame}[fragile]
@@ -222,6 +239,20 @@ Classe desenvolvida para gerar a envoltória aleatória.
  \end{itemize}
 \end{frame}
 
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.3]{./images/unidadeH.png}
+  \caption{Unidade H padrão a partir da qual construímos nossos instrumentos}
+ \end{figure} 
+\end{frame}
+
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/instrumento1.png}
+  \caption{Esquemático do instrumento 1 tendo como base a unidade H}
+ \end{figure} 
+\end{frame}
+
  \begin{frame}[fragile]
  \frametitle{Instrumento 1 - construção}
  \begin{figure}
@@ -263,13 +294,7 @@ Classe desenvolvida para gerar a envoltória aleatória.
  \end{itemize}
 \end{frame}
 
-\begin{frame}
- \begin{figure}
-  \includegraphics[scale=0.3]{./images/unidadeH.png}
-  \caption{Unidade H padrão: no trabalho desenvolvido, não utilizamos a env padrão
-  da unidade H}
- \end{figure} 
-\end{frame}
+
 
 \begin{frame}
  \begin{figure}
@@ -320,6 +345,7 @@ public Instrumento2(){
  \item Como no item anterior, \textbf{basta conectar os blocos necessários}.
  \item Pode ser visto como uma extensão do Instrumento 2. As classes são muito semelhantes.
  \item Apenas acrescentamos um somador e um oscilador ao instrumento 2.
+ \item É o instrumento que apresenta maios riqueza na variação dos sons produzidos.
  \end{itemize}
 \end{frame}
 
@@ -373,6 +399,13 @@ public Instrumento3(){
  \end{figure} 
 \end{frame}
 
+\begin{frame}
+ \begin{figure}
+  \includegraphics[scale=0.4]{./images/ins3_2.png}
+  \caption{Saída do Instrumento 3: compara com a onda saída anterior do mesmo instrumento}
+ \end{figure} 
+\end{frame}
+
 \subsection{Instrumento}
 \begin{frame}
  \frametitle{Instrumento}
@@ -405,7 +438,7 @@ public Instrumento3(){
 \begin{frame}
   \frametitle{Documentação e Referências}
   \begin{itemize}
-  \item \href{/home/juarez408/Documents/GitHub/GitCode/UnB2014/ICS/Trabalho2/doc/index.html}{Documentação produzida com javadoc}
+  \item \href{../doc/index.html}{Documentação produzida com javadoc}
   \item \href{http://www.cic.unb.br/docentes/lcmm/sintese/javadoc/}{Documentação da API sintese}
   \item \href{https://code.google.com/p/jmathplot/}{API jmathplot}
   \end{itemize}
