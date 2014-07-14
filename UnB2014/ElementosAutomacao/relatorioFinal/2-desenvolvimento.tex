@@ -1,0 +1,112 @@
+\section{Introdução}
+
+ Prática comum no mundo da automação industrial é o controle de reações químicas em larga escala. Tipicamente 
+é necessário controlar a vazão dos componente da reação assim como  a temperatura e a pressão no reator para que o processo
+ocorra segundo as condições especificadas. Essa automação é hoje feita com o auxílio dos controladores lógicos programáveis(CLP).
+
+A automação deve implementar uma máquina de estados seguindo uma sequência de estados conforme a receita da reação. Normalmente a descrição do problema não virá em uma máquina de estados, já que 
+essa não é uma técnica conhecida pelos químicos, mas sim numa receita ou passos a serem seguidos. É trabalho do engenheiro
+então interpretar essas instruções e construir o diagrama de estados equivalente. Um dos métodos de se definir a relação 
+sequencial entre os estados é a modelagem por redes de Petri, que deve levar em consideração tanto os estados de controle como
+os estados da planta. Ao final da modelagem de Petri o engenheiro de automação
+tem todas as informações na mão para começar a programação.
+
+Dentre as linguagens utilizadas para a implementação do controle por meio de CLP's encontra-se o sequential functional
+chart(SFC). Esta linguagem assemelha-se muito a modelagem por redes de Petri e a tradução do modelo para o programa é quase
+que direta. A desvantagem dessa técnica é que o programa gerado após a compilação é grande em memória. Isso acontece pela linguagem
+ser de alto nível e envolver diversas estruturas de dados complexas em sua definição. Outra linguagem também comumente
+encontrada é o Ladder. Essa linguagem assemelha-se com os antigos quadros de relés e possuir estruturas de mais baixo nível que o SFC.
+Como resultado, o programa compilado é menor. Os controladores de hoje possuem grandes quantidades de memória, mas quando utilizamos controladores mais simples ou ainda quando a automação cresce muito, memória pode vir a ser um problema e fator determinante na
+escolha da linguagem utilizada.
+
+\section{Descrição do Problema}
+Consideramos o sistema na figura a seguir:
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1.0]{../images/planta.png}
+	\caption{Planta Automatizada}
+	\label{fig:planta}
+\end{figure}
+
+Inicialmente descrevemos os elementos da planta e seu funcionamento. A planta possui: 4 válvulas, 3 sensores de nível (bóias),
+1 misturador, 1 sensor de presença e um botão liga. A válvula 1 quando aberta libera vapor de água no reator e causa um aumento
+de temperatura. A válvula 2 quando acionada libera o fluxo da substância 1. A válvula 3 controla o fluxo de uma substância 3.
+A princípio o controle das válvulas 2  e  3 não influenciam a temperatura do reator. O misturador quando acionado cataliza a reação
+e pode ser que esta, se exotérmica, aumente a temperatura no sistema. O sensor de presença simplesmente detecta o posicionamento ou 
+não de um tambor. Existem ainda 4 luzes de alarme: uma para cada válvula e uma para informar superaquecimento do reator. Durante
+todo o processo somente uma válvula pode ser acionada por vez, por isso quando dizemos que a válvula 1 é acionada está implícito
+que todas as outras não o estão.
+
+
+Descrevemos agora a sequência de etapas normais do processo, isto é , aquilo que deve acontecer se tudo der certo. 
+
+
+\begin{itemize}
+	\item \textbf{Sequência Normal}
+	\begin{itemize}
+		\item O processo se inicia quando um sensor de presença detecta o correto posicionamento de um container abaixo
+		do reator e um botão pulsador de início é pressionado
+		\item abre-se a válvula 1 e espera-se que a temperatura aumente até 100ºC
+		\item abre-se a válvula 2 e espera-se que o sensor de nível 2 seja acionado(pelo posicionamento, é claro que
+		o  sensor 3 será acionado antes que o sensor 3 o seja)
+		\item abre-se a válvula 3 e espera-se que o sensor de nível 1 seja atingido.
+		\item abre-se a válvula 1 para aumentar a temperatura até 300ºC
+		\item inicia-se a mistura ao acionar o misturador por 20s
+		\item desliga-se então o misturador e abre-se a válvula 4 para liberar a mistura
+		\item volta-se então para o estado inicial enquanto se espera comando para um novo ciclo
+	\end{itemize}
+\end{itemize}
+
+ Passamos para a descrição de erros e seu tratamento. Existem duas fontes de erro a serem monitoradas durante
+o processo: o mal funcionamento das válvulas e a temperatura.
+\begin{itemize}
+\item \textbf{Problemas e Tratamento}
+	\begin{itemize}
+	\item  O mal funcionamento das válvulas pode ser detectado
+pela não ativação da transição do estado atual a partir de um determinado tempo. Uma vez que o processo é conhecido e controlado, é esperado que após o acionamento de algum estado este seja logo sucedido pelo seu sucessor. Por exemplo, assim que liberamos o fluxo
+da primeira substância esperamos que não demore muito para que o sensor de nível 2 seja ativado. Caso isso não ocorra em, digamos, no máximo 2 minutos sabemos que deve haver algum problema com o sistema relacionado a essa substância(ou a válvula está quebrada 
+ou pode haver um vazamento na rede).
+	\item   Já a temperatura do sistema pode lançar dois alarmes que influenciam o processo: a temperatura
+pode cair abaixo da temperatura de processo ou pode passar desta. No primeiro caso devemos parar o que quer que seja que esteja acontecendo e abrir a válvula 1 para injetar vapor e elevar a temperatura. No segundo caso devemos fechar todas as válvulas e esperar
+para que a temperatura caia. O mistura é então descartada e volta-se para o estado inicial.
+	\item Na situação de qualquer emergência
+o alarme respectivo deve ser acionado e somente desativado quando do pressionar do botão DesligaEmergencia. Para finalizar,
+quando o sistema está em parada de emergência ele não deve aceitar o comando de iniciar até que o estado de emergência seja 
+desativado.
+	\end{itemize}
+\end{itemize}
+
+
+\section{Modelagem em Rede de Petri}
+
+Inicialmente montou-se a seguinte tabela 1 com as especificações de transições e estados. 
+
+\begin{figure*}
+	\centering
+	\includegraphics[scale=0.8]{../images/tabela}
+	\caption*{Tabela 1: especificações para modelagem em rede de Petri}
+	\label{fig:planta}
+\end{figure*}
+
+
+ A modelagem foi feita em redes de Petri utilizando o programa Visual Object Net++ e o resultado é mostrado na figura \ref{fig:planta}..
+\begin{figure*}
+	\centering
+	\includegraphics[scale=0.6, angle = 90]{../images/petri}
+	\caption{Rede de Petri para o sistema de controle e da planta}
+	\label{fig:planta}
+\end{figure*}
+
+\section{Programa em SFC}
+O código desenvolvido em SFC no programa RSLogix5000 é mostrado a seguir. O projeto desenvolvido está disponível da URL
+\url{https://github.com/JuarezASF/Code/blob/master/UnB2014/Automa%C3%A7%C3%A3o/ProjetoReator/Automacao_ProjetoFinal_Mauricio_e_Juarez.ACD}
+
+\section{Interface Homem Máquina}
+Desenvolveu-se uma interface homem máquina utilizando o programa RSView32.
+
+\begin{figure*}
+	\centering
+	\includegraphics[scale=0.6, angle = 90]{../images/IHM}
+	\caption{Interface Homem Máquina}
+	\label{fig:planta}
+\end{figure*}
