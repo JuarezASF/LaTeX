@@ -1,0 +1,401 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} 
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}			%para imagens
+\usepackage{epstopdf} 			%resolve problemas eps-pdf
+\usepackage{fancyhdr}			% para o cabeçalho bonito
+\usepackage{caption}				%para legendas
+\usepackage{placeins} 			%controlar o lugar dos floats
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\usepackage{subcaption}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\tiny\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+\lstset{language=Java}
+
+\defbeamertemplate*{title page}{customized}[1][]
+{
+  \usebeamerfont{title}\inserttitle\par
+  \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par
+  \bigskip
+ %% \usebeamerfont{author}\insertauthor\par
+  \usebeamerfont{institute}\insertinstitute\par
+  \usebeamerfont{date}\insertdate\par
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+}
+
+%DEFINE TEMA BEAMER A SER UTILIZADO
+\usetheme{Warsaw}
+\setbeamertemplate{navigation symbols}{}%remove navigation symbols
+%DEFINIÇÃO DE TÍTULO, AUTORES .....
+\title[Introdução a Computação Sônica]{ ICS - Trabalho IV \\ Introdução ao SOM-A}
+%\title[pequeno título que vai no bottom da página]{título grande}%
+\author{Juarez Aires Sampaio Filho 11/0032829}
+\institute{Universidade de Brasília}
+\date{\today}
+
+\begin{document}
+
+
+\begin{frame}
+        \titlepage
+\end{frame}
+
+\AtBeginSection[]
+{
+}
+\section{Enunciado}
+\begin{frame}{Enunciado}
+	\begin{block}{}
+		Escreva uma carta espectral SOM-A -- correspondente a uma partitura de sua escolha -- 
+que contenha dois ou mais instrumentos aditivos (dependendo de quantos instrumentos 
+houver na orquestra), cada um deles sendo construído com base na Transformada Rápida 
+de Fourier (FFT) aplicada ao sinal (de uma nota) de um dado instrumento acústico, também 
+de sua escolha.
+	\end{block}
+\end{frame}
+
+\section{Programas Utilizados}
+\begin{frame}{Programas Utilizados}
+Utilizou-se os seguintes programas no decorrer do trabalho;
+\begin{itemize}
+	\item SOM-A 
+	\item INS-A: para gerar um instrumento na linguagem do SOM-A com base em uma amostra
+	e por meio da transformada rápida de Fourrier.
+	\item TuxGuitar: programa utilizado muitas vezes para executar partituras de guitarra; aqui utilizado para converter partitura em arquivo MIDI.
+	\item Audacity: utilizado para recortar amostra de som.
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{TuxGuitar}
+\begin{figure}
+	\includegraphics[scale=0.2]{./images/TuxGuitarPrint.png}
+	\caption{TuxGuitar}
+\end{figure}
+\end{frame}
+
+\begin{frame}{TuxGuitar}
+	Com o TuxGuitar é possível	
+	\begin{itemize}
+		\item editar a partitura
+		\item adicionar, remover e renomear trilhas
+		\item exportar a partitura criada/editada para formato midi
+	\end{itemize}
+
+	Com essa ferramenta ganhamos uma imensa biblioteca de arquivos midi disponíveis:
+	as partituras originalmente feitas para o programa GuitarPro. 	
+	
+\end{frame}
+
+
+\begin{frame}{Audacity}
+\begin{figure}
+	\includegraphics[scale=0.2]{./images/AudacityPrint.png}
+	\caption{Audacity}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Audacity}
+	Com o Audacity é possível	
+	\begin{itemize}
+		\item editar um arquivo .aff
+		\item exportar o som editado para formato wave
+	\end{itemize}
+
+	As amostras disponíveis pela Universidade de Iowa possuem notas diversas em um mesmo arquivo aff e utilizamos o audacity para isolar uma nota em particular que irá servir como
+	entrada para o INS-A.	
+\end{frame}
+
+\begin{frame}{INS-A}
+\begin{figure}
+	\includegraphics[scale=0.2]{./images/InsA_Print.png}
+	\caption{INS-A}
+\end{figure}
+\end{frame}
+
+\begin{frame}{INS-A}
+	Com o INS-A é possível	
+	\begin{itemize}
+		\item carregar um arquivo wave
+		\item tocar esse arquivo
+		\item obter a transformada de Fourrier do sinal
+		\item obter um instrumento no formato SOM-A
+	\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{SOM-A}
+\begin{figure}
+	\includegraphics[scale=0.2]{./images/SomA_Print.png}
+	\caption{SOM-A}
+\end{figure}
+\end{frame}
+
+\begin{frame}{SOM-A}
+	Dentre as inúmeras funcionalidades do SOM-A é possível	
+	\begin{itemize}
+		\item carregar uma carta espectral a partir de um arquivo midi
+		\item carregar e editar instrumentos criados com INS-A
+		\item interpretar a carta e produzir o respectivo arquivo wave
+	\end{itemize}
+
+\end{frame}
+
+\section{A Música Escolhida}
+\begin{frame}{A Música Escolhida}
+Escolheu-se interpretar a música \emph{Canon in D} ou \emph{Cânone em Ré Maior}  de Pachelbel. Nessa peça, composta no século 17, três violinos tocam o cânone (cada parte entrando com a mesma música a dois compassos de intervalo), enquanto um baixo contínuo executa uma passagem de fundo curta e simples.
+
+
+Curiosidades:
+\begin{itemize}
+	\item música comumente tocada em casamentos
+	\item a música \emph{Basket Case} do Green Day foi composta com base na sequência
+	de acordes de Canon in D.
+	\item a mesma sequência de acordes aparece em diversas outras músicas pops.
+	\item Os acordes em questão, quando tocados na escala Ré Maior são: Ré Maior, Lá maior, Si Menos, Fá Sustenido Menor, Sol Maior, Ré Maior, Sol maior e Lá Maior 
+\end{itemize}
+\end{frame}
+
+\section{Instrumentos Produzidos}
+\begin{frame}{Instrumentos Produzidos}
+Para as partituras trabalhadas, produziu-se três instrumentos:
+\begin{itemize}
+	\item cello
+	\item violino
+	\item violão
+\end{itemize}
+
+A seguir vemos gráficos dos primeiros harmônicos de cada instrumento
+\end{frame}
+
+\begin{frame}{Cello 1/2}
+\vspace{-1 cm}
+\begin{figure}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/cello_f1.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f2.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f3.png}
+  \end{subfigure}  
+  \\ \vspace{-0.5 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/cello_f4.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f5.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f6.png}
+  \end{subfigure}  
+\\ \vspace{-0.5 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/cello_f7.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f8.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f9.png}
+  \end{subfigure}  
+\caption{Harmônicos 1-9 do Cello}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Cello 2/2}
+\vspace{-1 cm}
+\begin{figure}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/cello_f10.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f11.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f12.png}
+  \end{subfigure}  
+  \\ \vspace{-0.5 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/cello_f13.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f14.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/cello_f15.png}
+  \end{subfigure}  
+\caption{Harmônicos 10-15 do Cello}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Violino}
+\vspace{-1 cm}
+\begin{figure}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/violino_f1.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violino_f2.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violino_f3.png}
+  \end{subfigure}  
+  \\ \vspace{-0.5 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/violino_f4.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violino_f5.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violino_f6.png}
+  \end{subfigure}  
+\\ \vspace{-0.5 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/violino_f7.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violino_f8.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violino_f9.png}
+  \end{subfigure}  
+\caption{Harmônicos 1-9 do Violino}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Violão}
+\vspace{-1 cm}
+\begin{figure}[htp]
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/violao_f1.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violao_f2.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violao_f3.png}
+  \end{subfigure}  
+  \\ \vspace{-0.5 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{}
+    \includegraphics[height=1.5cm]{./images/violao_f4.png}
+  \end{subfigure}
+  \hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violao_f5.png}
+  \end{subfigure}
+\hspace{2 cm}
+  \begin{subfigure}[b]{.15\linewidth}
+    \caption*{} 
+    \includegraphics[height=1.5cm]{./images/violao_f6.png}
+  \end{subfigure}  
+\caption{Violão 1-6 do Violão}
+\end{figure}
+\end{frame}
+
+
+\section{Problemas Encontrados}
+\begin{frame}{Problemas Encontrados}
+\begin{itemize}
+	\item Alguns efeitos encontrados na partitura não foram corretamente traduzidos para MIDI
+	\item É preciso rodar a montagem diversas vezes e observar se não houve overflow e ir
+	reduzindo a envoltória até que este não ocorra. Há grandes chances de ocorrer o overflow quando a música possui vários instrumentos e alguns deles tocam acordes.
+	\item Para acelerar a 'compilação' do som, é necessário reduzir o número de harmônicos presentes no instrumento. Arbitrariamente escolhemos utilizar 10 harmônicos em todos os instrumentos.
+	\item não conseguiu-se obter um som 'decente' de violão com poucos harmônicos.
+\end{itemize}
+
+\end{frame}
+
+\section{Referências}
+\begin{frame}
+  \frametitle{Referências}
+  \begin{itemize}
+  \item \href{http://theremin.music.uiowa.edu/MIS.html}{University of Iowa - Digital Instrument Studios - Banco de Amostras de Som}
+  \item \href{https://www.freesound.org/people/Chem/packs/1995/}{Pack: Distortion guitar samples by Chem}
+  \item \href{http://www.cic.unb.br/docentes/lcmm/deptcic2014_1/ics/a20/a20.html}{UnB - Introdução à Computação Sônica, Capítulo 20 - A Linguagem do SOM-A}
+\item \href{http://www.ultimate-guitar.com/}{Ultimate Guitar - banco de tablaturas para guitarra}  
+\item \href{http://audacity.sourceforge.net/?lang=pt-BR}{Audacity - home page}
+\item \href{http://tuxguitar.herac.com.ar/}{TuxGuitar - home page}
+\item \href{http://drownedinsound.com/in_depth/4146352-canon-in-the-1990s--from-spiritualized-to-coolio-regurgitating-pachelbels-canon}{Drowned in Sound - artigo sobre Pachelbel's Canon}
+  \end{itemize}
+\end{frame}
+
+
+\end{document}
