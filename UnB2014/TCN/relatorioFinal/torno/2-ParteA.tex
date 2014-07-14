@@ -1,0 +1,265 @@
+\section{Aritimética de Ponto Flutuante - Software}
+
+\subsection{Raízes da Equação de Segundo Grau}
+Consideramos um polinômio $p(x)$ de segunda ordem dado por:
+\begin{equation}
+	p(x) = ax^2 + bx + c
+\end{equation}
+
+\paragraph{} Queremos achar as raízes $r_1$ e $r_2$de $p(x)$. Isso foi feito
+utilizando-se a fórmula de Bhaskara:
+\begin{equation}
+	r_{1,2} = \frac{-b \pm \sqrt{b^2 -4ac}}{2a}
+\end{equation}
+se $b^2 -4ac \geq 0$ e 
+\begin{equation}
+    r_{1,2} = \frac{-b \pm j\sqrt{-(b^2 -4ac)}}{2a}
+\end{equation}
+se $b^2 -4ac < 0$. 
+\paragraph{} Vemos que a aplicação da fórmula requer uma rotina para cálculo de
+raíz quadrada positiva. Quando fizemos o trabalho não sabíamos que o MIPS já
+possuia uma rotina para essa finalidade e implementou-se então o método da
+bisseção descrito a seguir:
+
+\begin{figure}[H]
+\centering
+\begin{BVerbatim}
+    recebe (X,e)
+    L = 0
+    R = X
+    E = R - L
+    enquanto E > e
+        M = (L+R)/2
+        se M^2 > x, então R = M
+        se M^2 < x, então L = M
+        se M^2 == x, então retorne M
+    fim enquanto
+    retorna M	
+\end{BVerbatim} 
+\end{figure}
+
+\paragraph{}Em nossa implementação definimos 'e' fixo e igual a .Além disso,
+para melhor precisão, todos os cálculos foram feitos com double e só ao final convertidos para float de
+precisão simples.
+
+\subsubsection{O cógido em assembly MIPS}
+\paragraph{}O código completo desenvolvido pode ser visto
+\href{https://github.com/JuarezASF/LaTeX/blob/master/UnB2014/OAC/exp2/code/raizes2grau.asm}{aqui}.
+
+\subsubsection{O procedimento show}
+O procedimento show pode ser visto no mesmo link acima.
+
+\subsubsection{Resultados}
+\paragraph{}O código é testado com algumas entradas e a resposta mostrada na
+tabela a seguir:
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|} \hline
+	\multicolumn{3}{|c|}{ Entrada} & \multicolumn{2}{|c|}{ Saída} \\ \hline
+	a & b & c & $r_1$ & $r_2$ \\ \hline
+	1 & 0 &  -9.86960440 &3.1415925 & -3.1415925 \\ \hline
+	1 & 0 &  0           & 0.0     &-0.0 \\ \hline
+	1 & 99&  2459        &-49.5 + i* 2.95804  &-49.5 + i* -2.95804 \\ \hline
+	1 & -2468 & 33762440  &1234.0 + i* 5678.0 & 234.0 + i* -5678.0 \\ \hline
+	0 & 10 & 100  &-10    & NaN \\ \hline
+\end{tabular}
+\caption{testes da implementação}
+\end{table}
+ 
+\subsection{Casas Decimais de $\pi$}
+\paragraph{}Para calcular os dígitos de pi, usaremos o \emph{Spigot Algorithm
+for the Digits of Pi}\footnote{em uma tradução livre: Algoritmo Torneira para os Dígitos
+de Pi} descrito em \cite{SpigotPi}. A seguir apresentamos brevemente a
+motivação teórica para o algoritmo e em seguida apresentamos o algoritmo
+propriamente dito.
+
+
+\paragraph{} Primeiramente faremos uma reinterpreação das casas decimais:
+\begin{equation}
+    \sqrt{2} = 1.41421356 = 1 + \frac{1}{10} \left( 4 + \frac{1}{10}\left(
+    1 + \frac{1}{10} \left( 4 + \frac{1}{10} \left( 2 + \frac{1}{10}
+    \left(1 + \ldots \right) \right) \right) \right) \right)
+\end{equation}
+ 
+Podemos resumir a notação dizendo que $\sqrt{2} = (1;4,1,4,2,1,\ldots)_{d}$,
+onde d é a base decimal $\{\frac{1}{10}, \frac{1}{10},\frac{1}{10},\frac{1}{10},
+\ldots \}$. A base d é aquela que estamos mais habituados, mas qualquer coleção
+de frações pode formar uma base nesse sentido e todo número terá uma
+representação nessa base criada. Na base binária, por exemplo, apenas
+substituímos o 10 do denominador por 2. Veja que na base decimal e na base
+binária, temos os mesmos elementos em cada entrada do vetor base, e se isso não acontecer? 
+
+\paragraph{} Como um exemplo de uma base exótica e de aplicação
+interessante, considere a base $b =
+\{\frac{1}{2},\frac{1}{3},\frac{1}{4},\frac{1}{5}, \ldots, \frac{1}{n}\}$. 
+Para ver como ela pode ser útil, utilize a série de potências da
+exponencial para escrever o número de Euler $e$ como:
+\begin{equation}
+    exp(1) = e = \sum_{i=0}^{\infty} \frac{1^i}{i!} = \sum_{i=0}^{\infty}
+    \frac{1}{i!} = 1 + \frac{1}{1} + \frac{1}{2} + \frac{1}{3*2} + \ldots 
+\end{equation}
+que pode ser reescrito como:
+\begin{equation}
+e = 1 + \frac{1}{1}(1 + \frac{1}{2}(1 + \frac{1}{3}(1 + \frac{1}{4}(1 +
+\frac{1}{5}(1 + \ldots)))))
+\end{equation}
+
+ou seja,:
+\begin{equation}
+    e = (2;1,1,1,1,1,1, \ldots)_b
+\end{equation}
+isto é, o número $e$ é uma dízima periódica na base b! Será que não podemos
+achar uma base que represente $\pi$ em uma dízima periódica? É justamente essa a
+ideia do algoritmo utilizado. No caso, a base utilizada é $c = \{\frac{1}{3},
+\frac{2}{5}, \frac{3}{7}, \frac{4}{9},\ldots, \frac{i-1}{2i-1}, \ldots \}$ e é
+possível mostrar, também utilizando séries de potência, que:
+\begin{equation}
+    \pi = (2;2,2,2,2,2,2,2, \ldots)_c
+\end{equation}
+
+O trabalho para achar as casas decimais de pi consiste então em converter a
+representação na base c para a base decimal usual! O algoritmo é apresentado a
+seguir:
+
+\begin{figure}[H]
+    \begin{BVerbatim}
+        1. Inicialize: Seja A = (2,2,2,2,2,....,2) um array de comprimento
+        [10n/3] + 1
+        2. Repite n + 1 vezes
+            2.1: multiplica A por 10
+            2.2: coloque na forma regular:
+                comecando da direita ate o segundo elemento do vetor:
+                    reduza o i-esimo elemento mod(2i-1), isto é:
+                     calcule q e r tal que: A[i] = q*(2i-1) + r
+                     A[i] = r
+                     A[i-1] += q(i-1)
+            2.3: calcule o proximo pre-digito
+                   reduza o primeiro elemento mod(10), isto é:
+                     A[0] = q*(10) + r
+                     A[0] = r
+                     salve q para a próxima etapa
+            2.4: decida o que fazer com o vetor preDigitos com base em q:
+                    se q == 9:
+                        preDigitos.add(q)
+                    caso contrario, se q == 10:
+                        q = 0
+                        adicione 1 a todos os pre-digitos anteriores( 9 vira 0)
+                        digitosVerdadeiros.add(preDigitos)
+                        esvazia preDigitos
+                        adiciona q aos preDigitos
+                     caso contrario:
+                        digitosVerdadeiros.add(preDigitos)
+                        esvazia preDigitos
+                        adiciona q aos preDigitos
+                        
+                        
+    \end{BVerbatim}
+\caption{Algoritmo $\pi$-spigot}
+\end{figure}
+
+\paragraph{} Note que \textbf{o algoritmo usa apenas aritmética de interiso para
+calcular os elementos de $\pi$} e é de simples implementação computacional!
+
+\paragraph{} No trabalho desenvolvido, o algoritmo foi primeiramente
+implementado em C++ para testar sua funcionalidade e em seguida implementado em
+assembly para MIPS. Analisando o algoritmo, vemos que ele precisa de estruturas
+de dados para armazenar os números já calculados e outra para armazenar os pre-dígitos, que deve ter o tamanho acrescentado
+e resetado ao longo do algoritmo. Boa parte do trabalho em
+assembly foi implementar essa estrutura de dados para lidar com dados de tamanho de variado.Em C++ utilizamos a estrutura
+\emph{vector} que já está implementada e isso facilita muito a implementação.  Vale a pena comparar o
+tamanho do código: em C++ foram necessárias 109 linhas, em assembly o código
+completo usa 740. Além disso, o código em C++ foi escrito em torno de 30
+minutos e o código em assembly precisou de quase 5 horas.
+
+\subsubsection{O cógido em assembly MIPS}
+\paragraph{}O código completo desenvolvido em C++ pode ser visto
+\href{https://github.com/JuarezASF/LaTeX/blob/master/UnB2014/OAC/exp2/code/PI_digits_cpp.cpp}{aqui} e o desenvolvido
+em assemlby MIPS pode ser visto \href{https://github.com/JuarezASF/LaTeX/blob/master/UnB2014/OAC/exp2/code/piDigits_assembly_mips.asm}{aqui}.
+
+\subsubsection{A função show\_pi}
+\paragraph{} A função pode ser vista no mesmo código assembly mips indicado anteriormente.
+
+\subsubsection{O Custo Computacional}
+O programa foi rodado diversas vezes para valores diferentes do número de casas desejadas e o número de operações
+necessárias foi anotado. Obteve-se a seguinte tabela:
+\begin{table}[H]
+	\centering 
+	\begin{tabular}{|c|c|}\hline
+	número de casas & número de instruções \\ \hline
+	5	& 19839 \\ \hline
+10	& 	70565 \\ \hline
+15	& 	152361 \\ \hline
+20		& 261474 \\ \hline
+25		& 404655 \\ \hline
+30	& 	578862 \\ \hline
+	\end{tabular}
+	\caption{Número de instruções por número de casas calculadas para o Spigot Algorithm}
+\end{table}
+
+A seguir vemos os dados plotados em um gráfico junto com uma regressão polinomial de segunda ordem.
+
+         \begin{figure}[H]
+                 \centering
+                 \includegraphics[scale = 0.4]{../images/AQ2c_graph.png}
+                \caption{Dados e Regressão para o custo do Spigot Algorithm}
+         \end{figure}
+         
+         O polinômio calculado para o custo é:
+         \begin{equation}
+         	c(n) = 616.4\cdot n^2 + 749.2\cdot n +  1133.7
+         \end{equation}
+         
+         A extrapolação para n = 100000 é mostrada a seguir:
+                  \begin{figure}[H]
+                 \centering
+                 \includegraphics[scale = 0.4]{../images/AQc_graph02.png}
+                \caption{Extrapolação para o custo do Spigot Algorithm}
+         \end{figure}
+         
+     \subsubsection{Limitações no MARS}
+     O fator limitante para grandes valores de n é o tamanho da memória. O algoritmo utiliza 3 vetores:\textbf{ A},\textbf{ preDigits} e\textbf{ piDigits}. \textbf{A} tem tamanho $\frac{10}{3}n + 1$, \textbf{preDigits} e \textbf{piDigits} tem tamanho
+     n. Além disso, cada dígito do vetor é um número de 0 a 9, então pode ser armazenado em 1 byte. O algoritmo precisa então de:
+     \begin{equation}
+     		m(n) = \frac{10}{3}n+1 + 2n = \frac{19}{3} \cdot n \mbox{ bytes}
+     \end{equation}
+     
+     Estamos utilizando o recurso de armazenamento de dados na heap por meio do syscall 9 que aloca memória dinamicamente.
+     Para tanto, o MARS disponibiliza os endereços de 0x10040000 até (0x100401e0 + 1c). Contando em words isso dá 8x16 words (8 colunas por
+     16 linhas). Portanto, o número de bytes disponíveis para acesso dinâmico é 8x16x4 = 512 bytes. Basta então resolver para n:
+     
+     \begin{equation}
+	     \frac{19}{3}n = 512 \Rightarrow n =  80.8421
+     \end{equation}
+     
+     Portanto, com o MARS podemos calcular no máximo 80 dígitos de pi devido à limitação de memória
+     
+     \subsubsection{Tempo de Execução para n máximo}
+     Como já dissemos,\textbf{ nosso algoritmo não utiliza aritimética de ponto flutuante}, por isso levamos em conta apenas o custo
+     das operações de ponto fixo. Jogamos o n máximo na fórmula obtida por regressão para obter o número de instruções
+     necessárias para n = 80:
+     
+     \begin{equation}
+     			c(96) = 616.4\cdot 80^2 + 749.2\cdot 80 +  1133.7 = 4.0060 \cdot 10^6\mbox{ instruções}
+     \end{equation}
+     
+     Calculamos o tempo de ciclo:
+     
+     \begin{equation}
+     	T = \frac{1}{f} = \frac{1}{1E9} = 1\cdot 10^{-9} \mbox{ segundos}
+     \end{equation}
+     
+     Utilizamos a fórmula clássica para tempo de execução:
+     
+     \begin{equation}
+     	t = n \cdot CPI \cdot T =  4.0060E06 \cdot 1 \cdot 1E-9 =  4.0060\cdot 10^{-3} s = 4.0060 \mbox{ milisegundos}
+     \end{equation}
+     
+     \subsubsection{Recorde Atual de casas para Pi}
+     
+     Segundo a wikipedia, em 2011 já havia-se calculado $\pi$ com mais de 10 trilhões de casas decimais
+     
+     
+     
+
+
+

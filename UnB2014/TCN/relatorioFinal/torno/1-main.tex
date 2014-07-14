@@ -1,0 +1,423 @@
+\input{0-Headers}
+
+%%$CONFIGURA TOPO DA PÁGINA
+\fancyhead{} 
+
+%%$CONFIGURA PÉ DA PÁGINA
+\fancyfoot{}
+\fancyfoot[C]{\thepage} 
+
+\title{
+    Universidade de Brasília \\
+   Tecnologia de Comando Numérico\\
+   Torno Didático\\
+    \HRule
+    \\
+   Análise de Erro Dimensional e Geométrico de Capabilidade 
+    \HRule \\
+    {\normalsize \today}
+}
+
+\author{\begin{tabular}{llr}
+    Professor: & Alberto J. Álvares & \\
+    Aluno:& & \\
+	&	Juarez Aires Sampaio Filho   & 11/0032829\\ 
+    \end{tabular}
+}
+
+
+\begin{document}
+
+\maketitle 
+
+\thispagestyle{fancy}
+
+
+%%INCLUI SEÇÕES DO TRABALHO
+\fancyhead{} 
+\section{Introdução}
+
+ No contexto das tecnologias de comando numérico aplicadas a usinagem, o\textbf{ código G} consiste numa sequências de instruções
+ a serem interpretadas por uma máquina de modo a usinar uma determinada peça. A definição da linguagem apresenta
+ diversos comandos de movimentação de ferramenta de forma a permitir que as mais variadas geometrias possam ser pelo código
+ descritas.
+ 
+ 
+ Antes mesmo da elaboração do código G, a receita deve ser escrita na forma de \textbf{planejamento de processo}. Nessa etapa,
+ descreve-se os passos a serem seguidos para a usinagem em uma tabela. A máquina não irá interpretar essa tabela, mas ela serve de orientação para a codificação do código G e para as configurações de máquina, peça e ferramenta que podem ser necessárias. Em máquinas
+ mais simples essa configuração é muitas vezes feita manualmente e o planejamento de processo informa o operador o que é necessário. Na prática deve-se primeiro escrever o planejamento do processo e só então passar para a elaboração do código G.
+ 
+ 
+ Para a verificação da qualidade da peça diversos conceitos estatísticos devem ser apresentados. Em primeiro lugar deve-se falar sobre os tipos de \textbf{erros} envolvidos no processo. Primeiramente temos o \textbf{erro sistemático} que gera uma diferença sistemática entre  o valor projeto para uma dimensão da peça e o valor obtido. Dizemos que o erro é sistemático quando ele é oriundo de uma má configuração
+ do sistema ou do processo. Por exemplo, digamos que estejamos medindo a gravidade e obtenhamos um valor de 18 m/$s^2$. O valor está muito distante daquele aceito como correto e deve então haver um erro sistemático no processo de medida. No contexto da usinagem, um erro sistemático ocorre, por exemplo, quando projetamos um diâmetro de 50mm para uma peça e medimos um diâmetro de 40mm. Quando o erro sistemático está presente em grande intensidade, dizemos que o processo foi \textbf{inacurado}, caso contrário foi \textbf{acurado}.
+ 
+ 
+Uma outra modalidade de erro é o \textbf{erro aleatório}. Esta forma de erro está presente em qualquer processo de medida ou fabricação e está relacionado com as variações de natureza aleatório que ocorrem no processo. Ao medirmos o diâmetro de uma peça podemos obter valores próximos como 50.01mm ou 49.98mm e isso não significa que existam dois valores para a variável sendo medida. Significa que 
+o instrumento sendo utilizado é suscetível a pequenas variações que, sem mais informações, são de natureza aleatória. Quando o erro aleatório é comparável ao valor da medida tomada dizemos que o processo foi\textbf{ impreciso}, quando não, é \textbf{preciso}.
+
+
+Se medidas sucessíveis nos dão valores diferentes, como saber o valor real? De fato, nunca podemos ter absoluta certeza sobre o valor de uma variável sendo medida, mas podemos supor um comportamento para o erro aleatório e estimar duas grandezas importantes: a média e o desvio padrão dos valores. O primeiro informa a melhor aproximação para o valor real sendo medido e o segundo informa o quanto os valores medidos oscilam em torno da média. Podemos dizer que o processo é preciso quando possuir baixo desvio.
+
+
+ Quanto ao comportamento esperado do erro aleatório, espera-se que ele varia seguindo uma distribuição normal, ou gaussiana.
+No entanto, quando possuímos apenas uma pequena quantidade de amostras(<30) é mais recomendável adotar um modelo de distribuição \textbf{t de Student}. Com essa abordagem podemos, a partir de um pequeno conjunto de dados, afirmar algo do tipo "estima-se com X\% de
+certeza que o valor real da média esteja entre A e B".
+
+
+
+Para a utilização da t-student alguns conceitos são agora apresentados:
+\begin{itemize}
+\item \textbf{média da população ($\mu$)}: corresponde a média real da população ao qual os valores pertencem.
+
+\item \textbf{média da amostra $\overline{X}$} : é a média dos dados. Notar que a média dos dados é, muito provavelmente, diferente
+da média da população(conjunto de todas as medidas possíveis).
+\begin{equation}
+		\overline{X} = \frac{1}{n}\sum_{i=1}^{n} x_i
+\end{equation}
+
+\item \textbf{Desvio Padrão ($\sigma$)}: corresponde ao desvio real da população em torno da média real
+
+\item \textbf{Estimação para o Desvio Padrão ($\widehat{\sigma}$)} corresponde a uma estimação para a variável acima
+e é dado por;
+	\begin{equation}
+		\widehat{\sigma} = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n} (x_i - \overline{X})^2}
+	\end{equation}
+\item  \textbf{Graus de Liberdade ($\xi$)}: corresponde ao números de variáveis aleatórios que podem variar desde que uma variável tenha
+sido fixada. Para o caso em estudo:
+\begin{equation}
+	\xi = n-1
+\end{equation}
+
+\item \textbf{Consultando a tabela t de Student}: digamos que queiramos X\% de confiabilidade para a o valor da média $\mu$, determinamos então o valor $\alpha$
+\begin{equation}
+	\alpha = 1 - X
+\end{equation}
+
+Para consulta na tabela devemos olhar a linha $\xi$(graus de liberdade) coluna (1 - $\alpha/2$). Isso é feito pelo modo como
+a tabela é construída. Teremos então o valor z. Calculamos então o comprimento de variação $\Delta$:
+\begin{equation}
+	\Delta = \frac{\widehat{\sigma}z}{\sqrt{n}}
+\end{equation}
+
+Finalmente, podemos dizer que "temos X\% de certeza de que a média real $\mu$ se encontra entre $\overline{X} - \Delta$ e $\overline{X} + \Delta$".
+Para o caso X = 0.95 e n = 5(nosso caso), z = 2.7764.
+\end{itemize}
+
+
+
+Um vez calculado o comprimento $\Delta$ podemos adotá-lo como o erro aleatório envolvido em nossas medidas.  Aqui escolhemos 95\% arbritariamente, poderíamos escolher qualquer valor mas 95\% parece suficientemente conservador e rigoroso. Basta lembrar em que sentido definimos o erro:  "temos 95\% de certeza de que a média real $\mu$ se encontra entre $\overline{X} - \Delta$ e $\overline{X} + \Delta$".
+ 
+ 
+
+Finalmente, apresentamos o conceito de capacidade. Como vimos anteriormente, todo processo apresenta erros. O projeto
+ de uma peça deve ter isso em consideração e, portanto, definir tolerâncias dimensionais. O índice de capacidade indica se 
+ uma determinada máquina é capaz ou não de produzir as especificações de erro informadas;
+ \begin{equation}
+ 	\mbox{Capacidade} = \frac{\mbox{Tolerância}}{ \mbox{Erro Inerente}}
+ \end{equation}
+ A usinagem adequada é possível se esse índice for maior do que 1. Pode-se ainda acrescentar um  fator de segurança se
+ adequado às necessidades do projeto.
+ 
+\section{Objetivos}
+ Este trabalho tem como objetivo praticar as etapas do planejamento, execução e aferição da qualidade de uma peça de cera usinada no torno
+ didático.  
+ 
+\section{Planejamento de Processo}
+O planejamento de processo é visto na tabela \ref{tab:processo}.
+\begin{table*}[htp]
+\centering
+\begin{tabular}{|c|l|c|c|c|c|}\hline
+Nº & Operação & Z inicial(mm) & Z final(mm) & Profundidade(mm) & Raio(mm) \\ \hline
+ 1& desbaste &2 & -100 & 1 & \\\hline
+  2& rasgo & -95 & &2.5 & \\\hline
+   3& rasgo &-88 & &1.5 & \\\hline
+   4 & rasgo & -81 & &0.5 & \\\hline
+5& desbaste & -56 & -58  & 0.5 & \\\hline
+6& desbaste& -56 & -60  &1.5 & \\\hline
+7& perfilamento & -56 & -68 & 1.0 & \\\hline
+8& desbaste & -36 & -38  & 0.5 & \\\hline
+9& desbaste& -36 & -30  &1.5 & \\\hline
+10& perfil. circular & -36 & -38 & 1.0 & 6\\\hline
+11& desbaste & -16 & -18  & 0.5 & \\\hline
+12& desbaste& -16 & -10  &1.5 & \\\hline
+13& perfil. circular & -16 & -18 & 1.0 & 6\\\hline
+ 14& rasgo &-15 & &1.5 & \\\hline
+ 15& rasgo & -21 & &0.5 & \\\hline
+\end{tabular}
+\caption{Planejamento de Processo}
+\label{tab:processo}
+\end{table*}
+\section{Código G}
+\begin{verbatim}
+($Lathe)
+($Millimeters)
+(110032829)
+$AddRegPart 1
+G90 G21 G40 ET8 M6
+//G21  unidades em milimitros
+//G40 cancela compensação de raio  
+//ET8 M6 seleciona e troca ferramenta
+G92 X0 Z128
+
+(move para plano de segurança)
+G00 X28 Z2
+
+F250 S1000 M4 (liga a ferramente M4)
+
+G01 	X24.0
+Z-100(tira 1mm para homogeneizar)
+X28
+	(rasgos iniciais - começo)
+	//primeiro rasgo profundidade 6
+G00  Z-95 //G0
+G01  X23.5 (tira 2cm)
+X21.5
+X19.5
+X28 (segurança)
+
+
+	//segundo rasgo profundidade 4
+G00  Z-88 //G0
+G01  X23.5
+X21.5
+X28 (segurança)
+
+	//terceiro rasgo profundidade 2
+G00  Z-81 //G0
+G01	X23.5
+X28 (segurança)
+	(rasgos iniciais - fim)
+	
+	(declividade trapezoidal - inicio)
+	(rasgo trapezoidal primeiro passe)
+G00  Z-56 //G0 extremidade direita 
+G01  X25.5 //aproximação
+X23.5 Z-58
+Z-72
+X25.5 Z-74
+X28 (segurança)
+	(rasgo trapezoidal - segundo passe)
+Z-56 //G0 extremidade direita 
+X25.5 //aproximação
+X21.5 Z-60
+Z-70
+X25.5 Z-74
+X28 (segurança)
+	(rasgo trapezoidal - terceiro passe)
+Z-56 //G0 extremidade direita 
+X25.5 //aproximação
+X19.5 Z-62
+Z-68
+X25.5 Z-74
+X28 (segurança)
+	(declividade trapezoidal - fim)
+	
+	(declividade circular - inicio)
+	(rasgo circular primeiro passe)
+Z-36 //G0 extremidade direita 
+X25.5 //aproximação
+X23.5 Z-38
+Z-50
+X25.5 Z-52
+X28 (segurança)
+	(rasgo circular segundo passe)
+Z-38 //G0 extremidade direita 
+X25.5 //aproximação
+X21.5 Z-40
+Z-48
+X25.5 Z-52
+X28 (segurança)
+	(rasgo circular terceiro passe)
+Z-38 //G0 extremidade direita 
+X25.5 //aproximação
+X19.5 Z-42
+Z-46
+X25.5 Z-52
+X28 (segurança)
+	(rasco circular - acabamento)
+Z-38 // G0 extremidade direita
+X25.5
+G2 X19.5 Z-42 R6  
+G1 Z-46
+G2 X25.5 Z-52 R6
+G1 X28 (segurança) 
+	(declividade circular - fim)
+	
+	(declividade circular com rasgos - início)
+	(primeiro passe)
+Z-16 //G0 extremidade direita 
+X25.5 //aproximação
+X23.5 Z-18
+Z-28
+X25.5 Z-30
+X28 (segurança)
+	(segundo passe)
+Z-16 //G0 extremidade direita 
+X25.5 //aproximação
+X21.5 Z-20
+Z-26
+X25.5 Z-30
+X28 (segurança)
+
+	(primeiro rasgo)
+Z-25
+X23.5
+X21.5
+X19.5
+X28(segurança)
+	(segundo rasgo)
+Z-21
+X23.5
+X21.5
+X19.5
+X28(segurança)
+	(declividade circular com rasgos - FIM)
+	
+	(detalhe da ponta direita - inicio)
+	(primeiro passe)
+Z0
+X23.5
+X26.5 Z-2
+	(segundo passe)
+Z0
+X21.5
+X24.5 Z-4
+	(terceiro passe)
+Z0
+X19.5
+X24.5 Z-6
+	(acabamento)
+Z0 
+X19.5
+G2 X25.4 Z-6 R6 
+X28(segurança)
+	(detalhe da ponta direita - FIM)
+	
+	(rasgo na ponta direita - início)
+Z-11
+X25.5 (aproximação)
+X23.5 (usinagem)
+X21.5 (usinagem)
+X19.5 (usinagem)
+X28 (segurança)
+	(rasgo na ponta direita - FIM)
+	
+G0	X40 Z40 
+	
+M30 (encerra programa)
+\end{verbatim}
+
+\section{Simulação}
+A figura a seguir foi obtida com a simulação no programa CNC Simulador.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{./images/simulacao}
+\caption{Simulação obtida com CNC Simulator}
+\end{figure}
+
+\section{Resultados}
+A peça produzida é mostrada a seguir.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.10, angle = -90]{./images/resultado.jpg}
+\caption{resultado}
+\end{figure}
+
+Vamos na tabela \ref{tab:dados} dados dos valores medidos, projetados, médias e desvio padrão. As medidas são tomadas nos pontos indicados da figura a seguir.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1.0]{./images/resultado_menor}
+\caption{ pontos onde as medidas foram tomadas}
+\end{figure}
+
+\begin{table*}[htp]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+variável & $x_1$ (mm)& $x_2$(mm) & $x_3$(mm)& $x_4$(mm)& $x_5$ (mm)& $\overline{X}$(mm) & $\widehat{\sigma}$ (mm) & Projetado(mm) & Erro(\%) \\ \hline
+medida 1& 42,971& 42,839&  42,906 & 42,924 & 42,920 &42,912  & 0,048 & 39,000 & 10,03 \\ \hline
+medida 2& 45,084& 45,051& 45,030& 45,108& 45,111 &45,077  & 0,036 & 43,000 & 4,83\\ \hline
+medida 3& 46,844 & 47,137 & 47,371& 47,124 & 47,194 &47,134 & 0,190 &47,000 &0,29 \\ \hline
+medida 4& 47,611& 47,592& 47,517& 47,571& 47,644 &47,587  & 0,047 & 48,000 & 0,86\\ \hline
+medida 5& 38,865 & 38,840 & 38,837 & 38,884 & 38, 791 & 38,843 &  0,035 &39,000 & 0,40\\ \hline 
+\end{tabular}
+\caption{Dados Experimentais e Estatísticos}
+\label{tab:dados}
+\end{table*}
+
+\section{Análise de Capacidade}
+
+Para uma análise rápida da capacidade de máquina, vamos tomar como variância das medidas feitas a média das variâncias de 
+cada medida. 
+\begin{equation}
+	\overline{\widehat{\sigma}} =0,071065999
+\end{equation}
+
+O erro da máquina pode então ser estimado em:
+
+\begin{equation}
+\Delta = \frac{\widehat{\sigma}z}{\sqrt{n}}  = \frac{0,041 \cdot  2,7764}{\sqrt{5}} = 0,0882386589
+\end{equation}
+
+Calculamos agora a capabilidade com um fator de segurança de 2 e uma tolerância de 0.5mm:
+\begin{equation}
+\begin{array}{l}
+ 	\mbox{Cp} = \frac{\mbox{Tolerância}}{ \mbox{fator de segurança} \cdot \mbox{Erro Inerente}}  \\
+ 	= \frac{0.5}{2 \cdot 2 \cdot 0,0882386589} \approx 1.4
+\end{array}
+ \end{equation}
+ 
+ Vemos que a máquina em que a peça foi usinada é capaz, e com folga, de usinar uma peça com requisitos de projeto de tolerância dimensional
+ de 0.5mm. No entanto, as médias para as medidas tomadas destoam bastante dos valores projetados, mostrando a presença de
+ erros sistemáticos. Apontamos duas fontes prováveis de erro: o zeramento da máquina e o diâmetro original da peça pode ter diferido
+ daquela de projeto(50mm).
+ 
+\textbf{CPK}
+
+
+ Vamos calcular o CPK. Esta medida se aplica quando a tolerância sofre maior restrição em relação a um dos limites(superior ou inferior). 
+ 
+ \begin{equation}
+ 	CPK = min(CPI, CPS)
+ \end{equation}
+ 
+ onde:
+ 
+ \begin{equation}
+ 	CPI = \frac{\mbox{tolerância inferior}}{0.5 \cdot \mbox{variabilidade inerente}}
+ \end{equation}
+ 
+  \begin{equation}
+ 	CPS = \frac{\mbox{tolerância superior}}{0.5 \cdot \mbox{variabilidade inerente}}
+ \end{equation}
+ 
+ É claro que o menor CP está naquele com menor tolerância. Vamos calcular para uma tolerância inferior de 0.3 e superior de 0.8:
+\begin{equation}
+\begin{array}{l}
+CPI = 1,70 \\
+CPS = 4,53 \\
+CPK = CPI = 1.70
+\end{array}
+\end{equation} 
+
+Vemos que ainda sim a máquina é capaz.
+ 
+ \begin{thebibliography}{1}
+
+\bibitem{PE-book}
+  		Paul L. Meyer
+  		\emph{Probabilidade Aplicações à Estatística}2ªed. LTC, 2009.(pag. 359, exemplo 14.18
+	
+\bibitem{t1}  		
+		Duke University, Department of Statistical Science  	
+  		\emph{FAQ'S ABOUT THE STUDENT-T DISTRIBUTION} www.isds.duke.edu/courses/Fall98/sta110b/tfaq.html
+  		acesso em \today
+  		
+\bibitem{t2}  		
+		Stat Trek 	
+  		\emph{Student's t Distribution} http://stattrek.com/probability-distributions/t-distribution.aspx?tutorial=ap
+  		acesso em \today
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,618 @@
+\input{0-Headers}
+
+%%$CONFIGURA TOPO DA PÁGINA
+\fancyhead{} 
+
+%%$CONFIGURA PÉ DA PÁGINA
+\fancyfoot{}
+\fancyfoot[C]{\thepage} 
+
+\title{
+    Universidade de Brasília \\
+   Tecnologia de Comando Numérico\\
+  Fresa\\
+    \HRule
+    \\
+   Análise de Erro Dimensional e Geométrico de Capabilidade 
+    \HRule \\
+    {\normalsize \today}
+}
+
+\author{\begin{tabular}{llr}
+    Professor: & Alberto J. Álvares & \\
+    Aluno:& & \\
+	&	Juarez Aires Sampaio Filho   & 11/0032829\\ 
+    \end{tabular}
+}
+
+
+\begin{document}
+
+\maketitle 
+
+\thispagestyle{fancy}
+
+
+%%INCLUI SEÇÕES DO TRABALHO
+\fancyhead{} 
+ 
+\section{Objetivos}
+ Este trabalho tem como objetivo praticar as etapas do planejamento, execução e aferição da qualidade de uma peça de madeira MDF na 
+ fresa disponível para os alunos no GRACO.  
+ 
+\section{Código G}
+\begin{verbatim}
+$AddRegPart 1
+(configurações)
+G92 X100 Y100 Z20 //seta zero no centro da peça
+T1 M6 M21 //troca ferramenta e fecha a porta
+G90 M3 S900 F450 //coordenadas absolutas e parâmetros de usinagem
+
+	(Braços início - 1.5 de profundidade)
+G00 X0 Y0 Z5
+G91 //coordenadas relativas
+//BRAÇO 0º
+G01 Z-6.5
+X50 Y0
+Z6.5
+G00 X-50 Y-0
+//BRAÇO 30º
+G01 Z-6.5
+Y37.5 X64.95
+Z6.5
+G00 Y-37.5 X-64.95
+//BRAÇO 60º
+G01 Z-6.5
+X25 Y43.30
+Z6.5
+G00 X-25 Y-43.30
+//BRAÇO 90º
+G01 Z-6.5
+X0 Y75
+Z6.5
+G00 X0 Y-75
+//BRAÇO 120º
+G01 Z-6.5
+X-25 Y43.30
+Z6.5
+G00 X25 Y-43.30
+//BRAÇO 150º
+G01 Z-6.5
+Y37.5 X-64.95
+Z6.5
+G00 Y-37.5 X64.95
+//BRAÇO 180º
+G01 Z-6.5
+X-50 Y0
+Z6.5
+G00 X50 Y-0
+//BRAÇO 210º
+G01 Z-6.5
+Y-37.5 X-64.95
+Z6.5
+G00 Y37.5 X64.95
+//BRAÇO 240º
+G01 Z-6.5
+X-25 Y-43.30
+Z6.5
+G00 X25 Y43.30
+//BRAÇO 270º
+G01 Z-6.5
+X0 Y-75
+Z6.5
+G00 X0 Y75
+//BRAÇO 300º
+G01 Z-6.5
+X25 Y-43.30
+Z6.5
+G00 X-25 Y43.30
+//BRAÇO 330º
+G01 Z-6.5
+Y-37.5 X64.95
+Z6.5
+G00 Y37.5 X-64.95
+
+G90
+	(Braços - fim)
+	
+	(COROA - INÍCIO)
+G00 X0 Y0 Z5
+G90 
+G01 X25 Y0
+Z-1.5
+//PRIMEIRO QUADRANTE
+X33.81 Y9.06
+X21.65 Y12.5 
+X24.75 Y24.75
+X12.5 Y21.65
+X9.06	Y33.81
+X0	Y25
+//SEGUNDO QUADRANTE
+Y33.81 	X-9.06
+Y21.65 	X-12.5 
+Y24.75 	X-24.75
+Y12.5 	X-21.65
+Y9.06	X-33.81
+Y0		X-25
+//TERCEIRO QUADRANTE
+X-33.81 Y-9.06
+X-21.65 Y-12.5 
+X-24.75 Y-24.75
+X-12.5 Y-21.65
+X-9.06	Y-33.81
+X0	Y-25
+//QUARTO QUADRANTE
+Y-33.81 	X9.06
+Y-21.65 	X12.5 
+Y-24.75 	X24.75
+Y-12.5 	X21.65
+Y-9.06	X33.81
+Y0		X25
+Z5
+G90
+	(COROA - FIM)
+	
+	(TRAÇOS - INÍCIO - 1.0 de profundidade)
+G00 X0 Y0 Z5
+G91
+//TRAÇOS BRAÇO 0º
+G01 X40 
+Z-6.0
+X3.21 Y3.83
+X-3.21 Y-3.83
+X3.21 Y-3.83
+X-3.21 Y3.83
+Z6.0
+G90
+G00  X0 Y0
+//TRAÇOS BRAÇO 30º
+G00  X43.30 Y25 (50<30º)
+Z-1.0
+G91
+G01  X0.87 Y4.92 (5<80º)
+X-0.87 Y-4.92
+X4.67 Y-1.71(5<-20º)
+X-4.67 Y1.71
+G90
+Z5
+G00  X51.96 Y30 (60<30º)
+Z-1.0
+G91
+G01  X0.87 Y4.92 (5<80º)
+X-0.87 Y-4.92
+X4.67 Y-1.71(5<-20º)
+X-4.67 Y1.71
+G90
+Z5
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 60º
+G00  X20 Y34.64
+Z-1.0
+G91
+G01  X-1.71 Y4.70
+X1.71 Y-4.70
+X4.91 Y0.87
+X-4.91 Y-0.87
+G90
+Z5
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 90º
+G00  X0 Y50 (50<90º)
+Z-1.0
+G91
+G01  X3.83 Y3.21 (5<40º)
+X-3.83 Y-3.21
+X-3.83 Y3.21(5<140º)
+X3.83 Y-3.21
+G90
+Z5
+G00  X0 Y60 (60<90º)
+Z-1.0
+G91
+G01  X3.83 Y3.21 (5<40º)
+X-3.83 Y-3.21
+X-3.83 Y3.21(5<140º)
+X3.83 Y-3.21
+G90
+Z5
+
+
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 120º
+G00  X-20 Y34.64 (40<120º)
+Z-1.0
+G91
+G01  X1.71 Y4.70 (5<70º)
+X-1.71 Y-4.70
+X-4.92 Y0.87(5<170)
+X4.92 Y-0.87
+G90
+Z5
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 150º
+G00  X-43.30 Y25 (50<150º)
+Z-1.0
+G91
+G01  X-4.67 Y-1.71 (5<200º)
+X4.67 Y1.71
+X-0.87 Y4.92(5<100º)
+X0.87 Y-4.92
+G90
+Z5
+G00  X-51.96 Y30 (60<150º)
+Z-1.0
+G91
+G01  X-4.67 Y-1.71 (5<200º)
+X4.67 Y1.71
+X-0.87 Y4.92(5<100º)
+X0.87 Y-4.92
+G90
+Z5
+G00 X0 Y0
+
+
+//TRAÇOS BRAÇO 180º
+G00 X-40 (40<180º)
+Z-1.0
+G91
+G01  X-3.21 Y3.83
+X3.21 Y-3.83
+X-3.21 Y-3.83
+X3.21 Y3.83
+G90
+Z5
+G00  X0 Y0
+
+//TRAÇOS BRAÇO 220º
+G00  X-43.30 Y-25 (50<210º)
+Z-1.0
+G91
+G01  X-4.67 Y1.71 (5<160º)
+X4.67 Y-1.71
+X-0.87 Y-4.92(5<260º)
+X0.87 Y4.92
+G90
+Z5
+G00  X-51.96 Y-30 (60<210º)
+Z-1.0
+G91
+G01  X-4.67 Y1.71 (5<160º)
+X4.67 Y-1.71
+X-0.87 Y-4.92(5<260º)
+X0.87 Y4.92
+G90
+Z5
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 240º
+G00  X-20 Y-34.64 (40<240º)
+Z-1.0
+G91
+G01  X1.71 Y-4.70 (5<70º)
+X-1.71 Y4.70
+X-4.92 Y-0.87(5<170)
+X4.92 Y0.87
+G90
+Z5
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 270º
+G00  X0 Y-50 (50<270º)
+Z-1.0
+G91
+G01  X3.83 Y-3.21 (5<320º)
+X-3.83 Y3.21
+X-3.83 Y-3.21(5<220º)
+X3.83 Y3.21
+G90
+Z5
+G00  X0 Y-60 (60<270º)
+Z-1.0
+G91
+G01  X3.83 Y-3.21 (5<320º)
+X-3.83 Y3.21
+X-3.83 Y-3.21(5<220º)
+X3.83 Y3.21
+G90
+Z5
+
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 300º
+G00  X20 Y-34.64 (40<300º)
+Z-1.0
+G91
+G01  X-1.71 Y-4.70
+X1.71 Y4.70
+X4.91 Y-0.87
+X-4.91 Y0.87
+G90
+Z5
+G00 X0 Y0
+
+//TRAÇOS BRAÇO 330º
+G00  X43.30 Y-25 (50<330º)
+Z-1.0
+G91
+G01  X0.87 Y-4.92 (5<280º)
+X-0.87 Y4.92
+X4.67 Y1.71(5<380º)
+X-4.67 Y-1.71
+G90
+Z5
+G00  X51.96 Y-30 (60<330º)
+Z-1.0
+G91
+G01  X0.87 Y-4.92 (5<280º)
+X-0.87 Y4.92
+X4.67 Y1.71(5<380º)
+X-4.67 Y-1.71
+G90
+Z5
+G00 X0 Y0
+	(TRAÇOS - FIM)
+
+(Moldura - 1º passe - 1.5mm- INÍCIO)
+G90
+G00 X-75.0 Y-85.0 Z5 
+G01  Z-1.5
+X75
+G03 X85 Y-75 R10 
+G01 Y75
+G03 X75 Y85 R10
+G01  X-75
+G03 X-85 Y75 R10
+G01  Y-75
+G03 X-75 Y-85 R10
+G01  Z5
+	(MOLDURA - 2º passe - FIM)
+
+G90 
+	(Braços 2º passe - 2.5mm)
+G00 X0 Y0 Z5
+G91 //coordenadas relativas
+//BRAÇO 0º
+G01 Z-7.5
+X50 Y0
+Z7.5
+G00 X-50 Y-0
+//BRAÇO 30º
+G01 Z-7.5
+Y37.5 X64.95
+Z7.5
+G00 Y-37.5 X-64.95
+//BRAÇO 60º
+G01 Z-7.5
+X25 Y43.30
+Z7.5
+G00 X-25 Y-43.30
+//BRAÇO 90º
+G01 Z-7.5
+X0 Y75
+Z7.5
+G00 X0 Y-75
+//BRAÇO 120º
+G01 Z-7.5
+X-25 Y43.30
+Z7.5
+G00 X25 Y-43.30
+//BRAÇO 150º
+G01 Z-7.5
+Y37.5 X-64.95
+Z7.5
+G00 Y-37.5 X64.95
+//BRAÇO 180º
+G01 Z-7.5
+X-50 Y0
+Z7.5
+G00 X50 Y-0
+//BRAÇO 210º
+G01 Z-7.5
+Y-37.5 X-64.95
+Z7.5
+G00 Y37.5 X64.95
+//BRAÇO 240º
+G01 Z-7.5
+X-25 Y-43.30
+Z7.5
+G00 X25 Y43.30
+//BRAÇO 270º
+G01 Z-7.5
+X0 Y-75
+Z7.5
+G00 X0 Y75
+//BRAÇO 300º
+G01 Z-7.5
+X25 Y-43.30
+Z7.5
+G00 X-25 Y43.30
+//BRAÇO 330º
+G01 Z-7.5
+Y-37.5 X64.95
+Z7.5
+G00 Y37.5 X-64.95
+
+G90
+	(Braços 2º passe - fim)
+	
+		(COROA - 2º passe - 2.5mm INÍCIO)
+G00 X0 Y0 Z5
+G90 
+G01 X25 Y0
+Z-2.5
+//PRIMEIRO QUADRANTE
+X33.81 Y9.06 Z-2.0
+X21.65 Y12.5 Z-2.5
+X24.75 Y24.75 Z-2.0
+X12.5 Y21.65 Z-2.5
+X9.06	Y33.81 Z-2.0
+X0	Y25 Z-2.5
+//SEGUNDO QUADRANTE
+Y33.81 	X-9.06 Z-2.0
+Y21.65 	X-12.5 Z-2.5
+Y24.75 	X-24.75 Z-2.0
+Y12.5 	X-21.65 Z-2.5
+Y9.06	X-33.81 Z-2.0
+Y0		X-25 Z-2.5
+//TERCEIRO QUADRANTE
+X-33.81 Y-9.06 Z-2.0
+X-21.65 Y-12.5 Z-2.5
+X-24.75 Y-24.75 Z-2.0
+X-12.5 Y-21.65 Z-2.5
+X-9.06	Y-33.81 Z-2.0
+X0	Y-25 Z-2.5
+//QUARTO QUADRANTE
+Y-33.81 	X9.06 Z-2.0
+Y-21.65 	X12.5 Z-2.5 
+Y-24.75 	X24.75 Z-2.0
+Y-12.5 	X21.65 Z-2.5
+Y-9.06	X33.81 Z-2.0
+Y0		X25 Z-2.5
+Z5
+G90
+	(COROA - 2º passe - FIM)
+	
+	(Moldura - 2º passe - 2.5 mm- INÍCIO)
+G90
+G00 X-75.0 Y-85.0 Z5 
+G01  Z-2.5
+X75
+G03 X85 Y-75 R10 
+G01 Y75
+G03 X75 Y85 R10
+G01  X-75
+G03 X-85 Y75 R10
+G01  Y-75
+G03 X-75 Y-85 R10
+G01  Z5
+	(MOLDURA - 2º passe - FIM)
+	
+	(furos - 1º passe)
+G90
+G01 X-75.0 Y-75.0 Z5
+G01 Z-2.0
+Z5
+G01 X75.0 Y-75.0 Z5
+G01 Z-2.0
+Z5
+G01 X75.0 Y75.0 Z5
+G01 Z-2.0
+Z5
+G01 X-75.0 Y75.0 Z5
+G01 Z-2.0
+Z5
+
+G01 X0 Y0 Z20 
+M30 
+\end{verbatim}
+
+\section{Simulação}
+A figura a seguir foi obtida com a simulação no programa CNC Simulador.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{./images/simulacao}
+\caption{Simulação obtida com CNC Simulator}
+\end{figure}
+
+\section{Resultados}
+A peça produzida é mostrada a seguir.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{./images/resultado.jpg}
+\caption{resultado}
+\end{figure}
+
+Vamos na tabela \ref{tab:dados} dados dos valores medidos, projetados, médias e desvio padrão.
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+variável & $x_1$ (cm)& $x_2$(cm) & $x_3$(cm)& $x_4$(cm)& $x_5$ (cm)& $\overline{X}$(cm) & $\widehat{\sigma}$ (cm) & Projetado(mm) & Erro(\%) \\ \hline
+medida 1& 16,600& 16,582&  16,604 & 16,600 & 16,584 &  16,594 &0,010  & 17,000 &2,39  \\ \hline
+medida 2& 16,640& 16,650& 16,626& 16,634& 16,634 &16,637  & 0,009& 17,000 & 2,14\\ \hline
+medida 3& 8,114 & 8,118 & 8,122& 8,124 & 8,138 & 8,123 & 0,009 &8,500 & 4,43\\ \hline
+medida 4& 8,080& 8,104& 8,124& 8,086& 8,102 &8,099  & 0,017 & 8,500  & 4,72\\ \hline
+\end{tabular}
+\caption{Dados Experimentais e Estatísticos}
+\label{tab:dados}
+\end{table*}
+
+\section{Análise de Capacidade}
+
+Para uma análise rápida da capacidade de máquina, vamos tomar como variância das medidas feitas a média das variâncias de 
+cada medida. 
+\begin{equation}
+	\overline{\widehat{\sigma}} =0,0113645925 cm
+\end{equation}
+
+O erro da máquina pode então ser estimado em:
+
+\begin{equation}
+\Delta = \frac{\widehat{\sigma}z}{\sqrt{n}}  = \frac{0,041 \cdot  2,7764}{\sqrt{5}} = 0,0141107762 cm
+\end{equation}
+
+Calculamos agora a capabilidade com um fator de segurança de 2 e uma tolerância de 1.0mm:
+\begin{equation}
+\begin{array}{l}
+ 	\mbox{Cp} = \frac{\mbox{Tolerância}}{ \mbox{fator de segurança} \cdot \mbox{Erro Inerente}}  \\
+ 	= \frac{0.5}{2 \cdot 2 \cdot 0,0882386589} \approx 1.8
+\end{array}
+ \end{equation}
+ 
+ Vemos que a máquina em que a peça foi usinada é capaz, e com folga, de usinar uma peça com requisitos de projeto de tolerância dimensional
+ de 1mm. Vemos ainda que o erro percentual ficou abaixo de 5\% em todas as medidas, mostrando que o processo foi preciso.
+ 
+\textbf{CPK}
+
+
+ Vamos calcular o CPK. Esta medida se aplica quando a tolerância sofre maior restrição em relação a um dos limites(superior ou inferior). 
+ 
+ \begin{equation}
+ 	CPK = min(CPI, CPS)
+ \end{equation}
+ 
+ onde:
+ 
+ \begin{equation}
+ 	CPI = \frac{\mbox{tolerância inferior}}{0.5 \cdot \mbox{variabilidade inerente}}
+ \end{equation}
+ 
+  \begin{equation}
+ 	CPS = \frac{\mbox{tolerância superior}}{0.5 \cdot \mbox{variabilidade inerente}}
+ \end{equation}
+ 
+ É claro que o menor CP está naquele com menor tolerância. Vamos calcular para uma tolerância inferior de 0.8mm e superior de 1mm:
+\begin{equation}
+\begin{array}{l}
+CPI =2,83\\
+CPS = 3,54 \\
+CPK = CPI = 2,83
+\end{array}
+\end{equation} 
+
+Vemos que ainda sim a máquina é capaz.
+ 
+ \begin{thebibliography}{1}
+
+\bibitem{PE-book}
+  		Paul L. Meyer
+  		\emph{Probabilidade Aplicações à Estatística}2ªed. LTC, 2009.(pag. 359, exemplo 14.18
+	
+\bibitem{t1}  		
+		Duke University, Department of Statistical Science  	
+  		\emph{FAQ'S ABOUT THE STUDENT-T DISTRIBUTION} www.isds.duke.edu/courses/Fall98/sta110b/tfaq.html
+  		acesso em \today
+  		
+\bibitem{t2}  		
+		Stat Trek 	
+  		\emph{Student's t Distribution} http://stattrek.com/probability-distributions/t-distribution.aspx?tutorial=ap
+  		acesso em \today
+
+\end{thebibliography}
+
+\end{document}
