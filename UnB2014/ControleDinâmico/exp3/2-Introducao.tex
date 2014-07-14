@@ -1,0 +1,108 @@
+\section{Introdução}
+
+\subsection{O Sistema}
+No último experimento determinamos a função de transferência do kit levitação magnética. A seguir mostramos o sistema a ser compensado.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.60]{images/sistema.png}
+\caption{Modelo simplificado do sistema físico a ser compensado: notar que a realimentação é positiva}
+\label{fig:avanco-fisico}
+\end{figure}
+
+onde já obtemos:
+\begin{equation}
+\left\{
+   \begin{array}{l}
+    K_{ifsr} = 69.7731\\
+    w_r = 14.067 rad/s  
+   \end{array}
+   \right.
+\end{equation}
+
+\subsection{Implementação Física do Compensador de Avanço}
+Na figura a seguir vemos a implementação física do compensador de avanço.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.60]{images/lead_compensator.jpg}
+\caption{Implementação Física do Compensador de Avanço}
+\label{fig:avanco-fisico}
+\end{figure}
+
+A sua função de transferência é dada por;
+
+\begin{equation}
+    G_c(s) = k\frac{s + \frac{1}{R_1 C}}{s + \frac{R_1 + R_2}{R_1 R_2 C}}, k = \frac{1}{R_1^2C^2}
+\end{equation}
+
+de onde tiramos:
+
+\begin{equation}
+\left\{
+   \begin{array}{l}
+    z_c = -\frac{1}{R_1C}  \\
+    p_c = -\frac{R_1 + R_2}{R_1R_2C}  
+   \end{array}
+   \right.
+\end{equation}
+
+A função do compensador de avanço é alterar o LGR da planta ao acrescentar a fase desejada para que este passe por um ponto especificado do plano complexo. De forma mais prática, o compensador de avanço permite alterar a resposta dinâmica do sistema, isto é, melhorar o sobrevalor percentual e o tempo de acomodação.
+
+\subsection{Compensadores}
+
+Compensadores são estruturas adicionadas a malha de controle do sistema para melhorar a resposta obtida em malha fechada. Em geral o compensador é acrescentado na malha direta na parte de baixa potência dos sinais e pode corrigir os resultados do sistema não-compensado de duas formas: melhorando o erro estático ou melhorando a resposta dinâmica. Neste experimento trataremos principalmente de 
+dois tipos de compensadores: o compensador proporcional derivativo (PD) e o compensador de avanço. Esses dois compensadores tem a mesma funcionalidade: corrigir a resposta dinâmica.
+
+\subsection{Implementação Física do Compensador PD}
+Na figura a seguir vemos uma configuração  capaz de gerar diversos controladores.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.60]{images/PD_controller.png}
+\caption{Implementação Física do Compensador de Avanço}
+\label{fig:avanco-fisico}
+\end{figure}
+
+O compensador PD é obtido fazendo $Z_1 = C//R_1$ e $Z_2 = R_2$
+A sua função de transferência é dada por:
+
+\begin{equation}
+    G_c(s) = k(s + \frac{1}{R_1 C}), k = R_2 C
+\end{equation}
+
+de onde tiramos:
+
+\begin{equation}
+    z_c = -\frac{1}{R_1C}  \\
+\end{equation}
+
+A função de um compensador PD é a mesma do compensador de avanço. A diferença está no fato do compensador PD utilizar um componente ativo(o amplificado operacional) e o compensador de avanço utilizar somente componentes passivos(resistores, capacitores e indutores).
+
+\subsection{Relação Polos Dominantes - Sobrevalor}
+ A figura a seguir relaciona a posição no plano complexo dos polos dominantes de malha fechada com o fator de amortecimento $\xi$ do sistema.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.60]{images/bitola_ishihara.png}
+\caption{relação polos - $\xi$}
+\label{fig:bitola}
+\end{figure}
+
+Além disso, vale a fórmula que relaciona o sobrevalor percentual OS\% com o fator de amortecimento $\xi$:
+
+\begin{equation}
+   OS\% = e^{- \pi \frac{\xi}{\sqrt{1 - \xi ^2}}}
+\end{equation}
+
+
+    Além da compensação analógica, existe também a compensação digital. A compensação digital é feita substituindo o ganho direto e o compensador analógico por um computador, que faz um processamento do sinal em sua entrada seguindo uma equação de diferenças e retorna em sua saída o valor da equação correspondente.
+
+    Para esse tipo de compensação, é necessário traduzir a linguagem do mundo real, tipicamente analógica, para a linguagem digital por meio do uso de conversores A/D e D/A. Esse tipo de compensação é ilustrado abaixo pelo diagrama de blocos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{images/digital_blockdiagram.jpg}
+\caption{Diagrama de blocos de um sistema com compensação digital.}
+\label{fig:digital_blocks}
+\end{figure}
+

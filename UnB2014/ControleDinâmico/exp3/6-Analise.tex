@@ -1,0 +1,199 @@
+\section{Análise de Dados}
+\subsection{Projeto do Compensador de Avanço Analógico}
+Tendo como ponto de partida o overshoot do compensador padrão, que é de 84\%, escolhe-se um valor menor que esse para realização do projeto de um primeiro compensador de avanço. Pela equação que relaciona overshoot e $\xi$, tal overshoot corresponde a um $\xi$ de 0.0554, um valor muito baixo. Utilizando a figura 4, $cos \beta=\xi$. Logo esse ângulo deve ser de $86.8^o$. Para um overshoot de 50\%, o $\xi$ deve ser de 0.2155, e o ângulo correspondente de $77.56^o$.
+
+Sabendo que a parte real do polo é de -41.6 (vide lugar das raizes da figura), o $\omega$ é de 750. Logo, pode-se concluir que o polo complexo se encontra em -41.6+748.8j. O ganho correspondente é de 40.86. Esse é o ganho inerente do sistema no momento da medição.
+
+O compensador padrão possuia um tempo de acomodação de $\frac{4}{\xi\omega_n}=96ms$. Escolhendo um tempo um pouco mais rápido - digamos 50ms - encontra-se que o omega novo deve ser de 371rad/s. Com isso, determina-se a posição do novo polo do sistema em -80+362.3j. A fase do sistema nesse polo é de $155^o$. Logo o compensador deve contribuir com uma fase de $25^o$. Usando o método das bissetrizes, encontra-se que o zero deve se encontrar em -260 e o polo em -531. 
+
+Escolhendo um capacitor comum de 1$\mu$F, determina-se os valores de resistências. R1 é obtido como sendo 3.85k$\Omega$. Utiliza-se então um resistor disponível comercialmente de 3.9k$\Omega$. Com esses valores, calcula-se R2. R2 é obtido como sendo de 3641Ohms. Utilizando o valor de 3.6k$\Omega$, obtem-se o compensador desejado. 
+
+O LGR é mostrado abaixo. Nota-se que há um ganho de 14.8 para alcançar tais polos, que é um ganho realizável.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{images/avanco-normal.jpg}
+\caption{LGR do sistema compensado com um compensador avanço normal.}
+\label{fig:avanco_normal}
+\end{figure}
+
+A simulação do sistema é feita no simulink e os resultados são mostrados abaixo:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.7]{images/simulink.jpg}
+\caption{Sistema utilizado no simulink para simulação.}
+\label{fig:simulink}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics{images/resposta-degrau-avanco-normal.jpg}
+\caption{Resposta ao degrau do sistema compensado.}
+\label{fig:avanco-normal}
+\end{figure}
+
+Nota-se que o tempo de acomodação é coerente com o selecionado e o overshoot, apesar de não ter apresentado o valor de 50\% esperado, foi melhor que o overshoot do compensador padrão. Para sumarizar, os parâmetros projetados são:
+\begin{equation}
+    \left\{ \begin{array}{l}
+     R_1 = 3.9k \Omega  \\
+     R_2 = 3.6k \Omega  \\
+     C = 1 \mu F \\ 
+     \mbox{Ganho} = 14.8 \\
+     z_{c} = -\frac{1}{R_1C} = -256 \\
+     p_{c} = -\frac{R_1 + R_2}{R_1R_2C} = -534.2\\
+     p_{sistema} = \pm 14.01
+    \end{array}\right.
+\end{equation}
+
+
+\subsection{Projeto do Compensador de Avanço Otimizado Analógico}
+Agora, realiza-se o projeto do compensador otimizado. O princípio dele é anular o polo no SPE do sistema. Logo o zero do compensador será em -14.1. Com esse valor, mantendo o capacitor de $1\mu F$, obtem-se um valor de R1 de 70.9kOhms. O valor comercial mais próximo é de 68kOhms. Agora, para o compensador otimizado, almeja-se um overshoot de 20\%. Para isso, o csi deve ser de 0.46, aproximadamente. O angulo $\beta$ correspondente é de $65.87^o$. Escolhendo um tempo de acomodação melhor - diga-se 20ms - obtem-se um valor de omega de 435 rad/s. Dessa forma, o polo desejado está em -200+387j. A fase do sistema nesse ponto é de $125.4^o$. Logo o compensador deve contribuir com $55^o$. 
+
+\begin{equation}
+Fase\left( \frac{s+14.1}{s+p} \right)=55^o
+\end{equation}
+
+Logo o polo está em -470. Disso, encontra-se o valor de R2 como sendo de 2kOhms.
+
+Para sumarizar, os parâmetros projetados são:
+\begin{equation}
+    \left\{ \begin{array}{l}
+     R_1 = 68k \Omega  \\
+     R_2 = 3.6k \Omega  \\
+     C = 1 \mu F \\ 
+     \mbox{Ganho} = 2.0 \\
+     z_{c} = -\frac{1}{R_1C} =  -14.7059 \\
+     p_{c} = -\frac{R_1 + R_2}{R_1R_2C} = -292.5\\
+     p_{sistema} = \pm 14.01
+    \end{array}\right.
+\end{equation}
+
+A seguir vemos as curvas obtidas para o LGR e resposta ao degrau.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.4]{images/avanco_otimizado_lgr.png}
+\caption{LGR do sistema com compensador avanço otimizado}
+\label{fig:pd-normal-lgr}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.4]{images/avanco_otimizado_step.png}
+\caption{Resposta ao degrau do sistema compensado com avanço  otimizado}
+\label{fig:pd-normal-step}
+\end{figure}
+
+\subsection{Projeto do Compensador PD Analógico}
+Para esse projeto utilizamos os mesmos parâmetros do compensador de avanço e um ganho de 20:
+\begin{equation}
+    \left\{ \begin{array}{l}
+     R_1 = 3.9k \Omega  \\
+     R_2 = 3.6k \Omega  \\
+     C = 1 \mu F \\ 
+     \mbox{Ganho} = 20 \\
+     \rightarrow z_{c} = \frac{1}{R_1C} = -256 \\
+     p_{sistema} = \pm 14.01
+    \end{array}\right.
+\end{equation}
+O LGR e a resposta ao degrau simulada são mostrads a seguir:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.4]{images/pd_lgr.png}
+\caption{LGR do sistema com compensador PD projetado}
+\label{fig:pd-normal-lgr}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.4]{images/pd_step.png}
+\caption{Resposta ao degrau do PD projetado}
+\label{fig:pd-normal-step}
+\end{figure}
+
+De onde se obtem que o sobrevalor percentual projetado é de 56\%.
+
+\subsection{Projeto do Compensador PD Otimizado Analógico}
+Para esse projeto novamente utilizamos a ideia de colocar 
+o zero do compensador sobre o polo negativo do sistema. Eis os parâmetros comerciais projetados:
+\begin{equation}
+    \left\{ \begin{array}{l}
+     R_1 = 68k \Omega  \\
+     R_2 = 3.6k \Omega  \\
+     C = 1 \mu F \\ 
+     \mbox{Ganho} = 0.75 \\
+     \rightarrow z = -\frac{1}{R_1C} =   -14.7059 \\
+     p_{sistema} = \pm 14.01
+    \end{array}\right.
+\end{equation}
+O LGR e a resposta ao degrau simulada são mostrads a seguir:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.4]{images/pd_otimizado_lgr.png}
+\caption{LGR do sistema com compensador PD otimizado}
+\label{fig:pd-normal-lgr}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.4]{images/pd_otimizado_step.png}
+\caption{Resposta ao degrau do PD otimizado}
+\label{fig:pd-normal-step}
+\end{figure}
+
+De onde obtemos que o sistema se comporta quase como de primeira ordem, isto é, sem sobrevalor percentual.
+
+
+\subsection{Projeto do Compensador de Avanço Digital}
+
+Para obtermos os parâmetros do compensador digital, devemos passar o nosso compensador anteriormente projetado na forma
+$G_c(s) = k(s - z)/(s - p)$ para a forma: $G_c(s) = K(1 + s/z)/(1 + s/p)$. De cara, já temos o 's' e o 'p' necessário, e é fácil ver
+que $K = zk/p$. Temos então:
+
+\begin{equation}
+    \left\{ \begin{array}{l}
+     p_{sistema} = \pm 14.01 \\
+     z_{c} = -\frac{1}{R_1C} = -256 \\
+     p_{c} = -\frac{R_1 + R_2}{R_1R_2C} = -534.2\\
+     K_{c} = 7.1
+    \end{array}\right.
+\end{equation}
+
+\subsection{Projeto do Compensador de Avanço Otimizado Digital}
+
+Seguindo raciocínio análogo:
+
+\begin{equation}
+    \left\{ \begin{array}{l}
+     p_{sistema} = \pm 14.01 \\
+     z_{c} = -\frac{1}{R_1C} =  -14.7059 \\
+     p_{c} = -\frac{R_1 + R_2}{R_1R_2C} = -292.5\\
+     K_{c} = 0.1
+    \end{array}\right.
+\end{equation}
+
+\subsection{Projeto do Compensador PD Digital}
+
+Dessa vez a forma do compensador projetado é $G_c(s) = k(s - z)$ e deve ser passada para  $G_c(s) = K(1 + sT_d)$. Temos:
+
+\begin{equation}
+ \left\{ \begin{array}{l}
+    T_d = 0.004 \\
+    K = 5120 \\
+    \end{array}\right.
+\end{equation}
+
+\subsection{Projeto do Compensador PD Otimizado Digital}
+
+Analogamente:
+
+\begin{equation}
+    \left\{ \begin{array}{l}
+     T_d = 0.07 \\
+     K = 11.03
+    \end{array}\right.
+\end{equation}
+
